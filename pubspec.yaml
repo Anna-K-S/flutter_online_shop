@@ -19,22 +19,25 @@ dependencies:
   flutter_native_splash: ^2.3.7
 
 
-
-
-flutter_native_splash:
- color: "#efdaa1"
- image: assets/images/logo.png
- ios: true
- android: true
-
  
 
 dev_dependencies:
+ 
   flutter_test:
     sdk: flutter
 
 
+flutter_native_splash:
+  color: "#efdaa1"
+  image: assets/images/logo.png
+  ios: true
+  android: true
+
+
   flutter_lints: ^2.0.0
+
+
+  
 
 flutter:
 
