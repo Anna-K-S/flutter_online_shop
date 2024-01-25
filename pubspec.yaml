@@ -22,6 +22,16 @@ dependencies:
 
 
 
+
+ 
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+
 flutter_native_splash:
  color: "#efdaa1"
  image: assets/images/logo.png
@@ -33,15 +43,6 @@ flutter_icons:
  android: true
  image_path: assets/images/icon.png
  color: "#efdaa1" 
-
- 
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-
-  flutter_lints: ^2.0.0
 
 flutter:
 
