@@ -255,7 +255,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_gen:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_gen
       sha256: e46c44b2d612d660f913ebfa4423a5171513f4828c029a98aa847f4aecf624a4
