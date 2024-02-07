@@ -16,7 +16,7 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
-
+ 
 
 
 
@@ -33,6 +33,7 @@ dev_dependencies:
   flutter_gen: ^5.4.0
   build_runner: ^2.4.8
   flutter_gen_runner: ^5.4.0
+  dio: ^5.4.0
 
 flutter_native_splash:
  color: "#efdaa1"

@@ -9,7 +9,7 @@ class OnlineShop extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.amber[100],
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
             'SHOP',
@@ -21,4 +21,5 @@ class OnlineShop extends StatelessWidget {
       ),
     );
   }
+  
 }
