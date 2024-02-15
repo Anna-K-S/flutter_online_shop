@@ -21,5 +21,4 @@ class OnlineShop extends StatelessWidget {
       ),
     );
   }
-  
 }
