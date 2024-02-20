@@ -4,7 +4,6 @@ import 'package:flutter_online_shop/models/cart_product.dart';
 import 'package:flutter_online_shop/models/product.dart';
 import 'package:flutter_online_shop/models/user.dart';
 
-import 'package:flutter_online_shop/service/debug_inspector.dart';
 
 const _basePath = 'https://fakestoreapi.com';
 

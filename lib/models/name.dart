@@ -1,24 +1,3 @@
-// class Name {
-//   final String firstName;
-//   final String finalName;
-
-//   Name({
-//     required this.firstName,
-//     required this.finalName,
-//   });
-
-//   factory Name.fromJson(Map<String, dynamic> json) {
-//     return Name(
-//       firstName: json['firstName'] as String,
-//       finalName: json['finalName'] as String,
-//     );
-//   }
-// }
-
-
-
-
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'name.freezed.dart';
