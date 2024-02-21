@@ -1,9 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_online_shop/models/cart.dart';
-import 'package:flutter_online_shop/models/cart_product.dart';
 import 'package:flutter_online_shop/models/product.dart';
-import 'package:flutter_online_shop/models/user.dart';
-
 
 const _basePath = 'https://fakestoreapi.com';
 
@@ -12,49 +8,60 @@ class Api {
 
   Api(this._dio);
 
-  ///получение списка всех товаров
-  Future<List<Product>> getAllProducts() async {
-    final response = await _dio.get('/products');
-
-    final List<dynamic> json = response.data;
-    final List<Product> result =
-        json.map((json) => Product.fromJson(json)).toList();
-    return result;
-  }
-
-  /// получение инф-ии о товаре по его id
-  Future<Product> getDetailsProduct(int id) async {
-    final response = await _dio.get('/products/$id');
-
-    final json = response.data as Map<String, dynamic>;
-    final result = Product.fromJson(json);
-    return result;
-  }
-
-  /// получение списка всех пользователей
-
-  Future<List<User>> getAllUsers() async {
-    final response = await _dio.get('/users');
-
-    final List<dynamic> json = response.data;
-    final List<User> result = json.map((json) => User.fromJson(json)).toList();
-    return result;
-  }
-
-  ///получение списка товаров в корзине юзера по его id
-
-  Future<Cart> getUserCart(int userId) async {
-    final response = await _dio.get('/carts/$userId');
-
-    final json = response.data as Map<String, dynamic>;
-    final productsJson = json['products'] as List<dynamic>;
-    final List<CartProduct> cartProducts = productsJson
-        .map((productJson) => CartProduct.fromJson(productJson))
+  Future<List<Product>> getAll() async {
+    final response = await _dio.get('$_basePath/products');
+    return (response.data as List)
+        .map((json) => Product.fromJson(json))
         .toList();
-
-    final result = Cart.fromJson(json, cartProducts);
-    return result;
   }
 
- 
+  Future<Product> getById(int id) async {
+    final response = await _dio.get('$_basePath/products/$id');
+    return Product.fromJson(response.data);
+  }
+
+  Future<void> add(Product product) async {
+    await _dio.post(
+      '$_basePath/products',
+      data: product.toJson(),
+    );
+  }
+
+  Future<void> update(int id, Product product) async {
+    await _dio.put(
+      '$_basePath/products/$id',
+      data: product.toJson(),
+    );
+  }
+
+  Future<void> delete(int id) async {
+    await _dio.delete('$_basePath/products/$id');
+  }
+
+  Future<List<String>> getAllCategories() async {
+    final response = await _dio.get('$_basePath/products/categories');
+    return List<String>.from(response.data);
+  }
+
+  Future<List<Product>> getWithLimit(int limit) async {
+    final response = await _dio.get('$_basePath/products?limit=$limit');
+    return (response.data as List)
+        .map((json) => Product.fromJson(json))
+        .toList();
+  }
+
+  Future<List<Product>> getSorted(String sortBy) async {
+    final response = await _dio.get('$_basePath/products?sortBy=$sortBy');
+    return (response.data as List)
+        .map((json) => Product.fromJson(json))
+        .toList();
+  }
+
+  Future<List<Product>> getInCategory(String category) async {
+    final response =
+        await _dio.get('$_basePath/products/category/$category');
+    return (response.data as List)
+        .map((json) => Product.fromJson(json))
+        .toList();
+  }
 }
