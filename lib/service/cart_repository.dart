@@ -9,6 +9,7 @@ abstract interface class ICartRepository {
   Future<Cart> getUserCart(int userId);
   Future<void> addNewCart(Cart cart);
   Future<void> update(int id, Cart cart);
-  Future<void> deleteCart(int cartId);
+  Future<void> delete(int cartId);
+  
 }
  
