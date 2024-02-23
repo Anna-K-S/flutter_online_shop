@@ -20,46 +20,46 @@ class ProductsRepository implements IProductsRepository {
 
   @override
   Future<List<Product>> getAll() async {
-    return _api.getAll();
+    return await _api.getAllProducts();
   }
 
   @override
   Future<Product> getById(int id) async {
-    return _api.getById(id);
+    return _api.getProductsById(id);
   }
 
   @override
   Future<void> add(Product product) async {
-    await _api.add(product);
+    await _api.addProduct(product);
   }
 
   @override
   Future<void> update(int id, Product product) async {
-    await _api.update(id, product);
+    await _api.updateProduct(id, product);
   }
 
   @override
   Future<void> delete(int id) async {
-    await _api.delete(id);
+    await _api.deleteProduct(id);
   }
 
   @override
   Future<List<String>> getAllCategories() async {
-    return await _api.getAllCategories();
+    return await _api.getAllProductsCategories();
   }
 
   @override
   Future<List<Product>> getInCategory(String category) async {
-    return await _api.getInCategory(category);
+    return await _api.getProductsInCategory(category);
   }
 
   @override
   Future<List<Product>> getSorted(String sortBy) async {
-    return await _api.getSorted(sortBy);
+    return await _api.getSortedProducts(sortBy);
   }
 
   @override
   Future<List<Product>> getWithLimit(int limit) async {
-    return await _api.getWithLimit(limit);
+    return await _api.getProductsWithLimit(limit);
   }
 }

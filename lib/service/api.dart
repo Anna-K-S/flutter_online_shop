@@ -1,67 +1,37 @@
+import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_online_shop/models/product.dart';
 
-const _basePath = 'https://fakestoreapi.com';
+part 'api.g.dart';
 
-class Api {
-  final Dio _dio;
+@RestApi(baseUrl: "https://fakestoreapi.com")
+abstract class Api {
+  factory Api(Dio dio, {String baseUrl}) = _Api;
 
-  Api(this._dio);
+  @GET("/products")
+  Future<List<Product>> getAllProducts();
 
-  Future<List<Product>> getAll() async {
-    final response = await _dio.get('$_basePath/products');
-    return (response.data as List)
-        .map((json) => Product.fromJson(json))
-        .toList();
-  }
+  @GET("/products/{id}")
+  Future<Product> getProductsById(@Path("id") int id);
 
-  Future<Product> getById(int id) async {
-    final response = await _dio.get('$_basePath/products/$id');
-    return Product.fromJson(response.data);
-  }
+  @POST("/products")
+  Future<void> addProduct(@Body() Product product);
 
-  Future<void> add(Product product) async {
-    await _dio.post(
-      '$_basePath/products',
-      data: product.toJson(),
-    );
-  }
+  @PUT("/products/{id}")
+  Future<void> updateProduct(@Path("id") int id, @Body() Product product);
 
-  Future<void> update(int id, Product product) async {
-    await _dio.put(
-      '$_basePath/products/$id',
-      data: product.toJson(),
-    );
-  }
+  @DELETE("/products/{id}")
+  Future<void> deleteProduct(@Path("id") int id);
 
-  Future<void> delete(int id) async {
-    await _dio.delete('$_basePath/products/$id');
-  }
+  @GET("/products/categories")
+  Future<List<String>> getAllProductsCategories();
 
-  Future<List<String>> getAllCategories() async {
-    final response = await _dio.get('$_basePath/products/categories');
-    return List<String>.from(response.data);
-  }
+  @GET("/products?limit={limit}")
+  Future<List<Product>> getProductsWithLimit(@Path("limit") int limit);
 
-  Future<List<Product>> getWithLimit(int limit) async {
-    final response = await _dio.get('$_basePath/products?limit=$limit');
-    return (response.data as List)
-        .map((json) => Product.fromJson(json))
-        .toList();
-  }
+  @GET("/products?sortBy={sortBy}")
+  Future<List<Product>> getSortedProducts(@Path("sortBy") String sortBy);
 
-  Future<List<Product>> getSorted(String sortBy) async {
-    final response = await _dio.get('$_basePath/products?sortBy=$sortBy');
-    return (response.data as List)
-        .map((json) => Product.fromJson(json))
-        .toList();
-  }
-
-  Future<List<Product>> getInCategory(String category) async {
-    final response =
-        await _dio.get('$_basePath/products/category/$category');
-    return (response.data as List)
-        .map((json) => Product.fromJson(json))
-        .toList();
-  }
+  @GET("/products/category/{category}")
+  Future<List<Product>> getProductsInCategory(@Path("category") String category);
 }
