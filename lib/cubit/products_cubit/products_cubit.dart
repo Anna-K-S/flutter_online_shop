@@ -6,7 +6,9 @@ class ProductsCubit extends Cubit<ProductsState> {
   final IProductsRepository _productsRepository;
 
   ProductsCubit(this._productsRepository)
-      : super(const ProductsState.loading());
+      : super(
+          const ProductsState.loading(),
+        );
 
   Future<void> load() async {
     emit(
@@ -14,9 +16,13 @@ class ProductsCubit extends Cubit<ProductsState> {
     );
     try {
       final products = await _productsRepository.getAll();
-      emit(ProductsState.idle(products));
+      emit(
+        ProductsState.idle(products),
+      );
     } catch (e) {
-      emit(ProductsState.error("Failed to load products: $e"));
+      emit(
+        ProductsState.error("Failed to load products: $e"),
+      );
     }
   }
 
@@ -26,9 +32,13 @@ class ProductsCubit extends Cubit<ProductsState> {
     );
     try {
       final products = await _productsRepository.getAll();
-      emit(ProductsState.idle(products));
+      emit(
+        ProductsState.idle(products),
+      );
     } catch (e) {
-      emit(ProductsState.error("Failed to reload products: $e"));
+      emit(
+        ProductsState.error("Failed to reload products: $e"),
+      );
     }
   }
 }
