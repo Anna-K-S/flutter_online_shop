@@ -6,45 +6,65 @@ import 'package:flutter_online_shop/service/cart_repository.dart';
 class CartCubit extends Cubit<CartState> {
   final ICartRepository _cartRepository;
 
-  CartCubit(this._cartRepository) : super(const CartState.loading());
+  CartCubit(this._cartRepository) : super(const CartState.initial());
 
   Future<void> load(int userId) async {
-    emit(const CartState.loading());
+    emit(const CartState.initial());
     try {
-      final cart = await _cartRepository.getUser(userId);
-      emit(
-        CartState.idle(cart),
-      );
+      final cart = await _cartRepository.getUser(userId) ??
+          await _cartRepository.create(
+            userId: userId,
+            products: [],
+          );
+
+      emit(CartState.idle(cart));
     } catch (e) {
-      emit(CartState.error("Failed to load cart: $e"));
+      emit(
+        CartState.error(
+          errorMessage: "Failed to load cart: $e",
+          cart: state.cartOrNull,
+        ),
+      );
     }
   }
 
   Future<void> add(int userId, CartProduct product) async {
-    emit(const CartState.loading());
+    final cart = state.cartOrNull;
+
+    if (cart == null) return;
+
+    emit(CartState.loading(cart));
     try {
-      final cart = await _cartRepository.getUser(userId);
-      cart.products.add(product);
-      await _cartRepository.update(cart.id, cart);
-      emit(
-        CartState.idle(cart),
+      final newCart = cart.copyWith(
+        products: cart.products.toList()..add(product),
       );
+      await _cartRepository.update(newCart);
+      emit(CartState.idle(newCart));
     } catch (e) {
-      emit(CartState.error("Failed to add to cart: $e"));
+      emit(
+        CartState.error(errorMessage: "Failed to add to cart: $e", cart: cart),
+      );
     }
   }
 
   Future<void> remove(int userId, CartProduct product) async {
-    emit(const CartState.loading());
+    final cart = state.cartOrNull;
+
+    if (cart == null) return;
+
+    emit(CartState.loading(cart));
     try {
-      final cart = await _cartRepository.getUser(userId);
-      cart.products.remove(product);
-      await _cartRepository.update(cart.id, cart);
-      emit(
-        CartState.idle(cart),
-      );
+      final newProducts = cart.products.toList()..remove(product);
+      final newCart = cart.copyWith(products: newProducts);
+      await _cartRepository.update(newCart);
+      emit(CartState.idle(newCart));
     } catch (e) {
-      emit(CartState.error("Failed to remove from cart: $e"));
+      emit(
+        CartState.error(
+          errorMessage: "Failed to remove from cart: $e",
+          cart: cart,
+        ),
+      );
     }
   }
 }

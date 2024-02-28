@@ -5,7 +5,20 @@ part 'cart_state.freezed.dart';
 
 @freezed
 sealed class CartState with _$CartState {
-  const factory CartState.loading() = _Loading;
-  const factory CartState.idle(Cart cart) = _Loaded;
-  const factory CartState.error(String errorMessage) = _Error;
+  const CartState._();
+
+  Cart? get cartOrNull => switch (this) {
+        CartInitial() => null,
+        CartLoading(:final cart) => cart,
+        CartLoaded(:final cart) => cart,
+        CartError(:final cart) => cart,
+      };
+
+  const factory CartState.initial() = CartInitial;
+  const factory CartState.loading(Cart cart) = CartLoading;
+  const factory CartState.idle(Cart cart) = CartLoaded;
+  const factory CartState.error({
+    String? errorMessage,
+    Cart? cart,
+  }) = CartError;
 }

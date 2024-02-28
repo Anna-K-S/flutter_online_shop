@@ -7,9 +7,9 @@ abstract interface class IProductsRepository {
   Future<List<Product>> getWithLimit(int limit);
   Future<List<Product>> getSorted(String sortBy);
   Future<List<String>> getAllCategories();
-  Future<List<Product>> getInCategory(String category);
+  Future<List<Product>> getInCategory(Product product);
   Future<void> add(Product product);
-  Future<void> update(int id, Product product);
+  Future<void> update(Product product);
   Future<void> delete(int id);
 }
 
@@ -30,12 +30,12 @@ class ProductsRepository implements IProductsRepository {
 
   @override
   Future<void> add(Product product) async {
-    await _api.addProduct(product);
+    await _api.addProduct(product as ProductsRequest);
   }
 
   @override
-  Future<void> update(int id, Product product) async {
-    await _api.updateProduct(id, product);
+  Future<void> update(Product product) async {
+    await _api.updateProduct(product.id, product);
   }
 
   @override
@@ -49,8 +49,8 @@ class ProductsRepository implements IProductsRepository {
   }
 
   @override
-  Future<List<Product>> getInCategory(String category) async {
-    return await _api.getProductsInCategory(category);
+  Future<List<Product>> getInCategory(Product product) async {
+    return await _api.getProductsInCategory(product.category);
   }
 
   @override

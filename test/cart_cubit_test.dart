@@ -4,25 +4,15 @@ import 'package:flutter_online_shop/cubit/cart_cubit/cart_state.dart';
 import 'package:flutter_online_shop/models/cart.dart';
 import 'package:flutter_online_shop/models/cart_product.dart';
 import 'package:flutter_online_shop/service/cart_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-class MockCartRepository extends MockCubit implements ICartRepository {}
+class MockCartRepository extends Mock implements ICartRepository {}
 
 void main() {
   group('CartCubit', () {
     late CartCubit cubit;
-    late MockCartRepository mock;
-
-    setUp(() {
-      mock = MockCartRepository();
-      cubit = CartCubit(mock);
-    });
-
-    tearDown(() {
-      cubit.close();
-    });
-
+    late MockCartRepository mockCartRepository;
     const userId = 1;
     final cart = Cart(
       id: 1,
@@ -36,26 +26,40 @@ void main() {
       quantity: 1,
     );
 
-    test('initial state is CartState.loading()', () {
+    setUpAll(() {
+      registerFallbackValue(1);
+      registerFallbackValue(cart);
+      registerFallbackValue(cartProduct);
+    });
+
+    setUp(() {
+      mockCartRepository = MockCartRepository();
+      cubit = CartCubit(mockCartRepository);
+      when(() => mockCartRepository.create(userId: userId, products: []))
+          .thenAnswer((_) async => cart);
+    });
+
+    tearDown(() {
+      cubit.close();
+    });
+
+    test('initial state is CartState.initial()', () {
       expect(
         cubit.state,
-        equals(
-          const CartState.loading(),
-        ),
+        equals(const CartState.initial()),
       );
     });
 
     blocTest<CartCubit, CartState>(
-      'emits (loading, idle) when load succeeds',
+      'emits (initial, idle) when load succeeds',
       build: () {
-        when(
-          mock.getUser(userId),
-        ).thenAnswer((_) async => cart);
+        when(() => mockCartRepository.getUser(userId))
+            .thenAnswer((_) async => cart);
         return cubit;
       },
       act: (cubit) => cubit.load(userId),
       expect: () => [
-        const CartState.loading(),
+        const CartState.initial(),
         CartState.idle(cart),
       ],
     );
@@ -63,84 +67,87 @@ void main() {
     blocTest<CartCubit, CartState>(
       'emits (loading, error) when load throws exception',
       build: () {
-        when(
-          mock.getUser(userId),
-        ).thenThrow(
+        when(() => mockCartRepository.getUser(any())).thenThrow(
           Exception('Failed to load cart'),
         );
         return cubit;
       },
       act: (cubit) => cubit.load(userId),
       expect: () => [
-        const CartState.loading(),
+        const CartState.initial(),
         const CartState.error(
-            'Failed to load cart: Exception: Failed to load cart'),
+          errorMessage: 'Failed to load cart: Exception: Failed to load cart',
+        ),
       ],
     );
 
     blocTest<CartCubit, CartState>(
       'emits (loading, idle) when add succeeds',
+      seed: () => CartLoaded(cart),
       build: () {
-        when(
-          mock.getUser(userId),
-        ).thenAnswer((_) async => cart);
+        when(() => mockCartRepository.getUser(any()))
+            .thenAnswer((_) async => cart);
+        when(() => mockCartRepository.update(any())).thenAnswer((_) async {});
         return cubit;
       },
       act: (cubit) => cubit.add(userId, cartProduct),
       expect: () => [
-        const CartState.loading(),
-        CartState.idle(cart),
+        CartState.loading(cart),
+        CartState.idle(cart.copyWith(products: [cartProduct])),
       ],
     );
 
     blocTest<CartCubit, CartState>(
       'emits (loading, error) when add throws exception',
+      seed: () => CartLoaded(cart),
       build: () {
-        when(
-          mock.getUser(userId),
-        ).thenThrow(
+        when(() => mockCartRepository.update(any())).thenThrow(
           Exception('Failed to add to cart'),
         );
         return cubit;
       },
       act: (cubit) => cubit.add(userId, cartProduct),
       expect: () => [
-        const CartState.loading(),
-        const CartState.error(
-            'Failed to add to cart: Exception: Failed to add to cart'),
+        CartState.loading(cart),
+        CartState.error(
+          errorMessage:
+              'Failed to add to cart: Exception: Failed to add to cart',
+          cart: cart,
+        ),
       ],
     );
 
     blocTest<CartCubit, CartState>(
       'emits (loading, idle) when remove succeeds',
-      build: () {
-        when(
-          mock.getUser(userId),
-        ).thenAnswer((_) async => cart);
+      seed: () => CartLoaded(cart),
+      build: () { 
+        when(() => mockCartRepository.update(any())).thenAnswer((_)async {});
         return cubit;
       },
       act: (cubit) => cubit.remove(userId, cartProduct),
       expect: () => [
-        const CartState.loading(),
-        CartState.idle(cart),
+        CartState.loading(cart),
+        CartState.idle(cart.copyWith(products: cart.products.toList()..remove(cartProduct))),
       ],
     );
 
     blocTest<CartCubit, CartState>(
       'emits (loading, error) when remove throws exception',
+      seed: () => CartLoaded(cart),
       build: () {
-        when(
-          mock.getUser(userId),
-        ).thenThrow(
+        when(() => mockCartRepository.update(any())).thenThrow(
           Exception('Failed to remove from cart'),
         );
         return cubit;
       },
       act: (cubit) => cubit.remove(userId, cartProduct),
       expect: () => [
-        const CartState.loading(),
-        const CartState.error(
-            'Failed to remove from cart: Exception: Failed to remove from cart'),
+        CartState.loading(cart),
+        CartState.error(
+          errorMessage:
+              'Failed to remove from cart: Exception: Failed to remove from cart',
+          cart: cart,
+        ),
       ],
     );
   });

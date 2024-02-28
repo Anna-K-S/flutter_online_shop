@@ -1,4 +1,5 @@
 import 'package:flutter_online_shop/models/cart.dart';
+import 'package:flutter_online_shop/models/cart_product.dart';
 import 'package:flutter_online_shop/service/api.dart';
 
 abstract interface class ICartRepository {
@@ -7,13 +8,16 @@ abstract interface class ICartRepository {
   Future<List<Cart>> getWithLimit(int limit);
   Future<List<Cart>> getSorted(String sortBy);
   Future<List<Cart>> getInDateRange(DateTime startDate, DateTime endDate);
-  Future<Cart> getUser(int userId);
-  Future<void> addNew(Cart cart);
-  Future<void> update(int id, Cart cart);
+  Future<Cart?> getUser(int userId);
+  Future<Cart> create({
+    required int userId,
+    required List<CartProduct> products,
+  });
+  Future<void> update(Cart cart);
   Future<void> delete(int cartId);
-  
 }
- class CartRepository implements ICartRepository {
+
+class CartRepository implements ICartRepository {
   final Api _api;
 
   CartRepository(this._api);
@@ -39,23 +43,31 @@ abstract interface class ICartRepository {
   }
 
   @override
-  Future<List<Cart>> getInDateRange(DateTime startDate, DateTime endDate) async {
+  Future<List<Cart>> getInDateRange(
+      DateTime startDate, DateTime endDate) async {
     return await _api.getCartsInDateRange(startDate, endDate);
   }
 
   @override
-  Future<Cart> getUser(int userId) async {
-    return await _api.getUserCart(userId);
+  Future<Cart?> getUser(int userId) => _api.getUserCart(userId);
+
+  @override
+  Future<Cart> create({
+    required int userId,
+    required List<CartProduct> products,
+  }) {
+    return _api.addCart(
+      CreateCartRequest(
+        userId: userId,
+        date: DateTime.now(),
+        products: products,
+      ),
+    );
   }
 
   @override
-  Future<void> addNew(Cart cart) async {
-    await _api.addCart(cart);
-  }
-
-  @override
-  Future<void> update(int id, Cart cart) async {
-    await _api.updateCart(id, cart);
+  Future<void> update(Cart cart) async {
+    await _api.updateCart(cart.id, cart);
   }
 
   @override

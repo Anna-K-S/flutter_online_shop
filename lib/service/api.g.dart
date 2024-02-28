@@ -3,6 +3,50 @@
 part of 'api.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$CreateCartRequestImpl _$$CreateCartRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CreateCartRequestImpl(
+      userId: json['userId'] as int,
+      date: DateTime.parse(json['date'] as String),
+      products: (json['products'] as List<dynamic>)
+          .map((e) => CartProduct.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$CreateCartRequestImplToJson(
+        _$CreateCartRequestImpl instance) =>
+    <String, dynamic>{
+      'userId': instance.userId,
+      'date': instance.date.toIso8601String(),
+      'products': instance.products,
+    };
+
+_$ProductsRequestImpl _$$ProductsRequestImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProductsRequestImpl(
+      id: json['id'] as int,
+      title: json['title'] as String,
+      price: json['price'] as num,
+      category: json['category'] as String,
+      description: json['description'] as String,
+      image: json['image'] as String,
+    );
+
+Map<String, dynamic> _$$ProductsRequestImplToJson(
+        _$ProductsRequestImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'price': instance.price,
+      'category': instance.category,
+      'description': instance.description,
+      'image': instance.image,
+    };
+
+// **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
@@ -77,11 +121,11 @@ class _Api implements Api {
   }
 
   @override
-  Future<void> addProduct(Product product) async {
+  Future<void> addProduct(ProductsRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = product;
+    final _data = request;
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
@@ -637,13 +681,13 @@ class _Api implements Api {
   }
 
   @override
-  Future<Cart> getUserCart(int userId) async {
+  Future<Cart?> getUserCart(int userId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Cart>(Options(
+        await _dio.fetch<Map<String, dynamic>?>(_setStreamType<Cart>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -659,32 +703,35 @@ class _Api implements Api {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = Cart.fromJson(_result.data!);
+    final value = _result.data == null ? null : Cart.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<void> addCart(Cart cart) async {
+  Future<Cart> addCart(CreateCartRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = cart;
-    await _dio.fetch<void>(_setStreamType<void>(Options(
+    final _data = request;
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Cart>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/carts',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              '/carts',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = Cart.fromJson(_result.data!);
+    return value;
   }
 
   @override
