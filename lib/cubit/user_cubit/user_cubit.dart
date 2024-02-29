@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/user_cubit/user_state.dart';
 import 'package:flutter_online_shop/models/user.dart';
@@ -10,23 +8,7 @@ class UserCubit extends Cubit<UserState> {
 
   UserCubit(this._userRepository) : super(const UserState.initial());
 
-  Future<void> register(User user) async {
-    emit(
-      const UserState.initial(),
-    );
-    try {
-      final newUser = await _userRepository.create(
-       user,
-      );
-      emit(UserState.idle(newUser));
-    } catch (e) {
-      emit(UserState.error(
-        error: e,
-        user: state.userOrNull,
-      ));
-    }
-  }
-
+  
   Future<void> login(String email, String password) async {
     emit(const UserState.initial());
     try {
