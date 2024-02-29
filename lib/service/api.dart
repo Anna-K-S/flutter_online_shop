@@ -53,7 +53,7 @@ abstract class Api {
   Future<List<User>> getSortedUsers(@Query("sortBy") String sortBy);
 
   @POST("/users")
-  Future<void> addUser(@Body() User user);
+  Future<User> addUser(@Body() CreateUserRequest request);
 
   @PUT("/users/{id}")
   Future<void> updateUser(@Path("id") int id, @Body() User user);
@@ -124,4 +124,14 @@ class ProductsRequest with _$ProductsRequest {
 
   factory ProductsRequest.fromJson(Map<String, dynamic> json) =>
       _$ProductsRequestFromJson(json);
+}
+
+@freezed 
+class CreateUserRequest with _$CreateUserRequest {
+  const factory CreateUserRequest({
+    required User user,
+  }) = _User;
+
+  factory CreateUserRequest.fromJson(Map<String, dynamic> json) => _$CreateUserRequestFromJson(json);
+
 }

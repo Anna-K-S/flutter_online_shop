@@ -25,7 +25,7 @@ mixin _$User {
   String get userName => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   Name get name => throw _privateConstructorUsedError;
-  List<Address> get address => throw _privateConstructorUsedError;
+  Address get address => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,9 +43,10 @@ abstract class $UserCopyWith<$Res> {
       String userName,
       String password,
       Name name,
-      List<Address> address});
+      Address address});
 
   $NameCopyWith<$Res> get name;
+  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -92,7 +93,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as List<Address>,
+              as Address,
     ) as $Val);
   }
 
@@ -101,6 +102,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $NameCopyWith<$Res> get name {
     return $NameCopyWith<$Res>(_value.name, (value) {
       return _then(_value.copyWith(name: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res> get address {
+    return $AddressCopyWith<$Res>(_value.address, (value) {
+      return _then(_value.copyWith(address: value) as $Val);
     });
   }
 }
@@ -118,10 +127,12 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String userName,
       String password,
       Name name,
-      List<Address> address});
+      Address address});
 
   @override
   $NameCopyWith<$Res> get name;
+  @override
+  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -163,9 +174,9 @@ class __$$UserImplCopyWithImpl<$Res>
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
       address: null == address
-          ? _value._address
+          ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as List<Address>,
+              as Address,
     ));
   }
 }
@@ -179,8 +190,7 @@ class _$UserImpl implements _User {
       required this.userName,
       required this.password,
       required this.name,
-      required final List<Address> address})
-      : _address = address;
+      required this.address});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -195,13 +205,8 @@ class _$UserImpl implements _User {
   final String password;
   @override
   final Name name;
-  final List<Address> _address;
   @override
-  List<Address> get address {
-    if (_address is EqualUnmodifiableListView) return _address;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_address);
-  }
+  final Address address;
 
   @override
   String toString() {
@@ -220,13 +225,13 @@ class _$UserImpl implements _User {
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other._address, _address));
+            (identical(other.address, address) || other.address == address));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, userName, password,
-      name, const DeepCollectionEquality().hash(_address));
+  int get hashCode =>
+      Object.hash(runtimeType, id, email, userName, password, name, address);
 
   @JsonKey(ignore: true)
   @override
@@ -249,7 +254,7 @@ abstract class _User implements User {
       required final String userName,
       required final String password,
       required final Name name,
-      required final List<Address> address}) = _$UserImpl;
+      required final Address address}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -264,7 +269,7 @@ abstract class _User implements User {
   @override
   Name get name;
   @override
-  List<Address> get address;
+  Address get address;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
