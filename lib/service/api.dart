@@ -1,60 +1,96 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_online_shop/models/cart.dart';
-import 'package:flutter_online_shop/models/cart_product.dart';
-import 'package:flutter_online_shop/models/product.dart';
 import 'package:flutter_online_shop/models/user.dart';
+import 'package:retrofit/retrofit.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_online_shop/models/product.dart';
 
+part 'api.g.dart';
 
-const _basePath = 'https://fakestoreapi.com';
+@RestApi(baseUrl: "https://fakestoreapi.com")
+abstract class Api {
+  factory Api(Dio dio, {String baseUrl}) = _Api;
 
-class Api {
-  final Dio _dio;
+  @GET("/products")
+  Future<List<Product>> getAllProducts();
 
-  Api(this._dio);
+  @GET("/products/{id}")
+  Future<Product> getProductsById(@Path("id") int id);
 
-  ///получение списка всех товаров
-  Future<List<Product>> getAllProducts() async {
-    final response = await _dio.get('/products');
+  @POST("/products")
+  Future<void> addProduct(@Body() Product product);
 
-    final List<dynamic> json = response.data;
-    final List<Product> result =
-        json.map((json) => Product.fromJson(json)).toList();
-    return result;
-  }
+  @PUT("/products/{id}")
+  Future<void> updateProduct(@Path("id") int id, @Body() Product product);
 
-  /// получение инф-ии о товаре по его id
-  Future<Product> getDetailsProduct(int id) async {
-    final response = await _dio.get('/products/$id');
+  @DELETE("/products/{id}")
+  Future<void> deleteProduct(@Path("id") int id);
 
-    final json = response.data as Map<String, dynamic>;
-    final result = Product.fromJson(json);
-    return result;
-  }
+  @GET("/products/categories")
+  Future<List<String>> getAllProductsCategories();
 
-  /// получение списка всех пользователей
+  @GET("/products?limit={limit}")
+  Future<List<Product>> getProductsWithLimit(@Path("limit") int limit);
 
-  Future<List<User>> getAllUsers() async {
-    final response = await _dio.get('/users');
+  @GET("/products?sortBy={sortBy}")
+  Future<List<Product>> getSortedProducts(@Path("sortBy") String sortBy);
 
-    final List<dynamic> json = response.data;
-    final List<User> result = json.map((json) => User.fromJson(json)).toList();
-    return result;
-  }
+  @GET("/products/category/{category}")
+  Future<List<Product>> getProductsInCategory(@Path("category") String category);
+   @GET("/users")
+  Future<List<User>> getAllUsers();
 
-  ///получение списка товаров в корзине юзера по его id
+  @GET("/users/{id}")
+  Future<User> getUsersById(@Path("id") int id);
 
-  Future<Cart> getUserCart(int userId) async {
-    final response = await _dio.get('/carts/$userId');
+  @GET("/users")
+  Future<List<User>> getUsersWithLimit(@Query("limit") int limit);
 
-    final json = response.data as Map<String, dynamic>;
-    final productsJson = json['products'] as List<dynamic>;
-    final List<CartProduct> cartProducts = productsJson
-        .map((productJson) => CartProduct.fromJson(productJson))
-        .toList();
+  @GET("/users")
+  Future<List<User>> getSortedUsers(@Query("sortBy") String sortBy);
 
-    final result = Cart.fromJson(json, cartProducts);
-    return result;
-  }
+  @POST("/users")
+  Future<void> addUser(@Body() User user);
 
- 
+  @PUT("/users/{id}")
+  Future<void> updateUser(@Path("id") int id, @Body() User user);
+
+  @DELETE("/users/{id}")
+  Future<void> deleteUser(@Path("id") int id);
+
+  @POST("/auth/login")
+  Future<User?> loginUser(
+      @Field("email") String email, @Field("password") String password);
+
+    @GET("/carts")
+  Future<List<Cart>> getAllCarts();
+
+  @GET("/carts/{cartId}")
+  Future<Cart> getCartById(@Path("cartId") int cartId);
+
+  @GET("/carts")
+  Future<List<Cart>> getCartsWithLimit(@Query("limit") int limit);
+
+  @GET("/carts")
+  Future<List<Cart>> getSortedCarts(@Query("sortBy") String sortBy);
+
+  @GET("/carts")
+  Future<List<Cart>> getCartsInDateRange(
+    @Query("startDate") DateTime startDate,
+    @Query("endDate") DateTime endDate,
+  );
+
+  @GET("/carts/user/{userId}")
+  Future<Cart> getUserCart(@Path("userId") int userId);
+
+  @POST("/carts")
+  Future<void> addCart(@Body() Cart cart);
+
+  @PUT("/carts/{cartId}")
+  Future<void> updateCart(
+    @Path("cartId") int cartId,
+    @Body() Cart cart,
+  );
+
+  @DELETE("/carts/{cartId}")
+  Future<void> deleteCart(@Path("cartId") int cartId);    
 }
