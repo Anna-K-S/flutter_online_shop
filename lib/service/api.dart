@@ -1,10 +1,13 @@
 import 'package:flutter_online_shop/models/cart.dart';
+import 'package:flutter_online_shop/models/cart_product.dart';
 import 'package:flutter_online_shop/models/user.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_online_shop/models/product.dart';
 
 part 'api.g.dart';
+part 'api.freezed.dart';
 
 @RestApi(baseUrl: "https://fakestoreapi.com")
 abstract class Api {
@@ -17,7 +20,7 @@ abstract class Api {
   Future<Product> getProductsById(@Path("id") int id);
 
   @POST("/products")
-  Future<void> addProduct(@Body() Product product);
+  Future<void> addProduct(@Body() ProductsRequest request);
 
   @PUT("/products/{id}")
   Future<void> updateProduct(@Path("id") int id, @Body() Product product);
@@ -35,8 +38,9 @@ abstract class Api {
   Future<List<Product>> getSortedProducts(@Path("sortBy") String sortBy);
 
   @GET("/products/category/{category}")
-  Future<List<Product>> getProductsInCategory(@Path("category") String category);
-   @GET("/users")
+  Future<List<Product>> getProductsInCategory(
+      @Path("category") String category);
+  @GET("/users")
   Future<List<User>> getAllUsers();
 
   @GET("/users/{id}")
@@ -61,7 +65,7 @@ abstract class Api {
   Future<User?> loginUser(
       @Field("email") String email, @Field("password") String password);
 
-    @GET("/carts")
+  @GET("/carts")
   Future<List<Cart>> getAllCarts();
 
   @GET("/carts/{cartId}")
@@ -80,10 +84,10 @@ abstract class Api {
   );
 
   @GET("/carts/user/{userId}")
-  Future<Cart> getUserCart(@Path("userId") int userId);
+  Future<Cart?> getUserCart(@Path("userId") int userId);
 
   @POST("/carts")
-  Future<void> addCart(@Body() Cart cart);
+  Future<Cart> addCart(@Body() CreateCartRequest request);
 
   @PUT("/carts/{cartId}")
   Future<void> updateCart(
@@ -92,5 +96,32 @@ abstract class Api {
   );
 
   @DELETE("/carts/{cartId}")
-  Future<void> deleteCart(@Path("cartId") int cartId);    
+  Future<void> deleteCart(@Path("cartId") int cartId);
+}
+
+@freezed
+class CreateCartRequest with _$CreateCartRequest {
+  const factory CreateCartRequest({
+    required int userId,
+    required DateTime date,
+    required List<CartProduct> products,
+  }) = _CreateCartRequest;
+
+  factory CreateCartRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreateCartRequestFromJson(json);
+}
+
+@freezed
+class ProductsRequest with _$ProductsRequest {
+  const factory ProductsRequest({
+    required int id,
+    required String title,
+    required num price,
+    required String category,
+    required String description,
+    required String image,
+  }) = _ProductsRequest;
+
+  factory ProductsRequest.fromJson(Map<String, dynamic> json) =>
+      _$ProductsRequestFromJson(json);
 }
