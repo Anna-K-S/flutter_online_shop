@@ -19,6 +19,9 @@ dependencies:
   dio: ^5.4.0
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
+  retrofit: ^4.1.0
+  logger: ^2.0.2+1
+  
   
  
 
@@ -39,6 +42,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.4.0
   json_serializable: ^6.7.1
   flutter_launcher_icons: ^0.13.1
+  retrofit_generator: ^8.1.0
   
 
 flutter_native_splash:
