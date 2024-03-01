@@ -17,6 +17,8 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
+
+
  
 
 dev_dependencies:
@@ -34,13 +36,16 @@ flutter_native_splash:
 
   flutter_lints: ^2.0.0
   flutter_native_splash: ^2.3.7
-  flutter_launcher_icons: ^0.13.1
   flutter_gen: ^5.4.0
   build_runner: ^2.4.8
+  freezed: ^2.4.7
   flutter_gen_runner: ^5.4.0
+  json_serializable: ^6.7.1
+  flutter_launcher_icons: ^0.13.1
+  
 
 flutter_native_splash:
- color: "#efdaa1"
+ color: "#f5c9be"
  image: assets/images/logo.png
  ios: true
  android: true
@@ -60,8 +65,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/fruits/
-    - assets/images/berries/
 
 
 
