@@ -17,14 +17,19 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
-
-
-
  
 
 dev_dependencies:
+ 
   flutter_test:
     sdk: flutter
+
+
+flutter_native_splash:
+  color: "#efdaa1"
+  image: assets/images/logo.png
+  ios: true
+  android: true
 
 
   flutter_lints: ^2.0.0
@@ -45,6 +50,9 @@ flutter_icons:
  android: true
  image_path: assets/images/icon.png
  color: "#efdaa1" 
+
+
+  
 
 flutter:
 
