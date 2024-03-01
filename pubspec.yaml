@@ -16,19 +16,22 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
-  dio: ^5.4.0
-  freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1
-  
- 
 
 
 
  
 
 dev_dependencies:
+ 
   flutter_test:
     sdk: flutter
+
+
+flutter_native_splash:
+  color: "#efdaa1"
+  image: assets/images/logo.png
+  ios: true
+  android: true
 
 
   flutter_lints: ^2.0.0
@@ -52,6 +55,9 @@ flutter_icons:
  android: true
  image_path: assets/images/icon.png
  color: "#efdaa1" 
+
+
+  
 
 flutter:
 
