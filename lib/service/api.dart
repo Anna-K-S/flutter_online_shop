@@ -126,12 +126,14 @@ class ProductsRequest with _$ProductsRequest {
       _$ProductsRequestFromJson(json);
 }
 
-@freezed 
+@freezed
 class CreateUserRequest with _$CreateUserRequest {
   const factory CreateUserRequest({
-    required User user,
+    required String userName,
+    required String email,
+    required String password,
   }) = _User;
 
-  factory CreateUserRequest.fromJson(Map<String, dynamic> json) => _$CreateUserRequestFromJson(json);
-
+  factory CreateUserRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreateUserRequestFromJson(json);
 }
