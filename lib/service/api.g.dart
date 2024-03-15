@@ -47,16 +47,12 @@ Map<String, dynamic> _$$ProductsRequestImplToJson(
     };
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
-      userName: json['userName'] as String,
-      email: json['email'] as String,
-      password: json['password'] as String,
+      user: User.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
     <String, dynamic>{
-      'userName': instance.userName,
-      'email': instance.email,
-      'password': instance.password,
+      'user': instance.user,
     };
 
 // **************************************************************************

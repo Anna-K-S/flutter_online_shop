@@ -6,7 +6,7 @@ abstract interface class IUserRepository {
   Future<User> getById(int userId);
   Future<List<User>> getWithLimit(int limit);
   Future<List<User>> getSorted(String sortBy);
-  Future<User> create(String userName, String email, String password);
+  Future<User> create(User user);
   Future<void> update(User user);
   Future<void> delete(int userId);
   Future<User?> login(String email, String password);
@@ -38,14 +38,10 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<User> create(String userName, String email, String password) async {
-    return await _api.addUser(
-      CreateUserRequest(
-        userName: userName,
-        email: email,
-        password: password,
-      ),
-    );
+  Future<User> create(User user) async {
+    return await _api.addUser(CreateUserRequest(
+      user: user,
+    ));
   }
 
   @override

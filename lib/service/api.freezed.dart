@@ -446,9 +446,7 @@ CreateUserRequest _$CreateUserRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CreateUserRequest {
-  String get userName => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
+  User get user => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -462,7 +460,9 @@ abstract class $CreateUserRequestCopyWith<$Res> {
           CreateUserRequest value, $Res Function(CreateUserRequest) then) =
       _$CreateUserRequestCopyWithImpl<$Res, CreateUserRequest>;
   @useResult
-  $Res call({String userName, String email, String password});
+  $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -478,24 +478,22 @@ class _$CreateUserRequestCopyWithImpl<$Res, $Val extends CreateUserRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
+    Object? user = null,
   }) {
     return _then(_value.copyWith(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -507,7 +505,10 @@ abstract class _$$UserImplCopyWith<$Res>
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userName, String email, String password});
+  $Res call({User user});
+
+  @override
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -520,23 +521,13 @@ class __$$UserImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
+    Object? user = null,
   }) {
     return _then(_$UserImpl(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
     ));
   }
 }
@@ -544,22 +535,17 @@ class __$$UserImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserImpl implements _User {
-  const _$UserImpl(
-      {required this.userName, required this.email, required this.password});
+  const _$UserImpl({required this.user});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
 
   @override
-  final String userName;
-  @override
-  final String email;
-  @override
-  final String password;
+  final User user;
 
   @override
   String toString() {
-    return 'CreateUserRequest(userName: $userName, email: $email, password: $password)';
+    return 'CreateUserRequest(user: $user)';
   }
 
   @override
@@ -567,16 +553,12 @@ class _$UserImpl implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password));
+            (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userName, email, password);
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
@@ -593,19 +575,12 @@ class _$UserImpl implements _User {
 }
 
 abstract class _User implements CreateUserRequest {
-  const factory _User(
-      {required final String userName,
-      required final String email,
-      required final String password}) = _$UserImpl;
+  const factory _User({required final User user}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
   @override
-  String get userName;
-  @override
-  String get email;
-  @override
-  String get password;
+  User get user;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

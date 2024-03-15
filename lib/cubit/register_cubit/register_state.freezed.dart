@@ -16,76 +16,55 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RegisterState {
-  String get userName => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userName, String email, String password)
-        idle,
-    required TResult Function(String userName, String email, String password)
-        signingUp,
-    required TResult Function(
-            String userName, String email, String password, User user)
-        success,
-    required TResult Function(
-            String userName, String email, String password, Object error)
-        error,
+    required TResult Function() initial,
+    required TResult Function(User user) loading,
+    required TResult Function(User user) idle,
+    required TResult Function(Object? error, User? user) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userName, String email, String password)? idle,
-    TResult? Function(String userName, String email, String password)?
-        signingUp,
-    TResult? Function(
-            String userName, String email, String password, User user)?
-        success,
-    TResult? Function(
-            String userName, String email, String password, Object error)?
-        error,
+    TResult? Function()? initial,
+    TResult? Function(User user)? loading,
+    TResult? Function(User user)? idle,
+    TResult? Function(Object? error, User? user)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userName, String email, String password)? idle,
-    TResult Function(String userName, String email, String password)? signingUp,
-    TResult Function(String userName, String email, String password, User user)?
-        success,
-    TResult Function(
-            String userName, String email, String password, Object error)?
-        error,
+    TResult Function()? initial,
+    TResult Function(User user)? loading,
+    TResult Function(User user)? idle,
+    TResult Function(Object? error, User? user)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(RegisterIdle value) idle,
-    required TResult Function(RegisterSigningUp value) signingUp,
-    required TResult Function(RegisterSuccess value) success,
+    required TResult Function(RegisterInitial value) initial,
+    required TResult Function(RegisterLoading value) loading,
+    required TResult Function(RegisterLoaded value) idle,
     required TResult Function(RegisterError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RegisterIdle value)? idle,
-    TResult? Function(RegisterSigningUp value)? signingUp,
-    TResult? Function(RegisterSuccess value)? success,
+    TResult? Function(RegisterInitial value)? initial,
+    TResult? Function(RegisterLoading value)? loading,
+    TResult? Function(RegisterLoaded value)? idle,
     TResult? Function(RegisterError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(RegisterIdle value)? idle,
-    TResult Function(RegisterSigningUp value)? signingUp,
-    TResult Function(RegisterSuccess value)? success,
+    TResult Function(RegisterInitial value)? initial,
+    TResult Function(RegisterLoading value)? loading,
+    TResult Function(RegisterLoaded value)? idle,
     TResult Function(RegisterError value)? error,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $RegisterStateCopyWith<RegisterState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -94,8 +73,6 @@ abstract class $RegisterStateCopyWith<$Res> {
   factory $RegisterStateCopyWith(
           RegisterState value, $Res Function(RegisterState) then) =
       _$RegisterStateCopyWithImpl<$Res, RegisterState>;
-  @useResult
-  $Res call({String userName, String email, String password});
 }
 
 /// @nodoc
@@ -107,161 +84,76 @@ class _$RegisterStateCopyWithImpl<$Res, $Val extends RegisterState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
-  }) {
-    return _then(_value.copyWith(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$RegisterIdleImplCopyWith<$Res>
-    implements $RegisterStateCopyWith<$Res> {
-  factory _$$RegisterIdleImplCopyWith(
-          _$RegisterIdleImpl value, $Res Function(_$RegisterIdleImpl) then) =
-      __$$RegisterIdleImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String userName, String email, String password});
+abstract class _$$RegisterInitialImplCopyWith<$Res> {
+  factory _$$RegisterInitialImplCopyWith(_$RegisterInitialImpl value,
+          $Res Function(_$RegisterInitialImpl) then) =
+      __$$RegisterInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$RegisterIdleImplCopyWithImpl<$Res>
-    extends _$RegisterStateCopyWithImpl<$Res, _$RegisterIdleImpl>
-    implements _$$RegisterIdleImplCopyWith<$Res> {
-  __$$RegisterIdleImplCopyWithImpl(
-      _$RegisterIdleImpl _value, $Res Function(_$RegisterIdleImpl) _then)
+class __$$RegisterInitialImplCopyWithImpl<$Res>
+    extends _$RegisterStateCopyWithImpl<$Res, _$RegisterInitialImpl>
+    implements _$$RegisterInitialImplCopyWith<$Res> {
+  __$$RegisterInitialImplCopyWithImpl(
+      _$RegisterInitialImpl _value, $Res Function(_$RegisterInitialImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
-  }) {
-    return _then(_$RegisterIdleImpl(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$RegisterIdleImpl extends RegisterIdle {
-  const _$RegisterIdleImpl(
-      {required this.userName, required this.email, required this.password})
-      : super._();
-
-  @override
-  final String userName;
-  @override
-  final String email;
-  @override
-  final String password;
+class _$RegisterInitialImpl extends RegisterInitial {
+  const _$RegisterInitialImpl() : super._();
 
   @override
   String toString() {
-    return 'RegisterState.idle(userName: $userName, email: $email, password: $password)';
+    return 'RegisterState.initial()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RegisterIdleImpl &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password));
+        (other.runtimeType == runtimeType && other is _$RegisterInitialImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userName, email, password);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RegisterIdleImplCopyWith<_$RegisterIdleImpl> get copyWith =>
-      __$$RegisterIdleImplCopyWithImpl<_$RegisterIdleImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userName, String email, String password)
-        idle,
-    required TResult Function(String userName, String email, String password)
-        signingUp,
-    required TResult Function(
-            String userName, String email, String password, User user)
-        success,
-    required TResult Function(
-            String userName, String email, String password, Object error)
-        error,
+    required TResult Function() initial,
+    required TResult Function(User user) loading,
+    required TResult Function(User user) idle,
+    required TResult Function(Object? error, User? user) error,
   }) {
-    return idle(userName, email, password);
+    return initial();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userName, String email, String password)? idle,
-    TResult? Function(String userName, String email, String password)?
-        signingUp,
-    TResult? Function(
-            String userName, String email, String password, User user)?
-        success,
-    TResult? Function(
-            String userName, String email, String password, Object error)?
-        error,
+    TResult? Function()? initial,
+    TResult? Function(User user)? loading,
+    TResult? Function(User user)? idle,
+    TResult? Function(Object? error, User? user)? error,
   }) {
-    return idle?.call(userName, email, password);
+    return initial?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userName, String email, String password)? idle,
-    TResult Function(String userName, String email, String password)? signingUp,
-    TResult Function(String userName, String email, String password, User user)?
-        success,
-    TResult Function(
-            String userName, String email, String password, Object error)?
-        error,
+    TResult Function()? initial,
+    TResult Function(User user)? loading,
+    TResult Function(User user)? idle,
+    TResult Function(Object? error, User? user)? error,
     required TResult orElse(),
   }) {
-    if (idle != null) {
-      return idle(userName, email, password);
+    if (initial != null) {
+      return initial();
     }
     return orElse();
   }
@@ -269,295 +161,72 @@ class _$RegisterIdleImpl extends RegisterIdle {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(RegisterIdle value) idle,
-    required TResult Function(RegisterSigningUp value) signingUp,
-    required TResult Function(RegisterSuccess value) success,
+    required TResult Function(RegisterInitial value) initial,
+    required TResult Function(RegisterLoading value) loading,
+    required TResult Function(RegisterLoaded value) idle,
     required TResult Function(RegisterError value) error,
   }) {
-    return idle(this);
+    return initial(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RegisterIdle value)? idle,
-    TResult? Function(RegisterSigningUp value)? signingUp,
-    TResult? Function(RegisterSuccess value)? success,
+    TResult? Function(RegisterInitial value)? initial,
+    TResult? Function(RegisterLoading value)? loading,
+    TResult? Function(RegisterLoaded value)? idle,
     TResult? Function(RegisterError value)? error,
   }) {
-    return idle?.call(this);
+    return initial?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(RegisterIdle value)? idle,
-    TResult Function(RegisterSigningUp value)? signingUp,
-    TResult Function(RegisterSuccess value)? success,
+    TResult Function(RegisterInitial value)? initial,
+    TResult Function(RegisterLoading value)? loading,
+    TResult Function(RegisterLoaded value)? idle,
     TResult Function(RegisterError value)? error,
     required TResult orElse(),
   }) {
-    if (idle != null) {
-      return idle(this);
+    if (initial != null) {
+      return initial(this);
     }
     return orElse();
   }
 }
 
-abstract class RegisterIdle extends RegisterState {
-  const factory RegisterIdle(
-      {required final String userName,
-      required final String email,
-      required final String password}) = _$RegisterIdleImpl;
-  const RegisterIdle._() : super._();
-
-  @override
-  String get userName;
-  @override
-  String get email;
-  @override
-  String get password;
-  @override
-  @JsonKey(ignore: true)
-  _$$RegisterIdleImplCopyWith<_$RegisterIdleImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class RegisterInitial extends RegisterState {
+  const factory RegisterInitial() = _$RegisterInitialImpl;
+  const RegisterInitial._() : super._();
 }
 
 /// @nodoc
-abstract class _$$RegisterSigningUpImplCopyWith<$Res>
-    implements $RegisterStateCopyWith<$Res> {
-  factory _$$RegisterSigningUpImplCopyWith(_$RegisterSigningUpImpl value,
-          $Res Function(_$RegisterSigningUpImpl) then) =
-      __$$RegisterSigningUpImplCopyWithImpl<$Res>;
-  @override
+abstract class _$$RegisterLoadingImplCopyWith<$Res> {
+  factory _$$RegisterLoadingImplCopyWith(_$RegisterLoadingImpl value,
+          $Res Function(_$RegisterLoadingImpl) then) =
+      __$$RegisterLoadingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String userName, String email, String password});
-}
-
-/// @nodoc
-class __$$RegisterSigningUpImplCopyWithImpl<$Res>
-    extends _$RegisterStateCopyWithImpl<$Res, _$RegisterSigningUpImpl>
-    implements _$$RegisterSigningUpImplCopyWith<$Res> {
-  __$$RegisterSigningUpImplCopyWithImpl(_$RegisterSigningUpImpl _value,
-      $Res Function(_$RegisterSigningUpImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
-  }) {
-    return _then(_$RegisterSigningUpImpl(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$RegisterSigningUpImpl extends RegisterSigningUp {
-  const _$RegisterSigningUpImpl(
-      {required this.userName, required this.email, required this.password})
-      : super._();
-
-  @override
-  final String userName;
-  @override
-  final String email;
-  @override
-  final String password;
-
-  @override
-  String toString() {
-    return 'RegisterState.signingUp(userName: $userName, email: $email, password: $password)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RegisterSigningUpImpl &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, userName, email, password);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RegisterSigningUpImplCopyWith<_$RegisterSigningUpImpl> get copyWith =>
-      __$$RegisterSigningUpImplCopyWithImpl<_$RegisterSigningUpImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String userName, String email, String password)
-        idle,
-    required TResult Function(String userName, String email, String password)
-        signingUp,
-    required TResult Function(
-            String userName, String email, String password, User user)
-        success,
-    required TResult Function(
-            String userName, String email, String password, Object error)
-        error,
-  }) {
-    return signingUp(userName, email, password);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userName, String email, String password)? idle,
-    TResult? Function(String userName, String email, String password)?
-        signingUp,
-    TResult? Function(
-            String userName, String email, String password, User user)?
-        success,
-    TResult? Function(
-            String userName, String email, String password, Object error)?
-        error,
-  }) {
-    return signingUp?.call(userName, email, password);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userName, String email, String password)? idle,
-    TResult Function(String userName, String email, String password)? signingUp,
-    TResult Function(String userName, String email, String password, User user)?
-        success,
-    TResult Function(
-            String userName, String email, String password, Object error)?
-        error,
-    required TResult orElse(),
-  }) {
-    if (signingUp != null) {
-      return signingUp(userName, email, password);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(RegisterIdle value) idle,
-    required TResult Function(RegisterSigningUp value) signingUp,
-    required TResult Function(RegisterSuccess value) success,
-    required TResult Function(RegisterError value) error,
-  }) {
-    return signingUp(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RegisterIdle value)? idle,
-    TResult? Function(RegisterSigningUp value)? signingUp,
-    TResult? Function(RegisterSuccess value)? success,
-    TResult? Function(RegisterError value)? error,
-  }) {
-    return signingUp?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(RegisterIdle value)? idle,
-    TResult Function(RegisterSigningUp value)? signingUp,
-    TResult Function(RegisterSuccess value)? success,
-    TResult Function(RegisterError value)? error,
-    required TResult orElse(),
-  }) {
-    if (signingUp != null) {
-      return signingUp(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class RegisterSigningUp extends RegisterState {
-  const factory RegisterSigningUp(
-      {required final String userName,
-      required final String email,
-      required final String password}) = _$RegisterSigningUpImpl;
-  const RegisterSigningUp._() : super._();
-
-  @override
-  String get userName;
-  @override
-  String get email;
-  @override
-  String get password;
-  @override
-  @JsonKey(ignore: true)
-  _$$RegisterSigningUpImplCopyWith<_$RegisterSigningUpImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$RegisterSuccessImplCopyWith<$Res>
-    implements $RegisterStateCopyWith<$Res> {
-  factory _$$RegisterSuccessImplCopyWith(_$RegisterSuccessImpl value,
-          $Res Function(_$RegisterSuccessImpl) then) =
-      __$$RegisterSuccessImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String userName, String email, String password, User user});
+  $Res call({User user});
 
   $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
-class __$$RegisterSuccessImplCopyWithImpl<$Res>
-    extends _$RegisterStateCopyWithImpl<$Res, _$RegisterSuccessImpl>
-    implements _$$RegisterSuccessImplCopyWith<$Res> {
-  __$$RegisterSuccessImplCopyWithImpl(
-      _$RegisterSuccessImpl _value, $Res Function(_$RegisterSuccessImpl) _then)
+class __$$RegisterLoadingImplCopyWithImpl<$Res>
+    extends _$RegisterStateCopyWithImpl<$Res, _$RegisterLoadingImpl>
+    implements _$$RegisterLoadingImplCopyWith<$Res> {
+  __$$RegisterLoadingImplCopyWithImpl(
+      _$RegisterLoadingImpl _value, $Res Function(_$RegisterLoadingImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
     Object? user = null,
   }) {
-    return _then(_$RegisterSuccessImpl(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      user: null == user
+    return _then(_$RegisterLoadingImpl(
+      null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
@@ -575,98 +244,68 @@ class __$$RegisterSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RegisterSuccessImpl extends RegisterSuccess {
-  const _$RegisterSuccessImpl(
-      {required this.userName,
-      required this.email,
-      required this.password,
-      required this.user})
-      : super._();
+class _$RegisterLoadingImpl extends RegisterLoading {
+  const _$RegisterLoadingImpl(this.user) : super._();
 
-  @override
-  final String userName;
-  @override
-  final String email;
-  @override
-  final String password;
   @override
   final User user;
 
   @override
   String toString() {
-    return 'RegisterState.success(userName: $userName, email: $email, password: $password, user: $user)';
+    return 'RegisterState.loading(user: $user)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RegisterSuccessImpl &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
+            other is _$RegisterLoadingImpl &&
             (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userName, email, password, user);
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$RegisterSuccessImplCopyWith<_$RegisterSuccessImpl> get copyWith =>
-      __$$RegisterSuccessImplCopyWithImpl<_$RegisterSuccessImpl>(
+  _$$RegisterLoadingImplCopyWith<_$RegisterLoadingImpl> get copyWith =>
+      __$$RegisterLoadingImplCopyWithImpl<_$RegisterLoadingImpl>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userName, String email, String password)
-        idle,
-    required TResult Function(String userName, String email, String password)
-        signingUp,
-    required TResult Function(
-            String userName, String email, String password, User user)
-        success,
-    required TResult Function(
-            String userName, String email, String password, Object error)
-        error,
+    required TResult Function() initial,
+    required TResult Function(User user) loading,
+    required TResult Function(User user) idle,
+    required TResult Function(Object? error, User? user) error,
   }) {
-    return success(userName, email, password, user);
+    return loading(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userName, String email, String password)? idle,
-    TResult? Function(String userName, String email, String password)?
-        signingUp,
-    TResult? Function(
-            String userName, String email, String password, User user)?
-        success,
-    TResult? Function(
-            String userName, String email, String password, Object error)?
-        error,
+    TResult? Function()? initial,
+    TResult? Function(User user)? loading,
+    TResult? Function(User user)? idle,
+    TResult? Function(Object? error, User? user)? error,
   }) {
-    return success?.call(userName, email, password, user);
+    return loading?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userName, String email, String password)? idle,
-    TResult Function(String userName, String email, String password)? signingUp,
-    TResult Function(String userName, String email, String password, User user)?
-        success,
-    TResult Function(
-            String userName, String email, String password, Object error)?
-        error,
+    TResult Function()? initial,
+    TResult Function(User user)? loading,
+    TResult Function(User user)? idle,
+    TResult Function(Object? error, User? user)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(userName, email, password, user);
+    if (loading != null) {
+      return loading(user);
     }
     return orElse();
   }
@@ -674,71 +313,217 @@ class _$RegisterSuccessImpl extends RegisterSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(RegisterIdle value) idle,
-    required TResult Function(RegisterSigningUp value) signingUp,
-    required TResult Function(RegisterSuccess value) success,
+    required TResult Function(RegisterInitial value) initial,
+    required TResult Function(RegisterLoading value) loading,
+    required TResult Function(RegisterLoaded value) idle,
     required TResult Function(RegisterError value) error,
   }) {
-    return success(this);
+    return loading(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RegisterIdle value)? idle,
-    TResult? Function(RegisterSigningUp value)? signingUp,
-    TResult? Function(RegisterSuccess value)? success,
+    TResult? Function(RegisterInitial value)? initial,
+    TResult? Function(RegisterLoading value)? loading,
+    TResult? Function(RegisterLoaded value)? idle,
     TResult? Function(RegisterError value)? error,
   }) {
-    return success?.call(this);
+    return loading?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(RegisterIdle value)? idle,
-    TResult Function(RegisterSigningUp value)? signingUp,
-    TResult Function(RegisterSuccess value)? success,
+    TResult Function(RegisterInitial value)? initial,
+    TResult Function(RegisterLoading value)? loading,
+    TResult Function(RegisterLoaded value)? idle,
     TResult Function(RegisterError value)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (loading != null) {
+      return loading(this);
     }
     return orElse();
   }
 }
 
-abstract class RegisterSuccess extends RegisterState {
-  const factory RegisterSuccess(
-      {required final String userName,
-      required final String email,
-      required final String password,
-      required final User user}) = _$RegisterSuccessImpl;
-  const RegisterSuccess._() : super._();
+abstract class RegisterLoading extends RegisterState {
+  const factory RegisterLoading(final User user) = _$RegisterLoadingImpl;
+  const RegisterLoading._() : super._();
 
-  @override
-  String get userName;
-  @override
-  String get email;
-  @override
-  String get password;
   User get user;
-  @override
   @JsonKey(ignore: true)
-  _$$RegisterSuccessImplCopyWith<_$RegisterSuccessImpl> get copyWith =>
+  _$$RegisterLoadingImplCopyWith<_$RegisterLoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$RegisterErrorImplCopyWith<$Res>
-    implements $RegisterStateCopyWith<$Res> {
+abstract class _$$RegisterLoadedImplCopyWith<$Res> {
+  factory _$$RegisterLoadedImplCopyWith(_$RegisterLoadedImpl value,
+          $Res Function(_$RegisterLoadedImpl) then) =
+      __$$RegisterLoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$RegisterLoadedImplCopyWithImpl<$Res>
+    extends _$RegisterStateCopyWithImpl<$Res, _$RegisterLoadedImpl>
+    implements _$$RegisterLoadedImplCopyWith<$Res> {
+  __$$RegisterLoadedImplCopyWithImpl(
+      _$RegisterLoadedImpl _value, $Res Function(_$RegisterLoadedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$RegisterLoadedImpl(
+      null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$RegisterLoadedImpl extends RegisterLoaded {
+  const _$RegisterLoadedImpl(this.user) : super._();
+
+  @override
+  final User user;
+
+  @override
+  String toString() {
+    return 'RegisterState.idle(user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RegisterLoadedImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RegisterLoadedImplCopyWith<_$RegisterLoadedImpl> get copyWith =>
+      __$$RegisterLoadedImplCopyWithImpl<_$RegisterLoadedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(User user) loading,
+    required TResult Function(User user) idle,
+    required TResult Function(Object? error, User? user) error,
+  }) {
+    return idle(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(User user)? loading,
+    TResult? Function(User user)? idle,
+    TResult? Function(Object? error, User? user)? error,
+  }) {
+    return idle?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(User user)? loading,
+    TResult Function(User user)? idle,
+    TResult Function(Object? error, User? user)? error,
+    required TResult orElse(),
+  }) {
+    if (idle != null) {
+      return idle(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RegisterInitial value) initial,
+    required TResult Function(RegisterLoading value) loading,
+    required TResult Function(RegisterLoaded value) idle,
+    required TResult Function(RegisterError value) error,
+  }) {
+    return idle(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RegisterInitial value)? initial,
+    TResult? Function(RegisterLoading value)? loading,
+    TResult? Function(RegisterLoaded value)? idle,
+    TResult? Function(RegisterError value)? error,
+  }) {
+    return idle?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RegisterInitial value)? initial,
+    TResult Function(RegisterLoading value)? loading,
+    TResult Function(RegisterLoaded value)? idle,
+    TResult Function(RegisterError value)? error,
+    required TResult orElse(),
+  }) {
+    if (idle != null) {
+      return idle(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RegisterLoaded extends RegisterState {
+  const factory RegisterLoaded(final User user) = _$RegisterLoadedImpl;
+  const RegisterLoaded._() : super._();
+
+  User get user;
+  @JsonKey(ignore: true)
+  _$$RegisterLoadedImplCopyWith<_$RegisterLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RegisterErrorImplCopyWith<$Res> {
   factory _$$RegisterErrorImplCopyWith(
           _$RegisterErrorImpl value, $Res Function(_$RegisterErrorImpl) then) =
       __$$RegisterErrorImplCopyWithImpl<$Res>;
-  @override
   @useResult
-  $Res call({String userName, String email, String password, Object error});
+  $Res call({Object? error, User? user});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -752,51 +537,44 @@ class __$$RegisterErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userName = null,
-    Object? email = null,
-    Object? password = null,
-    Object? error = null,
+    Object? error = freezed,
+    Object? user = freezed,
   }) {
     return _then(_$RegisterErrorImpl(
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      error: null == error ? _value.error : error,
+      error: freezed == error ? _value.error : error,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$RegisterErrorImpl extends RegisterError {
-  const _$RegisterErrorImpl(
-      {required this.userName,
-      required this.email,
-      required this.password,
-      required this.error})
-      : super._();
+  const _$RegisterErrorImpl({this.error, this.user}) : super._();
 
   @override
-  final String userName;
+  final Object? error;
   @override
-  final String email;
-  @override
-  final String password;
-  @override
-  final Object error;
+  final User? user;
 
   @override
   String toString() {
-    return 'RegisterState.error(userName: $userName, email: $email, password: $password, error: $error)';
+    return 'RegisterState.error(error: $error, user: $user)';
   }
 
   @override
@@ -804,17 +582,13 @@ class _$RegisterErrorImpl extends RegisterError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RegisterErrorImpl &&
-            (identical(other.userName, userName) ||
-                other.userName == userName) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            const DeepCollectionEquality().equals(other.error, error));
+            const DeepCollectionEquality().equals(other.error, error) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userName, email, password,
-      const DeepCollectionEquality().hash(error));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(error), user);
 
   @JsonKey(ignore: true)
   @override
@@ -825,50 +599,36 @@ class _$RegisterErrorImpl extends RegisterError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userName, String email, String password)
-        idle,
-    required TResult Function(String userName, String email, String password)
-        signingUp,
-    required TResult Function(
-            String userName, String email, String password, User user)
-        success,
-    required TResult Function(
-            String userName, String email, String password, Object error)
-        error,
+    required TResult Function() initial,
+    required TResult Function(User user) loading,
+    required TResult Function(User user) idle,
+    required TResult Function(Object? error, User? user) error,
   }) {
-    return error(userName, email, password, this.error);
+    return error(this.error, user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userName, String email, String password)? idle,
-    TResult? Function(String userName, String email, String password)?
-        signingUp,
-    TResult? Function(
-            String userName, String email, String password, User user)?
-        success,
-    TResult? Function(
-            String userName, String email, String password, Object error)?
-        error,
+    TResult? Function()? initial,
+    TResult? Function(User user)? loading,
+    TResult? Function(User user)? idle,
+    TResult? Function(Object? error, User? user)? error,
   }) {
-    return error?.call(userName, email, password, this.error);
+    return error?.call(this.error, user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userName, String email, String password)? idle,
-    TResult Function(String userName, String email, String password)? signingUp,
-    TResult Function(String userName, String email, String password, User user)?
-        success,
-    TResult Function(
-            String userName, String email, String password, Object error)?
-        error,
+    TResult Function()? initial,
+    TResult Function(User user)? loading,
+    TResult Function(User user)? idle,
+    TResult Function(Object? error, User? user)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(userName, email, password, this.error);
+      return error(this.error, user);
     }
     return orElse();
   }
@@ -876,9 +636,9 @@ class _$RegisterErrorImpl extends RegisterError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(RegisterIdle value) idle,
-    required TResult Function(RegisterSigningUp value) signingUp,
-    required TResult Function(RegisterSuccess value) success,
+    required TResult Function(RegisterInitial value) initial,
+    required TResult Function(RegisterLoading value) loading,
+    required TResult Function(RegisterLoaded value) idle,
     required TResult Function(RegisterError value) error,
   }) {
     return error(this);
@@ -887,9 +647,9 @@ class _$RegisterErrorImpl extends RegisterError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(RegisterIdle value)? idle,
-    TResult? Function(RegisterSigningUp value)? signingUp,
-    TResult? Function(RegisterSuccess value)? success,
+    TResult? Function(RegisterInitial value)? initial,
+    TResult? Function(RegisterLoading value)? loading,
+    TResult? Function(RegisterLoaded value)? idle,
     TResult? Function(RegisterError value)? error,
   }) {
     return error?.call(this);
@@ -898,9 +658,9 @@ class _$RegisterErrorImpl extends RegisterError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(RegisterIdle value)? idle,
-    TResult Function(RegisterSigningUp value)? signingUp,
-    TResult Function(RegisterSuccess value)? success,
+    TResult Function(RegisterInitial value)? initial,
+    TResult Function(RegisterLoading value)? loading,
+    TResult Function(RegisterLoaded value)? idle,
     TResult Function(RegisterError value)? error,
     required TResult orElse(),
   }) {
@@ -912,21 +672,12 @@ class _$RegisterErrorImpl extends RegisterError {
 }
 
 abstract class RegisterError extends RegisterState {
-  const factory RegisterError(
-      {required final String userName,
-      required final String email,
-      required final String password,
-      required final Object error}) = _$RegisterErrorImpl;
+  const factory RegisterError({final Object? error, final User? user}) =
+      _$RegisterErrorImpl;
   const RegisterError._() : super._();
 
-  @override
-  String get userName;
-  @override
-  String get email;
-  @override
-  String get password;
-  Object get error;
-  @override
+  Object? get error;
+  User? get user;
   @JsonKey(ignore: true)
   _$$RegisterErrorImplCopyWith<_$RegisterErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
