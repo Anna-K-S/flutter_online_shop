@@ -16,21 +16,29 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
+  dio: ^5.4.0
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
+  retrofit: ^4.1.0
+  logger: ^2.1.0
+  flutter_bloc: ^8.1.4
+  bloc_test: ^9.1.6
+  test: ^1.24.3
+  mocktail: ^1.0.3
+  modal_progress_hud_nsn: ^0.4.0
+
+  
+  
+  
+ 
+
 
 
  
 
 dev_dependencies:
- 
   flutter_test:
     sdk: flutter
-
-
-flutter_native_splash:
-  color: "#efdaa1"
-  image: assets/images/logo.png
-  ios: true
-  android: true
 
 
   flutter_lints: ^2.0.0
@@ -55,9 +63,6 @@ flutter_icons:
  android: true
  image_path: assets/images/icon.png
  color: "#efdaa1" 
-
-
-  
 
 flutter:
 
