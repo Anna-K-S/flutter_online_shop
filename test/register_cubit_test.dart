@@ -12,7 +12,7 @@ class MockUserRepository extends Mock implements IUserRepository {}
 
 void main() {
   group('RegisterCubit', () {
-    late RegisterCubit cubit;
+    late RegisterFormCubit cubit;
     late MockUserRepository mockUserRepository;
 
     const name = Name(
@@ -38,48 +38,74 @@ void main() {
 
     setUp(() {
       mockUserRepository = MockUserRepository();
-      cubit = RegisterCubit(mockUserRepository);
+      cubit = RegisterFormCubit(mockUserRepository);
     });
 
     tearDown(() {
       cubit.close();
     });
 
-    test('initial state is RegisterState.initial()', () {
+    test('initial state is RegisterState.idle()', () {
       expect(
         cubit.state,
         equals(
-          const RegisterState.initial(),
+          const RegisterState.idle(
+            userName: '',
+            email: '',
+            password: '',
+          ),
         ),
       );
     });
 
-    blocTest<RegisterCubit, RegisterState>(
-      'emits [RegisterState.loading(), RegisterState.idle()] when registration is successful',
-      seed: () => const RegisterState.loading(user),
+    blocTest<RegisterFormCubit, RegisterState>(
+      'emits [RegisterState.signingUp, RegisterState.success] when registration is successful',
       build: () {
-        when(() => mockUserRepository.create(user))
+        when(() => mockUserRepository.create(any(), any(), any()))
             .thenAnswer((_) async => user);
         return cubit;
       },
-      act: (cubit) => cubit.register(user),
+      act: (cubit) => cubit.signUp(),
       expect: () => [
-        const RegisterState.initial(),
-        const RegisterState.idle(user),
+        const RegisterState.signingUp(
+          userName: '',
+          email: '',
+          password: '',
+        ),
+        const RegisterState.success(
+          userName: '',
+          email: '',
+          password: '',
+          user: user,
+        ),
       ],
     );
-
-    blocTest<RegisterCubit, RegisterState>(
-      'emits [RegisterState.loading(), RegisterState.error()] when registration fails',
-      seed: () => const RegisterLoaded(user),
+    final error = Exception();
+    blocTest<RegisterFormCubit, RegisterState>(
+      'emits [RegisterState.signingUp, RegisterState.error] when registration fails',
+      seed: () => const RegisterState.idle(
+        userName: '',
+        email: '',
+        password: '',
+      ),
       build: () {
-        when(() => mockUserRepository.create(user)).thenThrow(1);
+        when(() => mockUserRepository.create(any(), any(), any()))
+            .thenThrow(error);
         return cubit;
       },
-      act: (cubit) => cubit.register(user),
+      act: (cubit) => cubit.signUp(),
       expect: () => [
-        const RegisterState.initial(),
-        const RegisterState.error(error: 1),
+        const RegisterState.signingUp(
+          userName: '',
+          email: '',
+          password: '',
+        ),
+        RegisterState.error(
+          userName: '',
+          email: '',
+          password: '',
+          error: error,
+        ),
       ],
     );
   });
