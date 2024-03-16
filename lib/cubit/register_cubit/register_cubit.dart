@@ -1,29 +1,63 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/register_cubit/register_state.dart';
-import 'package:flutter_online_shop/models/user.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 
-class RegisterCubit extends Cubit<RegisterState>{
+class RegisterFormCubit extends Cubit<RegisterState> {
   final IUserRepository _userRepository;
 
-  RegisterCubit(this._userRepository) : super(const RegisterState.initial());
+  RegisterFormCubit(this._userRepository)
+      : super(
+          const RegisterState.idle(
+            userName: '',
+            email: '',
+            password: '',
+          ),
+        );
 
-  Future<void> register(User user) async {
+  void changeName(String userName) => emit(
+        state.copyWith(
+          userName: userName,
+        ),
+      );
+
+  void changeEmail(String email) => emit(state.copyWith(email: email));
+
+  void changePassword(String password) =>
+      emit(state.copyWith(password: password));
+
+  Future<void> signUp() async {
+    if (state.isSigningUp) return;
+
     emit(
-      const RegisterState.initial(),
+      RegisterState.signingUp(
+        userName: state.userName,
+        email: state.email,
+        password: state.password,
+      ),
     );
     try {
       final newUser = await _userRepository.create(
-       user,
+        state.userName,
+        state.email,
+        state.password,
       );
-      emit(RegisterState.idle(newUser));
+      emit(
+        RegisterState.success(
+          userName: state.userName,
+          email: state.email,
+          password: state.password,
+          user: newUser,
+        ),
+      );
     } catch (e) {
-      emit(RegisterState.error(
-        error: e,
-        user: state.userOrNull,
-      ));
+      emit(
+        RegisterState.error(
+          error: e,
+          userName: state.userName,
+          email: state.email,
+          password: state.password,
+        ),
+      );
     }
   }
-
 }

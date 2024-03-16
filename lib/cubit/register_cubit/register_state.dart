@@ -7,18 +7,40 @@ part 'register_state.freezed.dart';
 sealed class RegisterState with _$RegisterState {
   const RegisterState._();
 
-   User? get userOrNull => switch (this) {
-       RegisterInitial() => null,
-        RegisterLoading(:final user) => user,
-        RegisterLoaded(:final user) => user,
-        RegisterError(:final user) => user,
-      };
+  bool get isSuccess => this is RegisterSuccess;
 
-  const factory RegisterState.initial() = RegisterInitial;
-  const factory RegisterState.loading(User user) = RegisterLoading;
-  const factory RegisterState.idle(User user) = RegisterLoaded;
+  bool get isSigningUp => this is RegisterSigningUp;
+
+  bool get isError => this is RegisterError;
+
+  bool get isIdle => this is RegisterIdle;
+
+  bool get isValid =>
+      userName.isNotEmpty && email.isNotEmpty && password.isNotEmpty;
+
+  const factory RegisterState.idle({
+    required String userName,
+    required String email,
+    required String password,
+  }) = RegisterIdle;
+
+  const factory RegisterState.signingUp({
+    required String userName,
+    required String email,
+    required String password,
+  }) = RegisterSigningUp;
+
+  const factory RegisterState.success({
+    required String userName,
+    required String email,
+    required String password,
+    required User user,
+  }) = RegisterSuccess;
+
   const factory RegisterState.error({
-    Object? error,
-    User? user,
+    required String userName,
+    required String email,
+    required String password,
+    required Object error,
   }) = RegisterError;
 }

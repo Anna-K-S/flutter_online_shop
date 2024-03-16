@@ -35,12 +35,11 @@ void main() {
         name: name,
         address: address);
 
-    setUp(() {
+    setUpAll(() {
       mockUserRepository = MockUserRepository();
       cubit = UserCubit(mockUserRepository);
-      when(() => mockUserRepository.create(
-            user,
-          )).thenAnswer((_) async => user);
+      when(() => mockUserRepository.create(any(), any(), any()))
+          .thenAnswer((_) async => user);
     });
 
     tearDown(() {
