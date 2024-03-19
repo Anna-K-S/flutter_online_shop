@@ -92,8 +92,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 10.0,
                   ),
                   TextField(
-                    obscureText: _obscureText,
                     onChanged: context.read<RegisterFormCubit>().changePassword,
+                    obscureText: _obscureText,
                     decoration: DecorationsStyles.password(
                       obscureText: _obscureText,
                       visibility: _visibility,

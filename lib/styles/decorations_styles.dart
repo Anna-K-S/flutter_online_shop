@@ -66,7 +66,7 @@ class DecorationsStyles {
         ),
         suffixIcon: IconButton(
           icon: Icon(
-            obscureText ? Icons.visibility : Icons.visibility_off,
+            obscureText ? Icons.visibility_off : Icons.visibility,
             color: Colors.grey,
           ),
           onPressed: visibility,

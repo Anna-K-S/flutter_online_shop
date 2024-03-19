@@ -35,7 +35,7 @@ void main() {
         name: name,
         address: address);
 
-    setUpAll(() {
+    setUp(() {
       mockUserRepository = MockUserRepository();
       cubit = UserCubit(mockUserRepository);
       when(() => mockUserRepository.create(any(), any(), any()))
@@ -46,57 +46,59 @@ void main() {
       cubit.close();
     });
 
-    test('initial state is UserState.initial()', () {
+    test('initial state is UserState.idle()', () {
       expect(
         cubit.state,
         equals(
-          const UserState.initial(),
+          const UserState.idle(email: '', password: ''),
         ),
       );
     });
 
     blocTest<UserCubit, UserState>(
-      'setUser emits UserState.idle(user)',
+      'setUser emits UserState.success(user)',
       build: () => cubit,
       act: (cubit) => cubit.set(user),
       expect: () => [
-        const UserState.idle(user),
+        UserState.success(
+          user: user,
+          email: user.email,
+          password: user.password,
+        ),
       ],
     );
 
     blocTest<UserCubit, UserState>(
-      'loginUser emits [UserState.loading(), UserState.idle(user)] when login is successful',
-      seed: () => const UserLoading(user),
+      'emits [UserLoginUp, UserSuccess] when login is successful',
+      // seed: () => UserLoginUp(email: user .email, password: user .password),
       build: () {
         when(() => mockUserRepository.login(user.email, user.password))
             .thenAnswer((_) async => user);
         return cubit;
       },
-      act: (cubit) => cubit.set(user),
+      act: (cubit) => cubit.loginUp(user.email, user.password),
       expect: () => [
-        const UserState.idle(user),
+        UserLoginUp(email: user.email, password: user.password),
+        UserSuccess(email: user.email, password: user.password, user: user),
       ],
     );
-
+    final error = Exception();
     blocTest<UserCubit, UserState>(
-      'loginUser emits [UserState.loading(), UserState.error] when login fails',
-      seed: () => const UserLoaded(user),
+      'emits [UserLoginUp, UserError] when login fails',
       build: () {
         when(() => mockUserRepository.login(
               user.email,
               user.password,
-            )).thenThrow(1);
+            )).thenThrow(error);
         return cubit;
       },
-      act: (cubit) => cubit.login(
+      act: (cubit) => cubit.loginUp(
         user.email,
         user.password,
       ),
       expect: () => [
-        const UserState.initial(),
-        const UserState.error(
-          error: 1,
-        ),
+        UserLoginUp(email: user.email, password: user.password),
+        UserError(email: user.email, password: user.password, error: error),
       ],
     );
   });
