@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/user_cubit/user_state.dart';
-import 'package:flutter_online_shop/models/user.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 
 class UserCubit extends Cubit<UserState> {
@@ -37,7 +36,12 @@ class UserCubit extends Cubit<UserState> {
       );
 
       if (user == null) {
-        return emit(UserState.idle(email: email, password: password));
+        return emit(
+          UserState.idle(
+            email: email,
+            password: password,
+          ),
+        );
       }
 
       emit(
@@ -54,45 +58,5 @@ class UserCubit extends Cubit<UserState> {
         password: password,
       ));
     }
-  }
-
-  Future<void> update(User user) async {
-    if (state.isSuccess) {
-      emit(
-        UserState.updating(
-          user: user,
-          email: state.email,
-          password: state.password,
-        ),
-      );
-      try {
-        await _userRepository.update(user);
-        emit(
-          UserState.updated(
-            user: user,
-            email: state.email,
-            password: state.password,
-          ),
-        );
-      } catch (e) {
-        emit(
-          UserState.error(
-            email: user.email,
-            password: user.password,
-            error: e,
-          ),
-        );
-      }
-    }
-  }
-
-  void set(User user) {
-    emit(
-      UserState.success(
-        user: user,
-        email: user.email,
-        password: user.password,
-      ),
-    );
   }
 }

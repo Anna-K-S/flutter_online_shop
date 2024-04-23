@@ -4,6 +4,7 @@ import 'package:flutter_online_shop/cubit/register_cubit/register_state.dart';
 import 'package:flutter_online_shop/models/address.dart';
 import 'package:flutter_online_shop/models/name.dart';
 import 'package:flutter_online_shop/models/user.dart';
+import 'package:flutter_online_shop/service/api.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -11,7 +12,7 @@ import 'package:test/test.dart';
 class MockUserRepository extends Mock implements IUserRepository {}
 
 void main() {
-  group('RegisterCubit', () {
+  group('RegisterFormCubit', () {
     late RegisterFormCubit cubit;
     late MockUserRepository mockUserRepository;
 
@@ -23,7 +24,7 @@ void main() {
     const address = Address(
       city: 'City',
       street: 'Street',
-      number: 123,
+      number: '123',
       zipcode: '12345',
     );
 
@@ -45,15 +46,11 @@ void main() {
       cubit.close();
     });
 
-    test('initial state is RegisterState.idle()', () {
+    test('initial state is RegisterState.initial()', () {
       expect(
         cubit.state,
         equals(
-          const RegisterState.idle(
-            userName: '',
-            email: '',
-            password: '',
-          ),
+          RegisterState.initial(),
         ),
       );
     });
@@ -61,50 +58,80 @@ void main() {
     blocTest<RegisterFormCubit, RegisterState>(
       'emits [RegisterState.signingUp, RegisterState.success] when registration is successful',
       build: () {
-        when(() => mockUserRepository.create(any(), any(), any()))
-            .thenAnswer((_) async => user);
+        when(() => mockUserRepository.create(const CreateUserRequest(
+              userName: 'ffff',
+              email: 'ffff',
+              password: 'ffff',
+            ))).thenAnswer((_) async => user);
         return cubit;
       },
+      seed: () => const RegisterState(
+        userName: StringInput.pure(value: 'ffff'),
+        email: StringInput.pure(value: 'ffff'),
+        password: StringInput.pure(value: 'ffff'),
+        status: RegisterStatus.idle,
+      ),
       act: (cubit) => cubit.signUp(),
       expect: () => [
-        const RegisterState.signingUp(
-          userName: '',
-          email: '',
-          password: '',
+        const RegisterState(
+          userName: StringInput.pure(value: 'ffff'),
+          email: StringInput.pure(value: 'ffff'),
+          password: StringInput.pure(value: 'ffff'),
+          status: RegisterStatus.signingUp,
         ),
-        const RegisterState.success(
-          userName: '',
-          email: '',
-          password: '',
-          user: user,
+        const RegisterState(
+          userName: StringInput.pure(value: 'ffff'),
+          email: StringInput.pure(value: 'ffff'),
+          password: StringInput.pure(value: 'ffff'),
+          status: RegisterStatus.success,
+        ),
+        const RegisterState(
+          userName: StringInput.pure(value: 'ffff'),
+          email: StringInput.pure(value: 'ffff'),
+          password: StringInput.pure(value: 'ffff'),
+          status: RegisterStatus.idle,
         ),
       ],
     );
+
     final error = Exception();
     blocTest<RegisterFormCubit, RegisterState>(
       'emits [RegisterState.signingUp, RegisterState.error] when registration fails',
-      seed: () => const RegisterState.idle(
-        userName: '',
-        email: '',
-        password: '',
-      ),
       build: () {
-        when(() => mockUserRepository.create(any(), any(), any()))
-            .thenThrow(error);
+        when(() => mockUserRepository.create(
+              const CreateUserRequest(
+                userName: 'ffff',
+                email: 'ffff',
+                password: 'ffff',
+              ),
+            )).thenThrow(error);
         return cubit;
       },
+      seed: () => const RegisterState(
+        userName: StringInput.pure(value: 'ffff'),
+        email: StringInput.pure(value: 'ffff'),
+        password: StringInput.pure(value: 'ffff'),
+        status: RegisterStatus.idle,
+      ),
       act: (cubit) => cubit.signUp(),
       expect: () => [
-        const RegisterState.signingUp(
-          userName: '',
-          email: '',
-          password: '',
+        const RegisterState(
+          userName: StringInput.pure(value: 'ffff'),
+          email: StringInput.pure(value: 'ffff'),
+          password: StringInput.pure(value: 'ffff'),
+          status: RegisterStatus.signingUp,
         ),
-        RegisterState.error(
-          userName: '',
-          email: '',
-          password: '',
-          error: error,
+        const RegisterState(
+          userName: StringInput.pure(value: 'ffff'),
+          email: StringInput.pure(value: 'ffff'),
+          password: StringInput.pure(value: 'ffff'),
+          status: RegisterStatus.error,
+        ),
+        const RegisterState(
+          userName: StringInput.pure(value: 'ffff'),
+          email: StringInput.pure(value: 'ffff'),
+          password: StringInput.pure(value: 'ffff'),
+          status: RegisterStatus.idle,
         ),
       ],
     );

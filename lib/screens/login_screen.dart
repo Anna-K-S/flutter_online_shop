@@ -26,104 +26,122 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => UserCubit(context.read<IUserRepository>()),
-      child: Builder(builder: (context) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Login Account',
+                      style: TextStyles.title,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    const Text(
+                      'Fill Your Details',
+                      style: TextStyles.subtitle,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    BlocBuilder<UserCubit, UserState>(
+                      builder: (_, state) => TextFormField(
+                        onChanged: context.read<UserCubit>().changeEmail,
+                        initialValue: state.email,
+                        decoration: DecorationsStyles.textField.copyWith(
+                          labelText: 'Email Address',
+                          labelStyle: TextStyles.text,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    BlocBuilder<UserCubit, UserState>(
+                      builder: (_, state) => TextFormField(
+                        onChanged: context.read<UserCubit>().changePassword,
+                        initialValue: state.password,
+                        obscureText: _obscureText,
+                        autofillHints:
+                            Theme.of(context).platform == TargetPlatform.iOS
+                                ? const <String>[AutofillHints.oneTimeCode]
+                                : null,
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: DecorationsStyles.password(
+                          obscureText: _obscureText,
+                          visibility: _visibility,
+                        ).copyWith(
+                          labelText: 'Password',
+                          labelStyle: TextStyles.text,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40.0,
+                    ),
+                    BlocBuilder<UserCubit, UserState>(
+                      builder: (context, state) => RoundedButton(
+                        onPressed: () {
+                          if (!state.isValid) {
+                            ScaffoldMessenger.of(context)
+                              ..clearSnackBars()
+                              ..showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Please fill in all fields',
+                                  ),
+                                ),
+                              );
+                            return;
+                          }
+                          context.read<UserCubit>().loginUp(
+                                state.email,
+                                state.password,
+                              );
+                              
+                          if (state is UserError) {
+                            ScaffoldMessenger.of(context)
+                              ..clearSnackBars()
+                              ..showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Failed to log in. Please try again.'),
+                                ),
+                              );
+                            return;
+                          }
+                        },
+                        text: 'Login',
+                        color: const Color.fromARGB(255, 214, 206, 206),
+                        status: switch (state.runtimeType) {
+                          UserIdle() ||
+                              UserError() =>
+                              RoundedButtonStatus.enabled,
+                          UserLoginUp() => RoundedButtonStatus.busy,
+                          UserSuccess() => RoundedButtonStatus.disabled,
+                          _=> RoundedButtonStatus.enabled,
+                        },
+                       
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'Login Account',
-                  style: TextStyles.title,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                const Text(
-                  'Fill Your Details',
-                  style: TextStyles.subtitle,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                const Text(
-                  'Email Address',
-                  style: TextStyles.text,
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextField(
-                  onChanged: context.read<UserCubit>().changeEmail,
-                  decoration: DecorationsStyles.textField,
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                const Text(
-                  'Password',
-                  style: TextStyles.text,
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextField(
-                  onChanged: context.read<UserCubit>().changePassword,
-                  obscureText: _obscureText,
-                  decoration: DecorationsStyles.password(
-                    obscureText: _obscureText,
-                    visibility: _visibility,
-                  ),
-                ),
-                const SizedBox(
-                  height: 40.0,
-                ),
-                BlocBuilder<UserCubit, UserState>(
-                  builder: (context, state) => RoundedButton(
-                    onPressed: () {
-                      if (!state.isValid(
-                        email: state.email,
-                        password: state.password,
-                      )) {
-                        ScaffoldMessenger.of(context)
-                          ..clearSnackBars()
-                          ..showSnackBar(
-                            const SnackBar(
-                              content: Text('Please fill in all fields'),
-                            ),
-                          );
-                        return;
-                      }
-                      context.read<UserCubit>().loginUp(
-                            state.email,
-                            state.password,
-                          );
-                    },
-                    text: 'Login',
-                    color: const Color.fromARGB(255, 214, 206, 206),
-                    status: switch (state) {
-                      UserIdle() || UserError() => RoundedButtonStatus.enabled,
-                      UserLoginUp() ||
-                      UserUpdating() =>
-                        RoundedButtonStatus.busy,
-                      UserSuccess() ||
-                      UserUpdated() =>
-                        RoundedButtonStatus.disabled,
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

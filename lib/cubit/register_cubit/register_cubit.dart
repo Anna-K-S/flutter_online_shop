@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/register_cubit/register_state.dart';
+import 'package:flutter_online_shop/service/api.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 
 class RegisterFormCubit extends Cubit<RegisterState> {
@@ -7,56 +8,61 @@ class RegisterFormCubit extends Cubit<RegisterState> {
 
   RegisterFormCubit(this._userRepository)
       : super(
-          const RegisterState.idle(
-            userName: '',
-            email: '',
-            password: '',
+          const RegisterState(
+            userName: StringInput.pure(value: ''),
+            email: StringInput.pure(value: ''),
+            password: StringInput.pure(value: ''),
+            status: RegisterStatus.idle,
           ),
         );
 
   void changeName(String userName) => emit(
         state.copyWith(
-          userName: userName,
+          userName: StringInput.dirty(value: userName),
         ),
       );
 
-  void changeEmail(String email) => emit(state.copyWith(email: email));
+  void changeEmail(String email) =>
+      emit(state.copyWith(email: StringInput.dirty(value: email)));
 
   void changePassword(String password) =>
-      emit(state.copyWith(password: password));
+      emit(state.copyWith(password: StringInput.dirty(value: password)));
 
   Future<void> signUp() async {
-    if (state.isSigningUp) return;
+    if (state.isNotValid) return;
+
+    final userName = state.userName.value;
+    final email = state.email.value;
+    final password = state.password.value;
 
     emit(
-      RegisterState.signingUp(
-        userName: state.userName,
-        email: state.email,
-        password: state.password,
+      state.copyWith(
+        status: RegisterStatus.idle,
       ),
     );
+
     try {
-      final newUser = await _userRepository.create(
-        state.userName,
-        state.email,
-        state.password,
-      );
       emit(
-        RegisterState.success(
-          userName: state.userName,
-          email: state.email,
-          password: state.password,
-          user: newUser,
+        state.copyWith(
+          status: RegisterStatus.signingUp,
         ),
       );
+      await _userRepository.create(CreateUserRequest(
+        userName: userName,
+        email: email,
+        password: password,
+      ));
+
+      emit(state.copyWith(
+        status: RegisterStatus.success,
+      ));
     } catch (e) {
+      emit(state.copyWith(
+        status: RegisterStatus.error,
+      ));
+    } finally {
       emit(
-        RegisterState.error(
-          error: e,
-          userName: state.userName,
-          email: state.email,
-          password: state.password,
-        ),
+        state.copyWith(status: RegisterStatus.idle),
       );
     }
   }

@@ -1,46 +1,54 @@
-import 'package:flutter_online_shop/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:formz/formz.dart';
 
 part 'register_state.freezed.dart';
 
 @freezed
-sealed class RegisterState with _$RegisterState {
+sealed class RegisterState with _$RegisterState, FormzMixin {
   const RegisterState._();
 
-  bool get isSuccess => this is RegisterSuccess;
+  const factory RegisterState({
+    required StringInput userName,
+    required StringInput email,
+    required StringInput password,
+    required RegisterStatus status,
+    
+  }) = _RegisterState;
 
-  bool get isSigningUp => this is RegisterSigningUp;
+  factory RegisterState.initial() => const RegisterState(
+        userName: StringInput.pure(value: ''),
+        email: StringInput.pure(value: ''),
+        password: StringInput.pure(value: ''),
+        status: RegisterStatus.idle,
+      );
 
-  bool get isError => this is RegisterError;
+  @override
+  List<FormzInput> get inputs => [
+        userName,
+        email,
+        password,
+      ];
+}
 
-  bool get isIdle => this is RegisterIdle;
+enum RegisterStatus {
+  idle,
+  signingUp,
+  success,
+  error,
+}
 
-  bool get isValid =>
-      userName.isNotEmpty && email.isNotEmpty && password.isNotEmpty;
+enum FormInputError {
+  empty,
+  invalid,
+}
 
-  const factory RegisterState.idle({
-    required String userName,
-    required String email,
-    required String password,
-  }) = RegisterIdle;
+class StringInput extends FormzInput<String, FormInputError> {
+  const StringInput.pure({required String value}) : super.pure(value);
 
-  const factory RegisterState.signingUp({
-    required String userName,
-    required String email,
-    required String password,
-  }) = RegisterSigningUp;
+  const StringInput.dirty({required String value}) : super.dirty(value);
 
-  const factory RegisterState.success({
-    required String userName,
-    required String email,
-    required String password,
-    required User user,
-  }) = RegisterSuccess;
-
-  const factory RegisterState.error({
-    required String userName,
-    required String email,
-    required String password,
-    required Object error,
-  }) = RegisterError;
+  @override
+  FormInputError? validator(String value) {
+    return value.isEmpty ? FormInputError.empty : null;
+  }
 }

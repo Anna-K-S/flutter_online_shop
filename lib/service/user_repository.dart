@@ -6,10 +6,11 @@ abstract interface class IUserRepository {
   Future<User> getById(int userId);
   Future<List<User>> getWithLimit(int limit);
   Future<List<User>> getSorted(String sortBy);
-  Future<User> create(String userName, String email, String password);
+  Future<User> create(CreateUserRequest request);
   Future<void> update(User user);
   Future<void> delete(int userId);
   Future<User?> login(String email, String password);
+  
 }
 
 class UserRepository implements IUserRepository {
@@ -38,12 +39,13 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<User> create(String userName, String email, String password) async {
+  Future<User> create(CreateUserRequest request) async {
     return await _api.addUser(
       CreateUserRequest(
-        userName: userName,
-        email: email,
-        password: password,
+        userName: request.userName,
+        email: request.email,
+        password: request.password,
+       
       ),
     );
   }
@@ -54,8 +56,10 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<void> delete(int id) async {
-    await _api.deleteUser(id);
+  Future<void> delete(
+    int userId,
+  ) async {
+    await _api.deleteUser(userId);
   }
 
   @override

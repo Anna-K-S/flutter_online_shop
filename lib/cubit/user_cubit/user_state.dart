@@ -16,15 +16,7 @@ sealed class UserState with _$UserState {
 
   bool get isIdle => this is UserIdle;
 
-  bool get isUpdating => this is UserUpdating;
-
-  bool get isUpdated => this is UserUpdated;
-
-  bool isValid({
-    required String email,
-    required String password,
-  }) =>
-      email.isNotEmpty && password.isNotEmpty;
+  bool get isValid => email.isNotEmpty && password.isNotEmpty;
 
   const factory UserState.idle({
     required String email,
@@ -47,16 +39,4 @@ sealed class UserState with _$UserState {
     required String password,
     required Object error,
   }) = UserError;
-
-  const factory UserState.updating({
-    required String email,
-    required String password,
-    required User user,
-  }) = UserUpdating;
-
-  const factory UserState.updated({
-    required String email,
-    required String password,
-    required User user,
-  }) = UserUpdated;
 }

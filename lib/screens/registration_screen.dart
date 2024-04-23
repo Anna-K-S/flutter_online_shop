@@ -31,122 +31,143 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         builder: (context) {
           return Scaffold(
             backgroundColor: Colors.white,
-            body: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  const Text(
-                    'Register Account',
-                    style: TextStyles.title,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Text(
-                    'Fill Your Details',
-                    style: TextStyles.subtitle,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  const Text(
-                    'Your Name',
-                    style: TextStyles.text,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextField(
-                    onChanged: context.read<RegisterFormCubit>().changeName,
-                    decoration: DecorationsStyles.textField,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Text(
-                    'Email Address',
-                    style: TextStyles.text,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: context.read<RegisterFormCubit>().changeEmail,
-                    decoration: DecorationsStyles.textField,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Text(
-                    'Password',
-                    style: TextStyles.text,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  TextField(
-                    onChanged: context.read<RegisterFormCubit>().changePassword,
-                    obscureText: _obscureText,
-                    decoration: DecorationsStyles.password(
-                      obscureText: _obscureText,
-                      visibility: _visibility,
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const Text(
+                      'Register Account',
+                      style: TextStyles.title,
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 40.0,
-                  ),
-                  BlocBuilder<RegisterFormCubit, RegisterState>(
-                    builder: (context, state) => RoundedButton(
-                      onPressed: () {
-                        if (!state.isValid) {
-                          ScaffoldMessenger.of(context)
-                            ..clearSnackBars()
-                            ..showSnackBar(
-                              const SnackBar(
-                                content: Text('Please fill all fields'),
-                              ),
-                            );
-                          return;
-                        }
-                        context.read<RegisterFormCubit>().signUp();
-                      },
-                      text: 'Sing Up',
-                      color: const Color.fromARGB(255, 214, 206, 206),
-                      status: switch (state) {
-                        RegisterIdle() ||
-                        RegisterError() =>
-                          RoundedButtonStatus.enabled,
-                        RegisterSigningUp() => RoundedButtonStatus.busy,
-                        RegisterSuccess() => RoundedButtonStatus.disabled,
-                      },
+                    const SizedBox(
+                      height: 10.0,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 50.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Text(
-                        'Already Have Account?',
-                        style: TextStyles.text,
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Log In',
+                    const Text(
+                      'Fill Your Details',
+                      style: TextStyles.subtitle,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    BlocBuilder<RegisterFormCubit, RegisterState>(
+                      builder: (_, state) => TextFormField(
+                        keyboardType: TextInputType.text,
+                        onChanged: context.read<RegisterFormCubit>().changeName,
+                        initialValue: state.userName.value,
+                        decoration: DecorationsStyles.textField.copyWith(
+                          labelText: 'Your Name',
+                          labelStyle: TextStyles.text,
+                          errorText:
+                              state.userName.isNotValid ? 'Invalid Name' : null,
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    BlocBuilder<RegisterFormCubit, RegisterState>(
+                      builder: (_, state) => TextFormField(
+                        onChanged:
+                            context.read<RegisterFormCubit>().changeEmail,
+                        initialValue: state.email.value,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: DecorationsStyles.textField.copyWith(
+                          label: const Text(
+                            'Email Address',
+                          ),
+                          labelStyle: TextStyles.text,
+                          errorText:
+                              state.email.isNotValid ? 'Invalid Email' : null,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    BlocBuilder<RegisterFormCubit, RegisterState>(
+                      builder: (_, state) => TextFormField(
+                        onChanged:
+                            context.read<RegisterFormCubit>().changePassword,
+                        initialValue: state.password.value,
+                        autofillHints:
+                            Theme.of(context).platform == TargetPlatform.iOS
+                                ? const <String>[AutofillHints.oneTimeCode]
+                                : null,
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: _obscureText,
+                        decoration: DecorationsStyles.password(
+                          obscureText: _obscureText,
+                          visibility: _visibility,
+                        ).copyWith(
+                          label: const Text(
+                            'Password',
+                          ),
+                          labelStyle: TextStyles.text,
+                          errorText: state.password.isNotValid
+                              ? 'Invalid Password'
+                              : null,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    BlocBuilder<RegisterFormCubit, RegisterState>(
+                      builder: (context, state) => RoundedButton(
+                        onPressed: () {
+                          if (state.isNotValid) {
+                            ScaffoldMessenger.of(context)
+                              ..clearSnackBars()
+                              ..showSnackBar(
+                                const SnackBar(
+                                  content: Text('Please fill all fields'),
+                                ),
+                              );
+                            return;
+                          }
+                          context.read<RegisterFormCubit>().signUp(
+                            
+                          );
+                        
+                         
+                        },
+                        text: 'Sing Up',
+                        color: const Color.fromARGB(255, 214, 206, 206),
+                        status: switch (state.status) {
+                          RegisterStatus.idle ||
+                          RegisterStatus.success =>
+                            RoundedButtonStatus.enabled,
+                          _ => RoundedButtonStatus.busy,
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(
+                          'Already Have Account?',
+                          style: TextStyles.text,
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Log In',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );

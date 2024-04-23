@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class DecorationsStyles {
   static const textField = InputDecoration(
-    hintText: ' ',
     contentPadding: EdgeInsets.symmetric(
       vertical: 10.0,
       horizontal: 20.0,

@@ -25,9 +25,6 @@ mixin _$UserState {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
-    required TResult Function(String email, String password, User user)
-        updating,
-    required TResult Function(String email, String password, User user) updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,8 +33,6 @@ mixin _$UserState {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
-    TResult? Function(String email, String password, User user)? updating,
-    TResult? Function(String email, String password, User user)? updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -46,8 +41,6 @@ mixin _$UserState {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
-    TResult Function(String email, String password, User user)? updating,
-    TResult Function(String email, String password, User user)? updated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -57,8 +50,6 @@ mixin _$UserState {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
-    required TResult Function(UserUpdating value) updating,
-    required TResult Function(UserUpdated value) updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,8 +58,6 @@ mixin _$UserState {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
-    TResult? Function(UserUpdating value)? updating,
-    TResult? Function(UserUpdated value)? updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,8 +66,6 @@ mixin _$UserState {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
-    TResult Function(UserUpdating value)? updating,
-    TResult Function(UserUpdated value)? updated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -215,9 +202,6 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
-    required TResult Function(String email, String password, User user)
-        updating,
-    required TResult Function(String email, String password, User user) updated,
   }) {
     return idle(email, password);
   }
@@ -229,8 +213,6 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
-    TResult? Function(String email, String password, User user)? updating,
-    TResult? Function(String email, String password, User user)? updated,
   }) {
     return idle?.call(email, password);
   }
@@ -242,8 +224,6 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
-    TResult Function(String email, String password, User user)? updating,
-    TResult Function(String email, String password, User user)? updated,
     required TResult orElse(),
   }) {
     if (idle != null) {
@@ -259,8 +239,6 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
-    required TResult Function(UserUpdating value) updating,
-    required TResult Function(UserUpdated value) updated,
   }) {
     return idle(this);
   }
@@ -272,8 +250,6 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
-    TResult? Function(UserUpdating value)? updating,
-    TResult? Function(UserUpdated value)? updated,
   }) {
     return idle?.call(this);
   }
@@ -285,8 +261,6 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
-    TResult Function(UserUpdating value)? updating,
-    TResult Function(UserUpdated value)? updated,
     required TResult orElse(),
   }) {
     if (idle != null) {
@@ -402,9 +376,6 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
-    required TResult Function(String email, String password, User user)
-        updating,
-    required TResult Function(String email, String password, User user) updated,
   }) {
     return loginUp(email, password);
   }
@@ -416,8 +387,6 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
-    TResult? Function(String email, String password, User user)? updating,
-    TResult? Function(String email, String password, User user)? updated,
   }) {
     return loginUp?.call(email, password);
   }
@@ -429,8 +398,6 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
-    TResult Function(String email, String password, User user)? updating,
-    TResult Function(String email, String password, User user)? updated,
     required TResult orElse(),
   }) {
     if (loginUp != null) {
@@ -446,8 +413,6 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
-    required TResult Function(UserUpdating value) updating,
-    required TResult Function(UserUpdated value) updated,
   }) {
     return loginUp(this);
   }
@@ -459,8 +424,6 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
-    TResult? Function(UserUpdating value)? updating,
-    TResult? Function(UserUpdated value)? updated,
   }) {
     return loginUp?.call(this);
   }
@@ -472,8 +435,6 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
-    TResult Function(UserUpdating value)? updating,
-    TResult Function(UserUpdated value)? updated,
     required TResult orElse(),
   }) {
     if (loginUp != null) {
@@ -609,9 +570,6 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
-    required TResult Function(String email, String password, User user)
-        updating,
-    required TResult Function(String email, String password, User user) updated,
   }) {
     return success(email, password, user);
   }
@@ -623,8 +581,6 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
-    TResult? Function(String email, String password, User user)? updating,
-    TResult? Function(String email, String password, User user)? updated,
   }) {
     return success?.call(email, password, user);
   }
@@ -636,8 +592,6 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
-    TResult Function(String email, String password, User user)? updating,
-    TResult Function(String email, String password, User user)? updated,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -653,8 +607,6 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
-    required TResult Function(UserUpdating value) updating,
-    required TResult Function(UserUpdated value) updated,
   }) {
     return success(this);
   }
@@ -666,8 +618,6 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
-    TResult? Function(UserUpdating value)? updating,
-    TResult? Function(UserUpdated value)? updated,
   }) {
     return success?.call(this);
   }
@@ -679,8 +629,6 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
-    TResult Function(UserUpdating value)? updating,
-    TResult Function(UserUpdated value)? updated,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -806,9 +754,6 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
-    required TResult Function(String email, String password, User user)
-        updating,
-    required TResult Function(String email, String password, User user) updated,
   }) {
     return error(email, password, this.error);
   }
@@ -820,8 +765,6 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
-    TResult? Function(String email, String password, User user)? updating,
-    TResult? Function(String email, String password, User user)? updated,
   }) {
     return error?.call(email, password, this.error);
   }
@@ -833,8 +776,6 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
-    TResult Function(String email, String password, User user)? updating,
-    TResult Function(String email, String password, User user)? updated,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -850,8 +791,6 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
-    required TResult Function(UserUpdating value) updating,
-    required TResult Function(UserUpdated value) updated,
   }) {
     return error(this);
   }
@@ -863,8 +802,6 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
-    TResult? Function(UserUpdating value)? updating,
-    TResult? Function(UserUpdated value)? updated,
   }) {
     return error?.call(this);
   }
@@ -876,8 +813,6 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
-    TResult Function(UserUpdating value)? updating,
-    TResult Function(UserUpdated value)? updated,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -902,423 +837,5 @@ abstract class UserError extends UserState {
   @override
   @JsonKey(ignore: true)
   _$$UserErrorImplCopyWith<_$UserErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$UserUpdatingImplCopyWith<$Res>
-    implements $UserStateCopyWith<$Res> {
-  factory _$$UserUpdatingImplCopyWith(
-          _$UserUpdatingImpl value, $Res Function(_$UserUpdatingImpl) then) =
-      __$$UserUpdatingImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String email, String password, User user});
-
-  $UserCopyWith<$Res> get user;
-}
-
-/// @nodoc
-class __$$UserUpdatingImplCopyWithImpl<$Res>
-    extends _$UserStateCopyWithImpl<$Res, _$UserUpdatingImpl>
-    implements _$$UserUpdatingImplCopyWith<$Res> {
-  __$$UserUpdatingImplCopyWithImpl(
-      _$UserUpdatingImpl _value, $Res Function(_$UserUpdatingImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? email = null,
-    Object? password = null,
-    Object? user = null,
-  }) {
-    return _then(_$UserUpdatingImpl(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$UserUpdatingImpl extends UserUpdating with DiagnosticableTreeMixin {
-  const _$UserUpdatingImpl(
-      {required this.email, required this.password, required this.user})
-      : super._();
-
-  @override
-  final String email;
-  @override
-  final String password;
-  @override
-  final User user;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState.updating(email: $email, password: $password, user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'UserState.updating'))
-      ..add(DiagnosticsProperty('email', email))
-      ..add(DiagnosticsProperty('password', password))
-      ..add(DiagnosticsProperty('user', user));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserUpdatingImpl &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.user, user) || other.user == user));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, email, password, user);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UserUpdatingImplCopyWith<_$UserUpdatingImpl> get copyWith =>
-      __$$UserUpdatingImplCopyWithImpl<_$UserUpdatingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String email, String password) idle,
-    required TResult Function(String email, String password) loginUp,
-    required TResult Function(String email, String password, User user) success,
-    required TResult Function(String email, String password, Object error)
-        error,
-    required TResult Function(String email, String password, User user)
-        updating,
-    required TResult Function(String email, String password, User user) updated,
-  }) {
-    return updating(email, password, user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String email, String password)? idle,
-    TResult? Function(String email, String password)? loginUp,
-    TResult? Function(String email, String password, User user)? success,
-    TResult? Function(String email, String password, Object error)? error,
-    TResult? Function(String email, String password, User user)? updating,
-    TResult? Function(String email, String password, User user)? updated,
-  }) {
-    return updating?.call(email, password, user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String email, String password)? idle,
-    TResult Function(String email, String password)? loginUp,
-    TResult Function(String email, String password, User user)? success,
-    TResult Function(String email, String password, Object error)? error,
-    TResult Function(String email, String password, User user)? updating,
-    TResult Function(String email, String password, User user)? updated,
-    required TResult orElse(),
-  }) {
-    if (updating != null) {
-      return updating(email, password, user);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(UserIdle value) idle,
-    required TResult Function(UserLoginUp value) loginUp,
-    required TResult Function(UserSuccess value) success,
-    required TResult Function(UserError value) error,
-    required TResult Function(UserUpdating value) updating,
-    required TResult Function(UserUpdated value) updated,
-  }) {
-    return updating(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UserIdle value)? idle,
-    TResult? Function(UserLoginUp value)? loginUp,
-    TResult? Function(UserSuccess value)? success,
-    TResult? Function(UserError value)? error,
-    TResult? Function(UserUpdating value)? updating,
-    TResult? Function(UserUpdated value)? updated,
-  }) {
-    return updating?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(UserIdle value)? idle,
-    TResult Function(UserLoginUp value)? loginUp,
-    TResult Function(UserSuccess value)? success,
-    TResult Function(UserError value)? error,
-    TResult Function(UserUpdating value)? updating,
-    TResult Function(UserUpdated value)? updated,
-    required TResult orElse(),
-  }) {
-    if (updating != null) {
-      return updating(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class UserUpdating extends UserState {
-  const factory UserUpdating(
-      {required final String email,
-      required final String password,
-      required final User user}) = _$UserUpdatingImpl;
-  const UserUpdating._() : super._();
-
-  @override
-  String get email;
-  @override
-  String get password;
-  User get user;
-  @override
-  @JsonKey(ignore: true)
-  _$$UserUpdatingImplCopyWith<_$UserUpdatingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$UserUpdatedImplCopyWith<$Res>
-    implements $UserStateCopyWith<$Res> {
-  factory _$$UserUpdatedImplCopyWith(
-          _$UserUpdatedImpl value, $Res Function(_$UserUpdatedImpl) then) =
-      __$$UserUpdatedImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String email, String password, User user});
-
-  $UserCopyWith<$Res> get user;
-}
-
-/// @nodoc
-class __$$UserUpdatedImplCopyWithImpl<$Res>
-    extends _$UserStateCopyWithImpl<$Res, _$UserUpdatedImpl>
-    implements _$$UserUpdatedImplCopyWith<$Res> {
-  __$$UserUpdatedImplCopyWithImpl(
-      _$UserUpdatedImpl _value, $Res Function(_$UserUpdatedImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? email = null,
-    Object? password = null,
-    Object? user = null,
-  }) {
-    return _then(_$UserUpdatedImpl(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$UserUpdatedImpl extends UserUpdated with DiagnosticableTreeMixin {
-  const _$UserUpdatedImpl(
-      {required this.email, required this.password, required this.user})
-      : super._();
-
-  @override
-  final String email;
-  @override
-  final String password;
-  @override
-  final User user;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState.updated(email: $email, password: $password, user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'UserState.updated'))
-      ..add(DiagnosticsProperty('email', email))
-      ..add(DiagnosticsProperty('password', password))
-      ..add(DiagnosticsProperty('user', user));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserUpdatedImpl &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.user, user) || other.user == user));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, email, password, user);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UserUpdatedImplCopyWith<_$UserUpdatedImpl> get copyWith =>
-      __$$UserUpdatedImplCopyWithImpl<_$UserUpdatedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String email, String password) idle,
-    required TResult Function(String email, String password) loginUp,
-    required TResult Function(String email, String password, User user) success,
-    required TResult Function(String email, String password, Object error)
-        error,
-    required TResult Function(String email, String password, User user)
-        updating,
-    required TResult Function(String email, String password, User user) updated,
-  }) {
-    return updated(email, password, user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String email, String password)? idle,
-    TResult? Function(String email, String password)? loginUp,
-    TResult? Function(String email, String password, User user)? success,
-    TResult? Function(String email, String password, Object error)? error,
-    TResult? Function(String email, String password, User user)? updating,
-    TResult? Function(String email, String password, User user)? updated,
-  }) {
-    return updated?.call(email, password, user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String email, String password)? idle,
-    TResult Function(String email, String password)? loginUp,
-    TResult Function(String email, String password, User user)? success,
-    TResult Function(String email, String password, Object error)? error,
-    TResult Function(String email, String password, User user)? updating,
-    TResult Function(String email, String password, User user)? updated,
-    required TResult orElse(),
-  }) {
-    if (updated != null) {
-      return updated(email, password, user);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(UserIdle value) idle,
-    required TResult Function(UserLoginUp value) loginUp,
-    required TResult Function(UserSuccess value) success,
-    required TResult Function(UserError value) error,
-    required TResult Function(UserUpdating value) updating,
-    required TResult Function(UserUpdated value) updated,
-  }) {
-    return updated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UserIdle value)? idle,
-    TResult? Function(UserLoginUp value)? loginUp,
-    TResult? Function(UserSuccess value)? success,
-    TResult? Function(UserError value)? error,
-    TResult? Function(UserUpdating value)? updating,
-    TResult? Function(UserUpdated value)? updated,
-  }) {
-    return updated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(UserIdle value)? idle,
-    TResult Function(UserLoginUp value)? loginUp,
-    TResult Function(UserSuccess value)? success,
-    TResult Function(UserError value)? error,
-    TResult Function(UserUpdating value)? updating,
-    TResult Function(UserUpdated value)? updated,
-    required TResult orElse(),
-  }) {
-    if (updated != null) {
-      return updated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class UserUpdated extends UserState {
-  const factory UserUpdated(
-      {required final String email,
-      required final String password,
-      required final User user}) = _$UserUpdatedImpl;
-  const UserUpdated._() : super._();
-
-  @override
-  String get email;
-  @override
-  String get password;
-  User get user;
-  @override
-  @JsonKey(ignore: true)
-  _$$UserUpdatedImplCopyWith<_$UserUpdatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

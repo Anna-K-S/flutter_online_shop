@@ -4,6 +4,7 @@ import 'package:flutter_online_shop/cubit/user_cubit/user_state.dart';
 import 'package:flutter_online_shop/models/address.dart';
 import 'package:flutter_online_shop/models/name.dart';
 import 'package:flutter_online_shop/models/user.dart';
+import 'package:flutter_online_shop/service/api.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -23,7 +24,7 @@ void main() {
     const address = Address(
       city: 'City',
       street: 'Street',
-      number: 123,
+      number: '123',
       zipcode: '12345',
     );
 
@@ -38,8 +39,13 @@ void main() {
     setUp(() {
       mockUserRepository = MockUserRepository();
       cubit = UserCubit(mockUserRepository);
-      when(() => mockUserRepository.create(any(), any(), any()))
-          .thenAnswer((_) async => user);
+      when(() => mockUserRepository.create(
+            const CreateUserRequest(
+              userName: '',
+              email: '',
+              password: '',
+            ),
+          )).thenAnswer((_) async => user);
     });
 
     tearDown(() {
@@ -50,23 +56,15 @@ void main() {
       expect(
         cubit.state,
         equals(
-          const UserState.idle(email: '', password: ''),
+           UserState.idle(
+            email: '',
+            password: '',
+          ),
         ),
       );
     });
 
-    blocTest<UserCubit, UserState>(
-      'setUser emits UserState.success(user)',
-      build: () => cubit,
-      act: (cubit) => cubit.set(user),
-      expect: () => [
-        UserState.success(
-          user: user,
-          email: user.email,
-          password: user.password,
-        ),
-      ],
-    );
+  
 
     blocTest<UserCubit, UserState>(
       'emits [UserLoginUp, UserSuccess] when login is successful',
