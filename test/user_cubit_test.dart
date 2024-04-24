@@ -4,6 +4,7 @@ import 'package:flutter_online_shop/cubit/user_cubit/user_state.dart';
 import 'package:flutter_online_shop/models/address.dart';
 import 'package:flutter_online_shop/models/name.dart';
 import 'package:flutter_online_shop/models/user.dart';
+import 'package:flutter_online_shop/service/api.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -23,7 +24,7 @@ void main() {
     const address = Address(
       city: 'City',
       street: 'Street',
-      number: 123,
+      number: '123',
       zipcode: '12345',
     );
 
@@ -35,68 +36,67 @@ void main() {
         name: name,
         address: address);
 
-    setUpAll(() {
+    setUp(() {
       mockUserRepository = MockUserRepository();
       cubit = UserCubit(mockUserRepository);
-      when(() => mockUserRepository.create(any(), any(), any()))
-          .thenAnswer((_) async => user);
+      when(() => mockUserRepository.create(
+            const CreateUserRequest(
+              userName: '',
+              email: '',
+              password: '',
+            ),
+          )).thenAnswer((_) async => user);
     });
 
     tearDown(() {
       cubit.close();
     });
 
-    test('initial state is UserState.initial()', () {
+    test('initial state is UserState.idle()', () {
       expect(
         cubit.state,
         equals(
-          const UserState.initial(),
+           UserState.idle(
+            email: '',
+            password: '',
+          ),
         ),
       );
     });
 
-    blocTest<UserCubit, UserState>(
-      'setUser emits UserState.idle(user)',
-      build: () => cubit,
-      act: (cubit) => cubit.set(user),
-      expect: () => [
-        const UserState.idle(user),
-      ],
-    );
+  
 
     blocTest<UserCubit, UserState>(
-      'loginUser emits [UserState.loading(), UserState.idle(user)] when login is successful',
-      seed: () => const UserLoading(user),
+      'emits [UserLoginUp, UserSuccess] when login is successful',
+      // seed: () => UserLoginUp(email: user .email, password: user .password),
       build: () {
         when(() => mockUserRepository.login(user.email, user.password))
             .thenAnswer((_) async => user);
         return cubit;
       },
-      act: (cubit) => cubit.set(user),
+      act: (cubit) => cubit.loginUp(user.email, user.password),
       expect: () => [
-        const UserState.idle(user),
+        UserLoginUp(email: user.email, password: user.password),
+        UserSuccess(email: user.email, password: user.password, user: user),
       ],
     );
-
+    final error = Exception();
     blocTest<UserCubit, UserState>(
-      'loginUser emits [UserState.loading(), UserState.error] when login fails',
-      seed: () => const UserLoaded(user),
+      'emits [UserLoginUp, UserError] when login fails',
       build: () {
         when(() => mockUserRepository.login(
               user.email,
               user.password,
-            )).thenThrow(1);
+            )).thenThrow(error);
         return cubit;
       },
-      act: (cubit) => cubit.login(
+      act: (cubit) => cubit.loginUp(
         user.email,
         user.password,
       ),
       expect: () => [
-        const UserState.initial(),
-        const UserState.error(
-          error: 1,
-        ),
+        UserLoginUp(email: user.email, password: user.password),
+        UserError(email: user.email, password: user.password, error: error),
       ],
     );
   });

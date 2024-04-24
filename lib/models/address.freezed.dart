@@ -22,7 +22,7 @@ Address _$AddressFromJson(Map<String, dynamic> json) {
 mixin _$Address {
   String get city => throw _privateConstructorUsedError;
   String get street => throw _privateConstructorUsedError;
-  int get number => throw _privateConstructorUsedError;
+  String get number => throw _privateConstructorUsedError;
   String get zipcode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +35,7 @@ abstract class $AddressCopyWith<$Res> {
   factory $AddressCopyWith(Address value, $Res Function(Address) then) =
       _$AddressCopyWithImpl<$Res, Address>;
   @useResult
-  $Res call({String city, String street, int number, String zipcode});
+  $Res call({String city, String street, String number, String zipcode});
 }
 
 /// @nodoc
@@ -68,7 +68,7 @@ class _$AddressCopyWithImpl<$Res, $Val extends Address>
       number: null == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       zipcode: null == zipcode
           ? _value.zipcode
           : zipcode // ignore: cast_nullable_to_non_nullable
@@ -84,7 +84,7 @@ abstract class _$$AddressImplCopyWith<$Res> implements $AddressCopyWith<$Res> {
       __$$AddressImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String city, String street, int number, String zipcode});
+  $Res call({String city, String street, String number, String zipcode});
 }
 
 /// @nodoc
@@ -115,7 +115,7 @@ class __$$AddressImplCopyWithImpl<$Res>
       number: null == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       zipcode: null == zipcode
           ? _value.zipcode
           : zipcode // ignore: cast_nullable_to_non_nullable
@@ -141,7 +141,7 @@ class _$AddressImpl implements _Address {
   @override
   final String street;
   @override
-  final int number;
+  final String number;
   @override
   final String zipcode;
 
@@ -183,7 +183,7 @@ abstract class _Address implements Address {
   const factory _Address(
       {required final String city,
       required final String street,
-      required final int number,
+      required final String number,
       required final String zipcode}) = _$AddressImpl;
 
   factory _Address.fromJson(Map<String, dynamic> json) = _$AddressImpl.fromJson;
@@ -193,7 +193,7 @@ abstract class _Address implements Address {
   @override
   String get street;
   @override
-  int get number;
+  String get number;
   @override
   String get zipcode;
   @override

@@ -10,7 +10,7 @@ _$AddressImpl _$$AddressImplFromJson(Map<String, dynamic> json) =>
     _$AddressImpl(
       city: json['city'] as String,
       street: json['street'] as String,
-      number: json['number'] as int,
+      number: json['number'] as String,
       zipcode: json['zipcode'] as String,
     );
 

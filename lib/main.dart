@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_online_shop/cubit/user_cubit/user_cubit.dart';
+import 'package:flutter_online_shop/models/user.dart';
+import 'package:flutter_online_shop/screens/login_screen.dart';
 import 'package:flutter_online_shop/screens/registration_screen.dart';
+import 'package:flutter_online_shop/screens/user_profile_screen.dart';
 import 'package:flutter_online_shop/service/api.dart';
 import 'package:flutter_online_shop/service/my_bloc_observer.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
@@ -27,21 +31,11 @@ class OnlineShop extends StatelessWidget {
             context.read<Api>(),
           ),
         ),
-      ],
-      child: MaterialApp(
-        home: RegistrationScreen(),
-        // home: Scaffold(
-        //   backgroundColor: Colors.white,
-        //   appBar: AppBar(
-        //     title: Text(
-        //       'SHOP',
-        //       style: TextStyle(
-        //           color: Colors.orange.shade800, fontWeight: FontWeight.w600),
-        //     ),
-        //     backgroundColor: Colors.yellow.shade800,
-        //   ),
 
-        // ),
+        BlocProvider(create: (context) => UserCubit(context.read<IUserRepository>()))
+      ],
+      child: const MaterialApp(
+        home: LoginScreen(),
       ),
     );
   }

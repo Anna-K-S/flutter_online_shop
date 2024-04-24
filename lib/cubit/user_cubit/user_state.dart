@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_online_shop/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -7,18 +8,35 @@ part 'user_state.freezed.dart';
 sealed class UserState with _$UserState {
   const UserState._();
 
-  User? get userOrNull => switch (this) {
-        UserInitial() => null,
-        UserLoading(:final user) => user,
-        UserLoaded(:final user) => user,
-        UserError(:final user) => user,
-      };
+  bool get isSuccess => this is UserSuccess;
 
-  const factory UserState.initial() = UserInitial;
-  const factory UserState.loading(User user) = UserLoading;
-  const factory UserState.idle(User user) = UserLoaded;
+  bool get isLoginUp => this is UserLoginUp;
+
+  bool get isError => this is UserError;
+
+  bool get isIdle => this is UserIdle;
+
+  bool get isValid => email.isNotEmpty && password.isNotEmpty;
+
+  const factory UserState.idle({
+    required String email,
+    required String password,
+  }) = UserIdle;
+
+  const factory UserState.loginUp({
+    required String email,
+    required String password,
+  }) = UserLoginUp;
+
+  const factory UserState.success({
+    required String email,
+    required String password,
+    required User user,
+  }) = UserSuccess;
+
   const factory UserState.error({
-    Object? error,
-    User? user,
+    required String email,
+    required String password,
+    required Object error,
   }) = UserError;
 }
