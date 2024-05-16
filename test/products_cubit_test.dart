@@ -31,6 +31,20 @@ void main() {
           category: 'Category',
           description: 'Description',
           image: 'image'),
+      const Product(
+          id: 3,
+          title: 'Product 2',
+          price: 10,
+          category: 'Category',
+          description: 'Description',
+          image: 'image'),
+      const Product(
+          id: 4,
+          title: 'Product 2',
+          price: 20,
+          category: 'Category',
+          description: 'Description',
+          image: 'image'),
     ];
 
     /// выполняется перед каждым тестом
@@ -45,67 +59,72 @@ void main() {
     });
 
     /// тест проверяет начальное состояние кубита
-    test('initial state is ProductsState.loading()', () {
+    test('initial state is ProductsState.idle', () {
       expect(
         cubit.state,
         equals(
-          const ProductsState.initial(),
+          const ProductsIdle(
+            products: [],
+          ),
         ),
       );
     });
 
     blocTest<ProductsCubit, ProductsState>(
-      'emits (loading, loaded) when load succeeds',
-      seed: () => ProductsLoaded(products),
+      'emits (loading, success) when load succeeds',
+      seed: () => ProductsSuccess(products: products),
       build: () {
         when(() => mock.getAll()).thenAnswer((_) async => products);
         return cubit;
       },
       act: (cubit) => cubit.load(),
       expect: () => [
-        const ProductsState.initial(),
-        ProductsState.idle(products),
+        ProductsLoading(products: products),
+        ProductsSuccess(products: products),
       ],
     );
 
     blocTest<ProductsCubit, ProductsState>(
       'emits [loading, error] when load throws exception',
-      seed: () => ProductsLoaded(products),
+      seed: () => ProductsSuccess(products: products),
       build: () {
         when(() => mock.getAll()).thenThrow(1);
         return cubit;
       },
       act: (cubit) => cubit.load(),
       expect: () => [
-        const ProductsState.initial(),
-        const ProductsState.error(error: 1),
+        ProductsLoading(products: products),
+        ProductsError(
+          error: 1,
+          products: products,
+        ),
       ],
     );
 
     blocTest<ProductsCubit, ProductsState>(
-      'emits (loading, idle) when reload succeeds',
-      seed: () => ProductsLoaded(products),
+      'emits (loading, success) when reload succeeds',
+      seed: () => ProductsSuccess(products: products),
       build: () {
         when(() => mock.getAll()).thenAnswer((_) async => products);
         return cubit;
       },
       act: (cubit) => cubit.reload(),
       expect: () => [
-        ProductsState.loading(products),
-        ProductsState.idle(products),
+        ProductsLoading(products: products),
+        ProductsSuccess(products: products),
       ],
     );
 
     blocTest<ProductsCubit, ProductsState>(
       'emits (loading, error) when reload throws exception',
-      seed: () => ProductsLoaded(products),
+      seed: () => ProductsSuccess(products: products),
       build: () {
         when(() => mock.getAll()).thenThrow(1);
         return cubit;
       },
       act: (cubit) => cubit.reload(),
       expect: () => [
-        ProductsState.loading(products),
+        ProductsLoading(products: products),
         ProductsState.error(
           error: 1,
           products: products,
