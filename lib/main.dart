@@ -5,6 +5,7 @@ import 'package:flutter_online_shop/cubit/user_cubit/user_cubit.dart';
 
 import 'package:flutter_online_shop/screens/cart_screen.dart';
 import 'package:flutter_online_shop/screens/login_screen.dart';
+import 'package:flutter_online_shop/screens/products_detail_screen.dart';
 import 'package:flutter_online_shop/screens/products_screen.dart';
 
 import 'package:flutter_online_shop/service/api.dart';
@@ -20,7 +21,7 @@ void main() {
 }
 
 class OnlineShop extends StatelessWidget {
-  const OnlineShop({super.key});
+  const OnlineShop( {super.key});
 
   @override
   Widget build(BuildContext context) {
