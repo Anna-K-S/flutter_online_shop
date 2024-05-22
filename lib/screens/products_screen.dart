@@ -16,18 +16,23 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
+  //контроллеры для управления поиском
   final TextEditingController searchController = TextEditingController();
-  final SearchController controller = SearchController();
 
   @override
   void initState() {
     super.initState();
-    searchController.addListener(() {});
+    //добавляем слушатели к контроллерам для реагирования на изменения
+    searchController.addListener(queryListener);
+  }
+
+  void queryListener() {
+    context.read<ProductsCubit>().searchProducts(searchController.text);
   }
 
   @override
   void dispose() {
-    searchController.dispose();
+    searchController.dispose(); 
     super.dispose();
   }
 
@@ -64,6 +69,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ),
             child: RefreshIndicator(
               onRefresh: () => context.read<ProductsCubit>().reload(),
+              color: Colors.blue,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -77,8 +83,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ),
                   CustomSearchBar(
                     searchController: searchController,
-                    onTap: () {},
-                    controller: controller,
                   ),
                   const SizedBox(
                     height: 10.0,
@@ -185,7 +189,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       if (state.isLoading) {
                         return Center(
                           child: CircularProgressIndicator(
-                            color: Theme.of(context).primaryColor,
+                            color: Colors.white54,
                           ),
                         );
                       }

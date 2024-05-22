@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class DecorationsStyles {
   static const textField = InputDecoration(
@@ -69,6 +70,46 @@ class DecorationsStyles {
             color: Colors.grey,
           ),
           onPressed: visibility,
+        ),
+      );
+
+  static InputDecoration searchBar({
+    required String hintText,
+    required VoidCallback onPressed,
+    required bool showClearButton,
+  }) =>
+      InputDecoration(
+        icon: const Icon(
+          Icons.search,
+          color: Colors.black,
+        ),
+        hintText: hintText,
+        suffixIcon: showClearButton
+            ? IconButton(
+                onPressed: onPressed,
+                icon: const Icon(
+                  Icons.clear,
+                  color: Colors.black,
+                ),
+              )
+            : null,
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 0,
+          horizontal: 20,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
         ),
       );
 }

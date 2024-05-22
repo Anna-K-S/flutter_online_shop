@@ -40,18 +40,5 @@ List<Product>? get productsOrNull => map(
   success: (state) => state.products,
   error: (state) => state.products,
 );
-  // List<Product>? get productsOrNull => switch (this) {
-  //       ProductsIdle() => null,
-  //       ProductsLoading(:final products) => products,
-  //       ProductsSuccess(:final products) => products,
-  //       ProductsError(:final products) => products,
-  //     };
-  // //     };
-  // const factory ProductsState.idle() = ProductsIdle;
-  // const factory ProductsState.loading(List<Product> products) = ProductsLoading;
-  // const factory ProductsState.success(List<Product> products, ) = ProductsSuccess;
-  // const factory ProductsState.error({
-  //   Object? error,
-  //   List<Product>? products,
-  // }) = ProductsError;
+ 
 }

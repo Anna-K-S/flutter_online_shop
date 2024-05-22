@@ -1,56 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_online_shop/cubit/products_cubit/products_cubit.dart';
+import 'package:flutter_online_shop/styles/decorations_styles.dart';
 
-class CustomSearchBar extends StatelessWidget {
-  final TextEditingController searchController;
-  final VoidCallback onTap;
-  final SearchController controller;
-
+class CustomSearchBar extends StatefulWidget {
+  final TextEditingController searchController; 
   const CustomSearchBar({
-    required this.searchController,
-    required this.onTap,
-    required this.controller,
+    required this.searchController, 
     super.key,
   });
 
   @override
+  _CustomSearchBarState createState() => _CustomSearchBarState();
+}
+
+class _CustomSearchBarState extends State<CustomSearchBar> {
+  bool _showClearButton = false;
+
+  @override
+  void initState() {
+    super.initState();
+    //добавление слушателя для обновления состояния виджета при изменении текста
+    widget.searchController.addListener(() {
+      setState(() {
+        _showClearButton = widget.searchController.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SearchAnchor(
-      searchController: controller,
-      headerTextStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 15,
-      ),
-      viewHintText: 'Search...',
-      viewBackgroundColor: Colors.black.withOpacity(0.3),
-      viewTrailing: [
-        IconButton(
-          onPressed: () {
-            if (controller.text.isNotEmpty) {
-              controller.clear();
-            }
-          },
-          icon: const Icon(
-            Icons.clear,
-            color: Colors.black,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        TextField(
+          controller: widget.searchController,
+          decoration: DecorationsStyles.searchBar(
+            hintText: 'Search',
+            onPressed: () {
+              widget.searchController.clear();
+              context.read<ProductsCubit>().reload();
+              setState(() {
+                _showClearButton = false;
+              });
+            },
+            showClearButton: _showClearButton,
           ),
-        )
+          onChanged: (value) =>
+              context.read<ProductsCubit>().searchProducts(value),
+        ),
+        const SizedBox(
+          height: 8.0,
+        ),
       ],
-      builder: (context, controller) {
-        return SearchBar(
-          controller: searchController,
-          leading: IconButton(
-            onPressed: onTap,
-            icon: const Icon(
-              Icons.search,
-            ),
-          ),
-          hintText: 'Search...',
-          onTap: () => controller.openView(),
-        );
-      },
-      suggestionsBuilder: (context, controller) {
-        return [];
-      },
     );
   }
 }
