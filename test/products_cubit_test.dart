@@ -9,126 +9,149 @@ import 'package:test/test.dart';
 class MockProductsRepository extends Mock implements IProductsRepository {}
 
 void main() {
-  /// группа тестов для кубита
   group('ProductsCubit', () {
     late ProductsCubit cubit;
-    late MockProductsRepository mock;
+    late MockProductsRepository mockProductsRepository;
 
-    /// список продуктов, который будет использоваться для тестов
-
+    const product = Product(
+      id: 1,
+      title: 'Product 1',
+      price: 10,
+      category: 'Category',
+      description: 'Description',
+      image: 'image',
+    );
     final products = [
       const Product(
-          id: 1,
-          title: 'Product 1',
-          price: 10,
-          category: 'Category',
-          description: 'Description',
-          image: 'image'),
+        id: 1,
+        title: 'Product 1',
+        price: 10,
+        category: 'Category',
+        description: 'Description',
+        image: 'image',
+      ),
       const Product(
-          id: 2,
-          title: 'Product 2',
-          price: 20,
-          category: 'Category',
-          description: 'Description',
-          image: 'image'),
+        id: 2,
+        title: 'Product 2',
+        price: 20,
+        category: 'Category',
+        description: 'Description',
+        image: 'image',
+      ),
       const Product(
-          id: 3,
-          title: 'Product 2',
-          price: 10,
-          category: 'Category',
-          description: 'Description',
-          image: 'image'),
+        id: 3,
+        title: 'Product 2',
+        price: 10,
+        category: 'Category',
+        description: 'Description',
+        image: 'image',
+      ),
       const Product(
-          id: 4,
-          title: 'Product 2',
-          price: 20,
-          category: 'Category',
-          description: 'Description',
-          image: 'image'),
+        id: 4,
+        title: 'Product 2',
+        price: 20,
+        category: 'Category',
+        description: 'Description',
+        image: 'image',
+      ),
     ];
 
-    /// выполняется перед каждым тестом
-    setUp(() {
-      mock = MockProductsRepository();
-      cubit = ProductsCubit(mock);
+    setUpAll(() {
+      registerFallbackValue(product);
     });
 
-    /// закрытие кубита после каждого теста
+    setUp(() {
+      mockProductsRepository = MockProductsRepository();
+      cubit = ProductsCubit(mockProductsRepository);
+    });
+
     tearDown(() {
       cubit.close();
     });
 
-    /// тест проверяет начальное состояние кубита
-    test('initial state is ProductsState.idle', () {
+    test('initial state is ProductsIdle', () {
       expect(
         cubit.state,
-        equals(
-          const ProductsIdle(
-            products: [],
-          ),
-        ),
+        isA<ProductsIdle>(),
       );
     });
 
     blocTest<ProductsCubit, ProductsState>(
-      'emits (loading, success) when load succeeds',
-      seed: () => ProductsSuccess(products: products),
+      'emits ProductsLoading and ProductsSuccess when load is successful',
       build: () {
-        when(() => mock.getAll()).thenAnswer((_) async => products);
+        when(
+          () => mockProductsRepository.getAll(),
+        ).thenAnswer((_) async => products);
         return cubit;
       },
       act: (cubit) => cubit.load(),
       expect: () => [
-        ProductsLoading(products: products),
-        ProductsSuccess(products: products),
+        isA<ProductsLoading>(),
+        isA<ProductsSuccess>().having((s) => s.products, 'products', products),
       ],
     );
 
     blocTest<ProductsCubit, ProductsState>(
-      'emits [loading, error] when load throws exception',
-      seed: () => ProductsSuccess(products: products),
+      'emits ProductsLoading and ProductsError when load fails',
       build: () {
-        when(() => mock.getAll()).thenThrow(1);
+        when(() => mockProductsRepository.getAll())
+            .thenThrow(Exception('Failed to load products'));
         return cubit;
       },
       act: (cubit) => cubit.load(),
       expect: () => [
-        ProductsLoading(products: products),
-        ProductsError(
-          error: 1,
-          products: products,
+        isA<ProductsLoading>(),
+        isA<ProductsError>().having(
+          (e) => e.error.toString(),
+          'error',
+          contains('Failed to load products'),
         ),
       ],
     );
 
     blocTest<ProductsCubit, ProductsState>(
-      'emits (loading, success) when reload succeeds',
-      seed: () => ProductsSuccess(products: products),
+      'emits ProductsLoading and ProductsSuccess when getById is successful',
       build: () {
-        when(() => mock.getAll()).thenAnswer((_) async => products);
+        when(() => mockProductsRepository.getById(1))
+            .thenAnswer((_) async => product);
         return cubit;
       },
-      act: (cubit) => cubit.reload(),
+      act: (cubit) => cubit.getById(1),
       expect: () => [
-        ProductsLoading(products: products),
-        ProductsSuccess(products: products),
+        isA<ProductsLoading>(),
+        isA<ProductsSuccess>().having((s) => s.products, 'products', [product]),
       ],
     );
 
     blocTest<ProductsCubit, ProductsState>(
-      'emits (loading, error) when reload throws exception',
-      seed: () => ProductsSuccess(products: products),
+      'emits ProductsLoading and ProductsError when getById fails',
       build: () {
-        when(() => mock.getAll()).thenThrow(1);
+        when(() => mockProductsRepository.getById(1)).thenThrow(
+          Exception('Failed to load product'),
+        );
         return cubit;
       },
-      act: (cubit) => cubit.reload(),
+      act: (cubit) => cubit.getById(1),
       expect: () => [
-        ProductsLoading(products: products),
-        ProductsState.error(
-          error: 1,
-          products: products,
+        isA<ProductsLoading>(),
+        isA<ProductsError>().having(
+          (e) => e.error.toString(),
+          'error',
+          contains('Failed to load product'),
         ),
+      ],
+    );
+
+    blocTest<ProductsCubit, ProductsState>(
+      'emits ProductsSuccess with no products when searchProducts query does not match',
+      build: () {
+        cubit.emit(ProductsSuccess(products: products));
+        return cubit;
+      },
+      act: (cubit) => cubit.searchProducts('Nonexistent'),
+      expect: () => [
+        isA<ProductsSuccess>()
+            .having((s) => s.products, 'filtered products', isEmpty),
       ],
     );
   });

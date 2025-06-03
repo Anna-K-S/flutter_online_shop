@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/user_cubit/user_state.dart';
+import 'package:flutter_online_shop/models/user.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 
 class UserCubit extends Cubit<UserState> {
   final IUserRepository _userRepository;
+  late final StreamSubscription<User>? _userSubscription;
 
   UserCubit(this._userRepository)
       : super(
@@ -11,7 +15,9 @@ class UserCubit extends Cubit<UserState> {
             email: '',
             password: '',
           ),
-        );
+        ) {
+    _init();
+  }
 
   void changeEmail(String email) {
     emit(state.copyWith(email: email));
@@ -45,7 +51,7 @@ class UserCubit extends Cubit<UserState> {
       }
 
       emit(
-        UserState.success(
+        UserState.loggedIn(
           user: user,
           email: email,
           password: password,
@@ -58,5 +64,69 @@ class UserCubit extends Cubit<UserState> {
         password: password,
       ));
     }
+  }
+
+  Future<void> logOut() async {
+    await _userRepository.deleteToken();
+    emit(const UserState.idle(email: '', password: ''));
+  }
+
+  Future<void> checkAuthentication() async {
+    final token = await _userRepository.getToken();
+    if (token != null) {
+      final user = await _userRepository.getUserFromToken(token);
+      if (user != null) {
+        emit(
+          UserState.loggedIn(
+            user: user,
+            email: user.email,
+            password: user.password,
+          ),
+        );
+        return;
+      }
+    }
+    emit(
+      const UserState.idle(
+        email: '',
+        password: '',
+      ),
+    );
+  }
+
+  Future<void> _init() async {
+    _userSubscription = _userRepository.userUpdated.listen((user) {
+      if (!state.isLoggedIn) return;
+
+      emit(
+        UserState.loggedIn(
+          user: user,
+          email: user.email,
+          password: user.password,
+        ),
+      );
+    });
+
+    final token = await _userRepository.getToken();
+
+    if (token == null) return;
+
+    final user = await _userRepository.getUserFromToken(token);
+
+    if (user == null) return;
+
+    emit(
+      UserState.loggedIn(
+        user: user,
+        email: user.email,
+        password: user.password,
+      ),
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _userSubscription!.cancel();
+    return super.close();
   }
 }

@@ -25,6 +25,8 @@ mixin _$UserState {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
+    required TResult Function(String email, String password, User user)
+        loggedIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -33,6 +35,7 @@ mixin _$UserState {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
+    TResult? Function(String email, String password, User user)? loggedIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +44,7 @@ mixin _$UserState {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
+    TResult Function(String email, String password, User user)? loggedIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -50,6 +54,7 @@ mixin _$UserState {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
+    required TResult Function(UserLoggedIn value) loggedIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,6 +63,7 @@ mixin _$UserState {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
+    TResult? Function(UserLoggedIn value)? loggedIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,11 +72,14 @@ mixin _$UserState {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
+    TResult Function(UserLoggedIn value)? loggedIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UserStateCopyWith<UserState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -93,6 +102,8 @@ class _$UserStateCopyWithImpl<$Res, $Val extends UserState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -131,6 +142,8 @@ class __$$UserIdleImplCopyWithImpl<$Res>
       _$UserIdleImpl _value, $Res Function(_$UserIdleImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -188,7 +201,9 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(runtimeType, email, password);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserIdleImplCopyWith<_$UserIdleImpl> get copyWith =>
@@ -202,6 +217,8 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
+    required TResult Function(String email, String password, User user)
+        loggedIn,
   }) {
     return idle(email, password);
   }
@@ -213,6 +230,7 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
+    TResult? Function(String email, String password, User user)? loggedIn,
   }) {
     return idle?.call(email, password);
   }
@@ -224,6 +242,7 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
+    TResult Function(String email, String password, User user)? loggedIn,
     required TResult orElse(),
   }) {
     if (idle != null) {
@@ -239,6 +258,7 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
+    required TResult Function(UserLoggedIn value) loggedIn,
   }) {
     return idle(this);
   }
@@ -250,6 +270,7 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
+    TResult? Function(UserLoggedIn value)? loggedIn,
   }) {
     return idle?.call(this);
   }
@@ -261,6 +282,7 @@ class _$UserIdleImpl extends UserIdle with DiagnosticableTreeMixin {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
+    TResult Function(UserLoggedIn value)? loggedIn,
     required TResult orElse(),
   }) {
     if (idle != null) {
@@ -280,8 +302,11 @@ abstract class UserIdle extends UserState {
   String get email;
   @override
   String get password;
+
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserIdleImplCopyWith<_$UserIdleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -305,6 +330,8 @@ class __$$UserLoginUpImplCopyWithImpl<$Res>
       _$UserLoginUpImpl _value, $Res Function(_$UserLoginUpImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -362,7 +389,9 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(runtimeType, email, password);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserLoginUpImplCopyWith<_$UserLoginUpImpl> get copyWith =>
@@ -376,6 +405,8 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
+    required TResult Function(String email, String password, User user)
+        loggedIn,
   }) {
     return loginUp(email, password);
   }
@@ -387,6 +418,7 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
+    TResult? Function(String email, String password, User user)? loggedIn,
   }) {
     return loginUp?.call(email, password);
   }
@@ -398,6 +430,7 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
+    TResult Function(String email, String password, User user)? loggedIn,
     required TResult orElse(),
   }) {
     if (loginUp != null) {
@@ -413,6 +446,7 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
+    required TResult Function(UserLoggedIn value) loggedIn,
   }) {
     return loginUp(this);
   }
@@ -424,6 +458,7 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
+    TResult? Function(UserLoggedIn value)? loggedIn,
   }) {
     return loginUp?.call(this);
   }
@@ -435,6 +470,7 @@ class _$UserLoginUpImpl extends UserLoginUp with DiagnosticableTreeMixin {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
+    TResult Function(UserLoggedIn value)? loggedIn,
     required TResult orElse(),
   }) {
     if (loginUp != null) {
@@ -454,8 +490,11 @@ abstract class UserLoginUp extends UserState {
   String get email;
   @override
   String get password;
+
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserLoginUpImplCopyWith<_$UserLoginUpImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -481,6 +520,8 @@ class __$$UserSuccessImplCopyWithImpl<$Res>
       _$UserSuccessImpl _value, $Res Function(_$UserSuccessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -504,6 +545,8 @@ class __$$UserSuccessImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $UserCopyWith<$Res> get user {
@@ -556,7 +599,9 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(runtimeType, email, password, user);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserSuccessImplCopyWith<_$UserSuccessImpl> get copyWith =>
@@ -570,6 +615,8 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
+    required TResult Function(String email, String password, User user)
+        loggedIn,
   }) {
     return success(email, password, user);
   }
@@ -581,6 +628,7 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
+    TResult? Function(String email, String password, User user)? loggedIn,
   }) {
     return success?.call(email, password, user);
   }
@@ -592,6 +640,7 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
+    TResult Function(String email, String password, User user)? loggedIn,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -607,6 +656,7 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
+    required TResult Function(UserLoggedIn value) loggedIn,
   }) {
     return success(this);
   }
@@ -618,6 +668,7 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
+    TResult? Function(UserLoggedIn value)? loggedIn,
   }) {
     return success?.call(this);
   }
@@ -629,6 +680,7 @@ class _$UserSuccessImpl extends UserSuccess with DiagnosticableTreeMixin {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
+    TResult Function(UserLoggedIn value)? loggedIn,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -650,8 +702,11 @@ abstract class UserSuccess extends UserState {
   @override
   String get password;
   User get user;
+
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserSuccessImplCopyWith<_$UserSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -675,6 +730,8 @@ class __$$UserErrorImplCopyWithImpl<$Res>
       _$UserErrorImpl _value, $Res Function(_$UserErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -740,7 +797,9 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType, email, password, const DeepCollectionEquality().hash(error));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserErrorImplCopyWith<_$UserErrorImpl> get copyWith =>
@@ -754,6 +813,8 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     required TResult Function(String email, String password, User user) success,
     required TResult Function(String email, String password, Object error)
         error,
+    required TResult Function(String email, String password, User user)
+        loggedIn,
   }) {
     return error(email, password, this.error);
   }
@@ -765,6 +826,7 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     TResult? Function(String email, String password)? loginUp,
     TResult? Function(String email, String password, User user)? success,
     TResult? Function(String email, String password, Object error)? error,
+    TResult? Function(String email, String password, User user)? loggedIn,
   }) {
     return error?.call(email, password, this.error);
   }
@@ -776,6 +838,7 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     TResult Function(String email, String password)? loginUp,
     TResult Function(String email, String password, User user)? success,
     TResult Function(String email, String password, Object error)? error,
+    TResult Function(String email, String password, User user)? loggedIn,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -791,6 +854,7 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     required TResult Function(UserLoginUp value) loginUp,
     required TResult Function(UserSuccess value) success,
     required TResult Function(UserError value) error,
+    required TResult Function(UserLoggedIn value) loggedIn,
   }) {
     return error(this);
   }
@@ -802,6 +866,7 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     TResult? Function(UserLoginUp value)? loginUp,
     TResult? Function(UserSuccess value)? success,
     TResult? Function(UserError value)? error,
+    TResult? Function(UserLoggedIn value)? loggedIn,
   }) {
     return error?.call(this);
   }
@@ -813,6 +878,7 @@ class _$UserErrorImpl extends UserError with DiagnosticableTreeMixin {
     TResult Function(UserLoginUp value)? loginUp,
     TResult Function(UserSuccess value)? success,
     TResult Function(UserError value)? error,
+    TResult Function(UserLoggedIn value)? loggedIn,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -834,8 +900,223 @@ abstract class UserError extends UserState {
   @override
   String get password;
   Object get error;
+
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserErrorImplCopyWith<_$UserErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UserLoggedInImplCopyWith<$Res>
+    implements $UserStateCopyWith<$Res> {
+  factory _$$UserLoggedInImplCopyWith(
+          _$UserLoggedInImpl value, $Res Function(_$UserLoggedInImpl) then) =
+      __$$UserLoggedInImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String email, String password, User user});
+
+  $UserCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$UserLoggedInImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$UserLoggedInImpl>
+    implements _$$UserLoggedInImplCopyWith<$Res> {
+  __$$UserLoggedInImplCopyWithImpl(
+      _$UserLoggedInImpl _value, $Res Function(_$UserLoggedInImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? password = null,
+    Object? user = null,
+  }) {
+    return _then(_$UserLoggedInImpl(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+    ));
+  }
+
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$UserLoggedInImpl extends UserLoggedIn with DiagnosticableTreeMixin {
+  const _$UserLoggedInImpl(
+      {required this.email, required this.password, required this.user})
+      : super._();
+
+  @override
+  final String email;
+  @override
+  final String password;
+  @override
+  final User user;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState.loggedIn(email: $email, password: $password, user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserState.loggedIn'))
+      ..add(DiagnosticsProperty('email', email))
+      ..add(DiagnosticsProperty('password', password))
+      ..add(DiagnosticsProperty('user', user));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserLoggedInImpl &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, email, password, user);
+
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserLoggedInImplCopyWith<_$UserLoggedInImpl> get copyWith =>
+      __$$UserLoggedInImplCopyWithImpl<_$UserLoggedInImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String email, String password) idle,
+    required TResult Function(String email, String password) loginUp,
+    required TResult Function(String email, String password, User user) success,
+    required TResult Function(String email, String password, Object error)
+        error,
+    required TResult Function(String email, String password, User user)
+        loggedIn,
+  }) {
+    return loggedIn(email, password, user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String email, String password)? idle,
+    TResult? Function(String email, String password)? loginUp,
+    TResult? Function(String email, String password, User user)? success,
+    TResult? Function(String email, String password, Object error)? error,
+    TResult? Function(String email, String password, User user)? loggedIn,
+  }) {
+    return loggedIn?.call(email, password, user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String email, String password)? idle,
+    TResult Function(String email, String password)? loginUp,
+    TResult Function(String email, String password, User user)? success,
+    TResult Function(String email, String password, Object error)? error,
+    TResult Function(String email, String password, User user)? loggedIn,
+    required TResult orElse(),
+  }) {
+    if (loggedIn != null) {
+      return loggedIn(email, password, user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UserIdle value) idle,
+    required TResult Function(UserLoginUp value) loginUp,
+    required TResult Function(UserSuccess value) success,
+    required TResult Function(UserError value) error,
+    required TResult Function(UserLoggedIn value) loggedIn,
+  }) {
+    return loggedIn(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(UserIdle value)? idle,
+    TResult? Function(UserLoginUp value)? loginUp,
+    TResult? Function(UserSuccess value)? success,
+    TResult? Function(UserError value)? error,
+    TResult? Function(UserLoggedIn value)? loggedIn,
+  }) {
+    return loggedIn?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UserIdle value)? idle,
+    TResult Function(UserLoginUp value)? loginUp,
+    TResult Function(UserSuccess value)? success,
+    TResult Function(UserError value)? error,
+    TResult Function(UserLoggedIn value)? loggedIn,
+    required TResult orElse(),
+  }) {
+    if (loggedIn != null) {
+      return loggedIn(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserLoggedIn extends UserState {
+  const factory UserLoggedIn(
+      {required final String email,
+      required final String password,
+      required final User user}) = _$UserLoggedInImpl;
+  const UserLoggedIn._() : super._();
+
+  @override
+  String get email;
+  @override
+  String get password;
+  User get user;
+
+  /// Create a copy of UserState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UserLoggedInImplCopyWith<_$UserLoggedInImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

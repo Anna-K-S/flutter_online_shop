@@ -4,10 +4,6 @@ import 'package:flutter_online_shop/service/api.dart';
 abstract interface class IProductsRepository {
   Future<List<Product>> getAll();
   Future<Product> getById(int id);
-  Future<List<Product>> getWithLimit(int limit);
-  Future<List<Product>> getSorted(String sortBy);
-  Future<List<String>> getAllCategories();
-  Future<List<Product>> getInCategory(Product product);
   Future<void> add(Product product);
   Future<void> update(Product product);
   Future<void> delete(int id);
@@ -41,25 +37,5 @@ class ProductsRepository implements IProductsRepository {
   @override
   Future<void> delete(int id) async {
     await _api.deleteProduct(id);
-  }
-
-  @override
-  Future<List<String>> getAllCategories() async {
-    return await _api.getAllProductsCategories();
-  }
-
-  @override
-  Future<List<Product>> getInCategory(Product product) async {
-    return await _api.getProductsInCategory(product.category);
-  }
-
-  @override
-  Future<List<Product>> getSorted(String sortBy) async {
-    return await _api.getSortedProducts(sortBy);
-  }
-
-  @override
-  Future<List<Product>> getWithLimit(int limit) async {
-    return await _api.getProductsWithLimit(limit);
   }
 }

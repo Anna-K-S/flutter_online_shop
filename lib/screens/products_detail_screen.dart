@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_online_shop/cubit/cart_cubit/cart_cubit.dart';
 import 'package:flutter_online_shop/cubit/products_cubit/products_cubit.dart';
+import 'package:flutter_online_shop/models/cart_item.dart';
 import 'package:flutter_online_shop/models/product.dart';
 import 'package:flutter_online_shop/service/products_repository.dart';
 import 'package:flutter_online_shop/styles/text_styles.dart';
@@ -27,13 +29,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
       child: Builder(
         builder: (context) {
+          final cartCubit = context.read<CartCubit>();
+          final quantity = CartItem(product: widget.product, quantity: 0);
+
           return Scaffold(
-            backgroundColor: Colors.grey[100],
             appBar: AppBar(
-              backgroundColor: Colors.grey[100],
               title: const Text(
                 'Product Detail',
-                style: TextStyles.title,
               ),
               centerTitle: true,
             ),
@@ -50,14 +52,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     Text(
                       widget.product.title,
-                      style: TextStyles.detailScreenTitle,
                     ),
                     const SizedBox(
                       height: 8.0,
                     ),
                     Text(
                       widget.product.category,
-                      style: TextStyles.detailScreenCategory,
                     ),
                     const SizedBox(
                       height: 8.0,
@@ -90,7 +90,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                         Text(
                           widget.product.description,
-                          style: TextStyles.productDescription,
                         ),
                         const SizedBox(
                           height: 8.0,
@@ -98,8 +97,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         SizedBox(
                           width: 200.0,
                           child: CartButton(
-                            onPressed: () {},
-                            color: Colors.blue,
+                            onPressed: () {
+                              cartCubit.add(
+                                widget.product,
+                              );
+                            },
+                            child: const Text(
+                              'Add to cart',
+                            ),
                           ),
                         ),
                       ],

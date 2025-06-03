@@ -4,8 +4,9 @@ import 'package:flutter_online_shop/cubit/register_cubit/register_cubit.dart';
 import 'package:flutter_online_shop/cubit/register_cubit/register_state.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:flutter_online_shop/styles/decorations_styles.dart';
-import 'package:flutter_online_shop/styles/text_styles.dart';
 import 'package:flutter_online_shop/widgets/rounded_button.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -16,6 +17,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _obscureText = true;
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   void _visibility() {
     setState(() {
@@ -26,11 +28,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterFormCubit(context.read<IUserRepository>()),
+      create: (context) =>
+          RegisterFormCubit(context.read<IUserRepository>(), _secureStorage),
       child: Builder(
         builder: (context) {
           return Scaffold(
-            backgroundColor: Colors.white,
             body: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -42,7 +44,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   children: <Widget>[
                     const Text(
                       'Register Account',
-                      style: TextStyles.title,
+                      // style: TextStyles.title,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
@@ -50,7 +52,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     const Text(
                       'Fill Your Details',
-                      style: TextStyles.subtitle,
+                      // style: TextStyles.subtitle,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
@@ -63,9 +65,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         initialValue: state.userName.value,
                         decoration: DecorationsStyles.textField.copyWith(
                           labelText: 'Your Name',
-                          labelStyle: TextStyles.text,
-                          errorText:
-                              state.userName.isNotValid ? 'Invalid Name' : null,
+                          // labelStyle: TextStyles.text,
+                          errorText: state.userName.isPure
+                              ? null
+                              : state.userName.error == FormInputError.empty
+                                  ? 'Invalid Name'
+                                  : null,
                         ),
                       ),
                     ),
@@ -82,9 +87,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           label: const Text(
                             'Email Address',
                           ),
-                          labelStyle: TextStyles.text,
-                          errorText:
-                              state.email.isNotValid ? 'Invalid Email' : null,
+                          // labelStyle: TextStyles.text,
+                          errorText: state.email.isPure
+                              ? null
+                              : state.email.error == FormInputError.empty
+                                  ? 'Invalid Email'
+                                  : null,
                         ),
                       ),
                     ),
@@ -109,10 +117,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           label: const Text(
                             'Password',
                           ),
-                          labelStyle: TextStyles.text,
-                          errorText: state.password.isNotValid
-                              ? 'Invalid Password'
-                              : null,
+                          // labelStyle: TextStyles.text,
+                          errorText: state.isPure
+                              ? null
+                              : state.password.isNotValid ==
+                                      FormInputError.empty
+                                  ? 'Invalid Password'
+                                  : null,
                         ),
                       ),
                     ),
@@ -132,11 +143,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               );
                             return;
                           }
-                          context.read<RegisterFormCubit>().signUp(
-                            
-                          );
-                        
-                         
+                          context.read<RegisterFormCubit>().signUp();
+
+                          context.go('/profile');
                         },
                         text: 'Sing Up',
                         color: const Color.fromARGB(255, 214, 206, 206),
@@ -156,12 +165,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       children: <Widget>[
                         const Text(
                           'Already Have Account?',
-                          style: TextStyles.text,
+                          // style: TextStyles.text,
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => context.go('/login'),
                           child: const Text(
                             'Log In',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],

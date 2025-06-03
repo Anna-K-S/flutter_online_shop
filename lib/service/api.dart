@@ -1,5 +1,4 @@
 import 'package:flutter_online_shop/models/cart.dart';
-import 'package:flutter_online_shop/models/cart_product.dart';
 import 'package:flutter_online_shop/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:retrofit/retrofit.dart';
@@ -28,29 +27,8 @@ abstract class Api {
   @DELETE("/products/{id}")
   Future<void> deleteProduct(@Path("id") int id);
 
-  @GET("/products/categories")
-  Future<List<String>> getAllProductsCategories();
-
-  @GET("/products?limit={limit}")
-  Future<List<Product>> getProductsWithLimit(@Path("limit") int limit);
-
-  @GET("/products?sortBy={sortBy}")
-  Future<List<Product>> getSortedProducts(@Path("sortBy") String sortBy);
-
-  @GET("/products/category/{category}")
-  Future<List<Product>> getProductsInCategory(
-      @Path("category") String category);
   @GET("/users")
   Future<List<User>> getAllUsers();
-
-  @GET("/users/{id}")
-  Future<User> getUsersById(@Path("id") int id);
-
-  @GET("/users")
-  Future<List<User>> getUsersWithLimit(@Query("limit") int limit);
-
-  @GET("/users")
-  Future<List<User>> getSortedUsers(@Query("sortBy") String sortBy);
 
   @POST("/users")
   Future<User> addUser(@Body() CreateUserRequest request);
@@ -61,42 +39,18 @@ abstract class Api {
   @DELETE("/users/{id}")
   Future<void> deleteUser(@Path("id") int id);
 
-  @POST("/auth/login")
+  @GET("/auth/login")
   Future<User?> loginUser(
       @Field("email") String email, @Field("password") String password);
 
-  @GET("/carts")
-  Future<List<Cart>> getAllCarts();
-
-  @GET("/carts/{cartId}")
-  Future<Cart> getCartById(@Path("cartId") int cartId);
-
-  @GET("/carts")
-  Future<List<Cart>> getCartsWithLimit(@Query("limit") int limit);
-
-  @GET("/carts")
-  Future<List<Cart>> getSortedCarts(@Query("sortBy") String sortBy);
-
-  @GET("/carts")
-  Future<List<Cart>> getCartsInDateRange(
-    @Query("startDate") DateTime startDate,
-    @Query("endDate") DateTime endDate,
-  );
-
-  @GET("/carts/user/{userId}")
-  Future<Cart?> getUserCart(@Path("userId") int userId);
-
-  @POST("/carts")
-  Future<Cart> addCart(@Body() CreateCartRequest request);
-
   @PUT("/carts/{cartId}")
   Future<void> updateCart(
-    @Path("cartId") int cartId,
+    @Path("cart") int userId,
     @Body() Cart cart,
   );
 
-  @DELETE("/carts/{cartId}")
-  Future<void> deleteCart(@Path("cartId") int cartId);
+  @GET("/user/me")
+  Future<User> getUserByToken(@Header("Authorization") String token);
 }
 
 @freezed
@@ -104,7 +58,8 @@ class CreateCartRequest with _$CreateCartRequest {
   const factory CreateCartRequest({
     required int userId,
     required DateTime date,
-    required List<CartProduct> products,
+    required List<Product> products,
+    required String token,
   }) = _CreateCartRequest;
 
   factory CreateCartRequest.fromJson(Map<String, dynamic> json) =>
@@ -132,6 +87,7 @@ class CreateUserRequest with _$CreateUserRequest {
     required String userName,
     required String email,
     required String password,
+    required String token,
   }) = _User;
 
   factory CreateUserRequest.fromJson(Map<String, dynamic> json) =>

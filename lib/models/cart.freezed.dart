@@ -20,13 +20,16 @@ Cart _$CartFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Cart {
-  int get id => throw _privateConstructorUsedError;
   int get userId => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
-  List<CartProduct> get products => throw _privateConstructorUsedError;
+  List<CartItem> get items => throw _privateConstructorUsedError;
 
+  /// Serializes this Cart to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CartCopyWith<Cart> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -35,7 +38,7 @@ abstract class $CartCopyWith<$Res> {
   factory $CartCopyWith(Cart value, $Res Function(Cart) then) =
       _$CartCopyWithImpl<$Res, Cart>;
   @useResult
-  $Res call({int id, int userId, DateTime date, List<CartProduct> products});
+  $Res call({int userId, DateTime date, List<CartItem> items});
 }
 
 /// @nodoc
@@ -48,19 +51,16 @@ class _$CartCopyWithImpl<$Res, $Val extends Cart>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? userId = null,
     Object? date = null,
-    Object? products = null,
+    Object? items = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -69,10 +69,10 @@ class _$CartCopyWithImpl<$Res, $Val extends Cart>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      products: null == products
-          ? _value.products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<CartProduct>,
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<CartItem>,
     ) as $Val);
   }
 }
@@ -84,7 +84,7 @@ abstract class _$$CartImplCopyWith<$Res> implements $CartCopyWith<$Res> {
       __$$CartImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int userId, DateTime date, List<CartProduct> products});
+  $Res call({int userId, DateTime date, List<CartItem> items});
 }
 
 /// @nodoc
@@ -94,19 +94,16 @@ class __$$CartImplCopyWithImpl<$Res>
   __$$CartImplCopyWithImpl(_$CartImpl _value, $Res Function(_$CartImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? userId = null,
     Object? date = null,
-    Object? products = null,
+    Object? items = null,
   }) {
     return _then(_$CartImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -115,10 +112,10 @@ class __$$CartImplCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      products: null == products
-          ? _value._products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<CartProduct>,
+      items: null == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<CartItem>,
     ));
   }
 }
@@ -127,32 +124,29 @@ class __$$CartImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CartImpl implements _Cart {
   const _$CartImpl(
-      {required this.id,
-      required this.userId,
+      {required this.userId,
       required this.date,
-      required final List<CartProduct> products})
-      : _products = products;
+      required final List<CartItem> items})
+      : _items = items;
 
   factory _$CartImpl.fromJson(Map<String, dynamic> json) =>
       _$$CartImplFromJson(json);
 
   @override
-  final int id;
-  @override
   final int userId;
   @override
   final DateTime date;
-  final List<CartProduct> _products;
+  final List<CartItem> _items;
   @override
-  List<CartProduct> get products {
-    if (_products is EqualUnmodifiableListView) return _products;
+  List<CartItem> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_products);
+    return EqualUnmodifiableListView(_items);
   }
 
   @override
   String toString() {
-    return 'Cart(id: $id, userId: $userId, date: $date, products: $products)';
+    return 'Cart(userId: $userId, date: $date, items: $items)';
   }
 
   @override
@@ -160,18 +154,19 @@ class _$CartImpl implements _Cart {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CartImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.date, date) || other.date == date) &&
-            const DeepCollectionEquality().equals(other._products, _products));
+            const DeepCollectionEquality().equals(other._items, _items));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, date,
-      const DeepCollectionEquality().hash(_products));
+  int get hashCode => Object.hash(
+      runtimeType, userId, date, const DeepCollectionEquality().hash(_items));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CartImplCopyWith<_$CartImpl> get copyWith =>
@@ -187,23 +182,23 @@ class _$CartImpl implements _Cart {
 
 abstract class _Cart implements Cart {
   const factory _Cart(
-      {required final int id,
-      required final int userId,
+      {required final int userId,
       required final DateTime date,
-      required final List<CartProduct> products}) = _$CartImpl;
+      required final List<CartItem> items}) = _$CartImpl;
 
   factory _Cart.fromJson(Map<String, dynamic> json) = _$CartImpl.fromJson;
 
-  @override
-  int get id;
   @override
   int get userId;
   @override
   DateTime get date;
   @override
-  List<CartProduct> get products;
+  List<CartItem> get items;
+
+  /// Create a copy of Cart
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CartImplCopyWith<_$CartImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -9,12 +9,12 @@ enum CartButtonStatus {
 class CartButton extends StatelessWidget {
   final VoidCallback onPressed;
   final CartButtonStatus status;
-  final Color color;
+  final Widget child;
 
   const CartButton({
     required this.onPressed,
-    required this.color,
     this.status = CartButtonStatus.enabled,
+    this.child = const SizedBox(),
     super.key,
   });
 
@@ -29,7 +29,6 @@ class CartButton extends StatelessWidget {
             horizontal: 8.0,
             vertical: 8.0,
           ),
-          backgroundColor: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(13.0),
           ),
@@ -45,9 +44,8 @@ class CartButton extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : Icon(
+              : const Icon(
                   Icons.add_shopping_cart,
-                  color: Colors.grey[900],
                   size: 22.0,
                 ),
         ),

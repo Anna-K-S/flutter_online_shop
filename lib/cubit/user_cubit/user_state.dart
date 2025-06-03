@@ -16,6 +16,8 @@ sealed class UserState with _$UserState {
 
   bool get isIdle => this is UserIdle;
 
+  bool get isLoggedIn => this is UserLoggedIn;
+
   bool get isValid => email.isNotEmpty && password.isNotEmpty;
 
   const factory UserState.idle({
@@ -39,4 +41,10 @@ sealed class UserState with _$UserState {
     required String password,
     required Object error,
   }) = UserError;
+
+  const factory UserState.loggedIn({
+    required String email,
+    required String password,
+    required User user,
+  }) = UserLoggedIn;
 }

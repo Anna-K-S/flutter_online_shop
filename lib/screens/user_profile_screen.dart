@@ -7,8 +7,9 @@ import 'package:flutter_online_shop/cubit/user_profile_cubit/user_profile_cubit.
 import 'package:flutter_online_shop/cubit/user_profile_cubit/user_profile_state.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:flutter_online_shop/styles/decorations_styles.dart';
-import 'package:flutter_online_shop/styles/text_styles.dart';
+import 'package:flutter_online_shop/widgets/custom_bottom_navigation_bar.dart';
 import 'package:flutter_online_shop/widgets/rounded_button.dart';
+import 'package:go_router/go_router.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -25,18 +26,24 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Form(
       key: _formKey,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
           title: const Text(
             'User Profile',
-            style: TextStyles.title,
           ),
           centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () => context.read<UserCubit>().logOut(),
+              icon: const Icon(
+                Icons.logout_outlined,
+              ),
+            ),
+          ],
         ),
+        bottomNavigationBar: const CustomBottomNavigationBar(),
         body: BlocBuilder<UserCubit, UserState>(
           builder: (_, state) => switch (state) {
-            UserSuccess() => BlocProvider(
+            UserLoggedIn() => BlocProvider(
                 create: (context) => UserProfileCubit(
                   context.read<IUserRepository>(),
                   user: state.user,
@@ -72,13 +79,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               ),
                               const Text(
                                 'Name',
-                                style: TextStyles.subtitle,
                               ),
                               const SizedBox(
-                                height: 8.0,
-                              ),
-                              const SizedBox(
-                                height: 20.0,
+                                height: 28.0,
                               ),
                               BlocBuilder<UserProfileCubit, UserProfileState>(
                                 buildWhen: (previous, current) =>
@@ -91,7 +94,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   decoration:
                                       DecorationsStyles.textField.copyWith(
                                     labelText: 'First Name',
-                                    labelStyle: TextStyles.text,
                                     errorText: state.firstName.isNotValid
                                         ? 'First Name is invalid'
                                         : null,
@@ -110,7 +112,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   decoration:
                                       DecorationsStyles.textField.copyWith(
                                     labelText: 'Last Name',
-                                    labelStyle: TextStyles.text,
                                     errorText: state.finalName.isNotValid
                                         ? 'Last Name is invalid'
                                         : null,
@@ -122,10 +123,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               ),
                               const Text(
                                 'Address',
-                                style: TextStyles.subtitle,
                               ),
                               const SizedBox(
-                                height: 8.0,
+                                height: 28.0,
                               ),
                               BlocBuilder<UserProfileCubit, UserProfileState>(
                                 builder: (_, state) => TextFormField(
@@ -136,7 +136,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   decoration:
                                       DecorationsStyles.textField.copyWith(
                                     labelText: 'City',
-                                    labelStyle: TextStyles.text,
                                     errorText: state.city.isNotValid
                                         ? 'City is invalid'
                                         : null,
@@ -155,7 +154,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   decoration:
                                       DecorationsStyles.textField.copyWith(
                                     labelText: 'Street',
-                                    labelStyle: TextStyles.text,
                                     errorText: state.street.isNotValid
                                         ? 'Street is invalid'
                                         : null,
@@ -174,7 +172,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   decoration:
                                       DecorationsStyles.textField.copyWith(
                                     labelText: 'Number',
-                                    labelStyle: TextStyles.text,
                                     errorText: state.number.isNotValid
                                         ? 'Number is invalid'
                                         : null,
@@ -190,10 +187,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       .read<UserProfileCubit>()
                                       .onZipcodeChanged,
                                   keyboardType: TextInputType.number,
+                                  initialValue: state.zipcode.value,
                                   decoration:
                                       DecorationsStyles.textField.copyWith(
                                     labelText: 'Zipcode',
-                                    labelStyle: TextStyles.text,
                                     errorText: state.zipcode.isNotValid
                                         ? 'Zipcode is invalid'
                                         : null,
@@ -241,11 +238,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     showDialog(
                                       context: context,
                                       builder: (_) => DeleteAccountAlert(
-                                        onConfirm: context
-                                            .read<UserProfileCubit>()
-                                            .delete,
+                                        onConfirm: () {
+                                          // context
+                                          //     .read<UserProfileCubit>()
+                                          //     .delete();
+                                          // context.go('/products');
+                                        },
                                       ),
                                     );
+                                    // context.go('/products');
                                   },
                                   text: 'Delete Account',
                                   color: Colors.grey,
@@ -268,11 +269,26 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   },
                 ),
               ),
-            _ => const Center(
-                child: Text(
-                  'Need to be logged in',
-                ),
-              )
+            (_) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const Text(
+                    'Need to be logged in to access this page',
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 60.0,
+                  ),
+                  Center(
+                    child: RoundedButton(
+                      onPressed: () => context.go('/login'),
+                      text: 'Login',
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ],
+              ),
           },
         ),
       ),

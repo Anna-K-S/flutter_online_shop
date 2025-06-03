@@ -24,7 +24,9 @@ mixin _$UserProfileState {
   StringInput get zipcode => throw _privateConstructorUsedError;
   UserProfileStatus get status => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UserProfileStateCopyWith<UserProfileState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +57,8 @@ class _$UserProfileStateCopyWithImpl<$Res, $Val extends UserProfileState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -125,6 +129,8 @@ class __$$UserProfileStateImplCopyWithImpl<$Res>
       $Res Function(_$UserProfileStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -222,7 +228,9 @@ class _$UserProfileStateImpl extends _UserProfileState {
   int get hashCode => Object.hash(
       runtimeType, firstName, finalName, city, street, number, zipcode, status);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserProfileStateImplCopyWith<_$UserProfileStateImpl> get copyWith =>
@@ -255,8 +263,11 @@ abstract class _UserProfileState extends UserProfileState {
   StringInput get zipcode;
   @override
   UserProfileStatus get status;
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserProfileStateImplCopyWith<_$UserProfileStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

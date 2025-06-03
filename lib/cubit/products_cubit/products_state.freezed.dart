@@ -68,7 +68,9 @@ mixin _$ProductsState {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProductsStateCopyWith<ProductsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -92,6 +94,8 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -125,6 +129,8 @@ class __$$ProductsIdleImplCopyWithImpl<$Res>
       _$ProductsIdleImpl _value, $Res Function(_$ProductsIdleImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -171,7 +177,9 @@ class _$ProductsIdleImpl extends ProductsIdle {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProductsIdleImplCopyWith<_$ProductsIdleImpl> get copyWith =>
@@ -259,8 +267,11 @@ abstract class ProductsIdle extends ProductsState {
 
   @override
   List<Product> get products;
+
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProductsIdleImplCopyWith<_$ProductsIdleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -284,6 +295,8 @@ class __$$ProductsSuccessImplCopyWithImpl<$Res>
       _$ProductsSuccessImpl _value, $Res Function(_$ProductsSuccessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -330,7 +343,9 @@ class _$ProductsSuccessImpl extends ProductsSuccess {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProductsSuccessImplCopyWith<_$ProductsSuccessImpl> get copyWith =>
@@ -419,8 +434,11 @@ abstract class ProductsSuccess extends ProductsState {
 
   @override
   List<Product> get products;
+
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProductsSuccessImplCopyWith<_$ProductsSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -444,6 +462,8 @@ class __$$ProductsLoadingImplCopyWithImpl<$Res>
       _$ProductsLoadingImpl _value, $Res Function(_$ProductsLoadingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -490,7 +510,9 @@ class _$ProductsLoadingImpl extends ProductsLoading {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProductsLoadingImplCopyWith<_$ProductsLoadingImpl> get copyWith =>
@@ -579,8 +601,11 @@ abstract class ProductsLoading extends ProductsState {
 
   @override
   List<Product> get products;
+
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProductsLoadingImplCopyWith<_$ProductsLoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -604,6 +629,8 @@ class __$$ProductsErrorImplCopyWithImpl<$Res>
       _$ProductsErrorImpl _value, $Res Function(_$ProductsErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -660,7 +687,9 @@ class _$ProductsErrorImpl extends ProductsError {
       const DeepCollectionEquality().hash(error),
       const DeepCollectionEquality().hash(_products));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProductsErrorImplCopyWith<_$ProductsErrorImpl> get copyWith =>
@@ -750,8 +779,11 @@ abstract class ProductsError extends ProductsState {
   Object get error;
   @override
   List<Product>? get products;
+
+  /// Create a copy of ProductsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProductsErrorImplCopyWith<_$ProductsErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

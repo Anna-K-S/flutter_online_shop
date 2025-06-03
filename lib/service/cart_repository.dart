@@ -1,77 +1,54 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter_online_shop/models/cart.dart';
-import 'package:flutter_online_shop/models/cart_product.dart';
-import 'package:flutter_online_shop/service/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract interface class ICartRepository {
-  Future<List<Cart>> getAll();
-  Future<Cart> getById(int cartId);
-  Future<List<Cart>> getWithLimit(int limit);
-  Future<List<Cart>> getSorted(String sortBy);
-  Future<List<Cart>> getInDateRange(DateTime startDate, DateTime endDate);
-  Future<Cart?> getUser(int userId);
-  Future<Cart> create({
-    required int userId,
-    required List<CartProduct> products,
-  });
+  Future<Cart?> get(int userId);
   Future<void> update(Cart cart);
-  Future<void> delete(int cartId);
+  Future<void> delete({required int userId});
 }
 
 class CartRepository implements ICartRepository {
-  final Api _api;
+  CartRepository();
 
-  CartRepository(this._api);
-
-  @override
-  Future<List<Cart>> getAll() async {
-    return await _api.getAllCarts();
-  }
+  Cart? _cart;
 
   @override
-  Future<Cart> getById(int cartId) async {
-    return await _api.getCartById(cartId);
-  }
+  Future<Cart?> get(int userId) async {
+    final cart = _cart ??
+        await SharedPreferences.getInstance().then((value) {
+          final json = value.getString('cart_$userId');
+          if (json != null) {
+            return Cart.fromJson(jsonDecode(json));
+          }
 
-  @override
-  Future<List<Cart>> getWithLimit(int limit) async {
-    return await _api.getCartsWithLimit(limit);
-  }
-
-  @override
-  Future<List<Cart>> getSorted(String sortBy) async {
-    return await _api.getSortedCarts(sortBy);
-  }
-
-  @override
-  Future<List<Cart>> getInDateRange(
-      DateTime startDate, DateTime endDate) async {
-    return await _api.getCartsInDateRange(startDate, endDate);
-  }
-
-  @override
-  Future<Cart?> getUser(int userId) => _api.getUserCart(userId);
-
-  @override
-  Future<Cart> create({
-    required int userId,
-    required List<CartProduct> products,
-  }) {
-    return _api.addCart(
-      CreateCartRequest(
-        userId: userId,
-        date: DateTime.now(),
-        products: products,
-      ),
-    );
+          return null;
+        });
+    return cart;
   }
 
   @override
   Future<void> update(Cart cart) async {
-    await _api.updateCart(cart.id, cart);
+    _cart = cart;
+
+    await SharedPreferences.getInstance().then((value) {
+      value.setString(
+        'cart_${cart.userId}',
+        jsonEncode(
+          cart.toJson(),
+        ),
+      );
+    });
   }
 
   @override
-  Future<void> delete(int cartId) async {
-    await _api.deleteCart(cartId);
+  Future<void> delete({required int userId}) async {
+    _cart = null;
+
+    await SharedPreferences.getInstance().then((value) {
+      value.remove('cart_$userId');
+    });
   }
 }
