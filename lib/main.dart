@@ -2,12 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/user_cubit/user_cubit.dart';
-import 'package:flutter_online_shop/models/user.dart';
+
+import 'package:flutter_online_shop/screens/cart_screen.dart';
 import 'package:flutter_online_shop/screens/login_screen.dart';
-import 'package:flutter_online_shop/screens/registration_screen.dart';
-import 'package:flutter_online_shop/screens/user_profile_screen.dart';
+import 'package:flutter_online_shop/screens/products_screen.dart';
+
 import 'package:flutter_online_shop/service/api.dart';
+import 'package:flutter_online_shop/service/cart_repository.dart';
 import 'package:flutter_online_shop/service/my_bloc_observer.dart';
+import 'package:flutter_online_shop/service/products_repository.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:logger/web.dart';
 
@@ -31,11 +34,24 @@ class OnlineShop extends StatelessWidget {
             context.read<Api>(),
           ),
         ),
-
-        BlocProvider(create: (context) => UserCubit(context.read<IUserRepository>()))
+        RepositoryProvider<ICartRepository>(
+          create: (context) => CartRepository(
+            context.read<Api>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => UserCubit(
+            context.read<IUserRepository>(),
+          ),
+        ),
+        RepositoryProvider<IProductsRepository>(
+          create: (context) => ProductsRepository(
+            context.read<Api>(),
+          ),
+        ),
       ],
-      child: const MaterialApp(
-        home: LoginScreen(),
+      child: MaterialApp(
+        home: ProductsScreen(),
       ),
     );
   }

@@ -31,7 +31,7 @@ class RoundedButton extends StatelessWidget {
         height: 42.0,
         color: color,
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300,),
           child: status == RoundedButtonStatus.busy
               ? const SizedBox.square(
                   dimension: 20,
