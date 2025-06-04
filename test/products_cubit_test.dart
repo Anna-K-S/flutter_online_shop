@@ -110,39 +110,6 @@ void main() {
     );
 
     blocTest<ProductsCubit, ProductsState>(
-      'emits ProductsLoading and ProductsSuccess when getById is successful',
-      build: () {
-        when(() => mockProductsRepository.getById(1))
-            .thenAnswer((_) async => product);
-        return cubit;
-      },
-      act: (cubit) => cubit.getById(1),
-      expect: () => [
-        isA<ProductsLoading>(),
-        isA<ProductsSuccess>().having((s) => s.products, 'products', [product]),
-      ],
-    );
-
-    blocTest<ProductsCubit, ProductsState>(
-      'emits ProductsLoading and ProductsError when getById fails',
-      build: () {
-        when(() => mockProductsRepository.getById(1)).thenThrow(
-          Exception('Failed to load product'),
-        );
-        return cubit;
-      },
-      act: (cubit) => cubit.getById(1),
-      expect: () => [
-        isA<ProductsLoading>(),
-        isA<ProductsError>().having(
-          (e) => e.error.toString(),
-          'error',
-          contains('Failed to load product'),
-        ),
-      ],
-    );
-
-    blocTest<ProductsCubit, ProductsState>(
       'emits ProductsSuccess with no products when searchProducts query does not match',
       build: () {
         cubit.emit(ProductsSuccess(products: products));

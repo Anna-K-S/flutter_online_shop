@@ -18,15 +18,6 @@ abstract class Api {
   @GET("/products/{id}")
   Future<Product> getProductsById(@Path("id") int id);
 
-  @POST("/products")
-  Future<void> addProduct(@Body() ProductsRequest request);
-
-  @PUT("/products/{id}")
-  Future<void> updateProduct(@Path("id") int id, @Body() Product product);
-
-  @DELETE("/products/{id}")
-  Future<void> deleteProduct(@Path("id") int id);
-
   @GET("/users")
   Future<List<User>> getAllUsers();
 
@@ -39,13 +30,13 @@ abstract class Api {
   @DELETE("/users/{id}")
   Future<void> deleteUser(@Path("id") int id);
 
-  @GET("/auth/login")
-  Future<User?> loginUser(
-      @Field("email") String email, @Field("password") String password);
+  @POST("/auth/login")
+  Future<User> loginUser(
+      @Field("username") String username, @Field("password") String password);
 
   @PUT("/carts/{cartId}")
   Future<void> updateCart(
-    @Path("cart") int userId,
+    @Path("cartId") int userId,
     @Body() Cart cart,
   );
 

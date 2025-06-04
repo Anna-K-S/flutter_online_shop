@@ -18,32 +18,32 @@ sealed class UserState with _$UserState {
 
   bool get isLoggedIn => this is UserLoggedIn;
 
-  bool get isValid => email.isNotEmpty && password.isNotEmpty;
+  bool get isValid => username.isNotEmpty && password.isNotEmpty;
 
   const factory UserState.idle({
-    required String email,
+    required String username,
     required String password,
   }) = UserIdle;
 
   const factory UserState.loginUp({
-    required String email,
+    required String username,
     required String password,
   }) = UserLoginUp;
 
   const factory UserState.success({
-    required String email,
+    required String username,
     required String password,
     required User user,
   }) = UserSuccess;
 
   const factory UserState.error({
-    required String email,
+    required String username,
     required String password,
     required Object error,
   }) = UserError;
 
   const factory UserState.loggedIn({
-    required String email,
+    required String username,
     required String password,
     required User user,
   }) = UserLoggedIn;

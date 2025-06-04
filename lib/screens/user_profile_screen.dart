@@ -239,14 +239,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       context: context,
                                       builder: (_) => DeleteAccountAlert(
                                         onConfirm: () {
-                                          // context
-                                          //     .read<UserProfileCubit>()
-                                          //     .delete();
-                                          // context.go('/products');
+                                          context
+                                              .read<UserProfileCubit>()
+                                              .deleteDetailInfo();
+                                          context.go('/products');
                                         },
                                       ),
                                     );
-                                    // context.go('/products');
+                                    context.go('/products');
                                   },
                                   text: 'Delete Account',
                                   color: Colors.grey,

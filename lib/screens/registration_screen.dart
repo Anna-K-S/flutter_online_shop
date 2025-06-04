@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/register_cubit/register_cubit.dart';
 import 'package:flutter_online_shop/cubit/register_cubit/register_state.dart';
+import 'package:flutter_online_shop/service/auth_repository.dart';
+import 'package:flutter_online_shop/service/cart_repository.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:flutter_online_shop/styles/decorations_styles.dart';
+import 'package:flutter_online_shop/styles/text_styles.dart';
 import 'package:flutter_online_shop/widgets/rounded_button.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -17,7 +19,6 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _obscureText = true;
-  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   void _visibility() {
     setState(() {
@@ -28,8 +29,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          RegisterFormCubit(context.read<IUserRepository>(), _secureStorage),
+      create: (context) => RegisterFormCubit(
+        context.read<IUserRepository>(),
+        context.read<IAuthRepository>(),
+        context.read<ICartRepository>(),
+      ),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -44,7 +48,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   children: <Widget>[
                     const Text(
                       'Register Account',
-                      // style: TextStyles.title,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
@@ -52,7 +55,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     const Text(
                       'Fill Your Details',
-                      // style: TextStyles.subtitle,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
@@ -65,7 +67,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         initialValue: state.userName.value,
                         decoration: DecorationsStyles.textField.copyWith(
                           labelText: 'Your Name',
-                          // labelStyle: TextStyles.text,
                           errorText: state.userName.isPure
                               ? null
                               : state.userName.error == FormInputError.empty
@@ -87,7 +88,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           label: const Text(
                             'Email Address',
                           ),
-                          // labelStyle: TextStyles.text,
                           errorText: state.email.isPure
                               ? null
                               : state.email.error == FormInputError.empty
@@ -117,7 +117,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           label: const Text(
                             'Password',
                           ),
-                          // labelStyle: TextStyles.text,
                           errorText: state.isPure
                               ? null
                               : state.password.isNotValid ==
@@ -165,7 +164,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       children: <Widget>[
                         const Text(
                           'Already Have Account?',
-                          // style: TextStyles.text,
+                          style: TextStyles.text,
                         ),
                         TextButton(
                           onPressed: () => context.go('/login'),

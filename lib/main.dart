@@ -12,11 +12,13 @@ import 'package:flutter_online_shop/screens/products_screen.dart';
 import 'package:flutter_online_shop/screens/registration_screen.dart';
 import 'package:flutter_online_shop/screens/user_profile_screen.dart';
 import 'package:flutter_online_shop/service/api.dart';
+import 'package:flutter_online_shop/service/auth_repository.dart';
 import 'package:flutter_online_shop/service/cart_repository.dart';
 import 'package:flutter_online_shop/service/my_bloc_observer.dart';
 import 'package:flutter_online_shop/service/products_repository.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:flutter_online_shop/themes/app_themes.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/web.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +63,7 @@ class OnlineShop extends StatelessWidget {
         path: '/product_detail',
         builder: (context, state) {
           final product = state.extra as Product;
-          return ProductDetailScreen(product: product);
+          return ProductDetailScreen(productId: product.id);
         },
       ),
     ],
@@ -69,59 +71,89 @@ class OnlineShop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(
-          create: (_) => Api(Dio()),
-        ),
-        RepositoryProvider<IUserRepository>(
-          create: (context) => UserRepository(
-            context.read<Api>(),
-          ),
-        ),
-        RepositoryProvider<ICartRepository>(
-          create: (context) => CartRepository(),
-        ),
-        BlocProvider(
-          create: (context) => UserCubit(
-            context.read<IUserRepository>(),
-          ),
-        ),
-        RepositoryProvider<IProductsRepository>(
-          create: (context) => ProductsRepository(
-            context.read<Api>(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => CartCubit(
-            context.read<ICartRepository>(),
-          ),
-        ),
-      ],
-      child: Consumer<AppThemes>(
-        builder: (context, themeData, child) {
-          return BlocListener<UserCubit, UserState>(
-            listenWhen: (previous, current) =>
-                previous.isLoggedIn != current.isLoggedIn,
-            listener: (context, state) {
-              switch (state) {
-                case UserSuccess(:final user):
-                case UserLoggedIn(:final user):
-                  context.read<CartCubit>().load(user.id);
+    final api = Api(Dio());
 
-                case UserIdle():
-                case UserLoginUp():
-                case UserError():
-              }
-            },
-            child: MaterialApp.router(
-              routerConfig: _router,
-              title: 'Flutter Online Shop',
-              theme: themeData.themeData,
+    return FutureBuilder<ICartRepository>(
+      future: CartRepository.create(api),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const MaterialApp(
+            home: Scaffold(
+              body: Center(child: CircularProgressIndicator()),
             ),
           );
-        },
-      ),
+        }
+
+        if (snapshot.hasError) {
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(child: Text('Error: ${snapshot.error}')),
+            ),
+          );
+        }
+
+        final cartRepository = snapshot.data!;
+
+        return MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider<IAuthRepository>(
+              create: (_) => AuthRepository(
+                const FlutterSecureStorage(),
+              ),
+            ),
+            RepositoryProvider.value(value: api),
+            RepositoryProvider<IUserRepository>(
+              create: (context) => UserRepository(
+                context.read<Api>(),
+                context.read<IAuthRepository>(),
+              ),
+            ),
+            RepositoryProvider<ICartRepository>.value(
+              value: cartRepository,
+            ),
+            BlocProvider(
+              create: (context) => UserCubit(
+                context.read<IUserRepository>(),
+                context.read<IAuthRepository>(),
+              ),
+            ),
+            RepositoryProvider<IProductsRepository>(
+              create: (context) => ProductsRepository(
+                context.read<Api>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => CartCubit(
+                context.read<ICartRepository>(),
+              ),
+            ),
+          ],
+          child: Consumer<AppThemes>(
+            builder: (context, themeData, child) {
+              return BlocListener<UserCubit, UserState>(
+                listenWhen: (previous, current) =>
+                    previous.isLoggedIn != current.isLoggedIn,
+                listener: (context, state) {
+                  switch (state) {
+                    case UserSuccess(:final user):
+                    case UserLoggedIn(:final user):
+                      context.read<CartCubit>().load(user.id);
+
+                    case UserIdle():
+                    case UserLoginUp():
+                    case UserError():
+                  }
+                },
+                child: MaterialApp.router(
+                  routerConfig: _router,
+                  title: 'Flutter Online Shop',
+                  theme: themeData.themeData,
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

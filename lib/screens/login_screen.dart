@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocListener<UserCubit, UserState>(
       listenWhen: (previous, current) =>
-          current is UserLoggedIn || current is UserError,
+          current.isLoggedIn || current.isError || current.isSuccess,
       listener: (context, state) {
         switch (state) {
           case UserLoggedIn():
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 BlocBuilder<UserCubit, UserState>(
                   builder: (_, state) => TextFormField(
                     onChanged: context.read<UserCubit>().changeEmail,
-                    initialValue: state.email,
+                    initialValue: state.username,
                     decoration: DecorationsStyles.textField.copyWith(
                       labelText: 'Email Address',
                       labelStyle: TextStyles.text,
@@ -120,11 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
 
                       context.read<UserCubit>().loginUp(
-                            state.email,
+                            state.username,
                             state.password,
                           );
-
-                      // context.go('/products');
                     },
                     text: 'Login',
                     color: const Color.fromARGB(255, 214, 206, 206),

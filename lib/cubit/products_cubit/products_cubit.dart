@@ -61,25 +61,6 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
   }
 
-  Future<void> getById(int id) async {
-    emit(ProductsLoading(products: state.productsOrNull!));
-    try {
-      final products = await _productsRepository.getById(id);
-      emit(
-        ProductsSuccess(
-          products: _products = [products],
-        ),
-      );
-    } catch (e) {
-      emit(
-        ProductsError(
-          error: e,
-          products: state.products,
-        ),
-      );
-    }
-  }
-
   void searchProducts(String query) {
     final state = this.state;
 

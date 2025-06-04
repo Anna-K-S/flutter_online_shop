@@ -5,6 +5,8 @@ import 'package:flutter_online_shop/models/address.dart';
 import 'package:flutter_online_shop/models/name.dart';
 import 'package:flutter_online_shop/models/user.dart';
 import 'package:flutter_online_shop/service/api.dart';
+import 'package:flutter_online_shop/service/auth_repository.dart';
+import 'package:flutter_online_shop/service/cart_repository.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mocktail/mocktail.dart';
@@ -14,11 +16,17 @@ class MockUserRepository extends Mock implements IUserRepository {}
 
 class MockSecureStorage extends Mock implements FlutterSecureStorage {}
 
+class MockAuthRepository extends Mock implements IAuthRepository {}
+
+class MockCartRepository extends Mock implements ICartRepository {}
+
 void main() {
   group('RegisterFormCubit', () {
     late RegisterFormCubit cubit;
     late MockUserRepository mockUserRepository;
     late MockSecureStorage mockSecureStorage;
+    late MockAuthRepository mockAuthRepository;
+    late MockCartRepository mockCartRepository;
 
     const name = Name(
       firstName: 'John',
@@ -43,7 +51,11 @@ void main() {
     setUpAll(() {
       mockUserRepository = MockUserRepository();
       mockSecureStorage = MockSecureStorage();
-      cubit = RegisterFormCubit(mockUserRepository, mockSecureStorage);
+      mockAuthRepository = MockAuthRepository();
+      mockCartRepository = MockCartRepository();
+
+      cubit = RegisterFormCubit(
+          mockUserRepository, mockAuthRepository, mockCartRepository);
 
       when(() => mockSecureStorage.write(
           key: any(named: 'key'),

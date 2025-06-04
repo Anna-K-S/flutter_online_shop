@@ -80,7 +80,7 @@ void main() {
     blocTest<UserProfileCubit, UserProfileState>(
       'emits updated state when onSave fails',
       build: () {
-        when(() => mockUserRepository.update(user)).thenThrow(error);
+        when(() => mockUserRepository.userUpdated).thenThrow(error);
         return cubit;
       },
       act: (cubit) {
@@ -130,10 +130,11 @@ void main() {
     blocTest<UserProfileCubit, UserProfileState>(
       'emits updated state when delete is successful',
       build: () {
-        when(() => mockUserRepository.delete(user)).thenAnswer((_) async {});
+        when(() => mockUserRepository.deleteDetailInfo(user))
+            .thenAnswer((_) async {});
         return cubit;
       },
-      act: (cubit) => cubit.delete(),
+      act: (cubit) => cubit.deleteDetailInfo(),
       expect: () => [
         const UserProfileState(
           finalName: StringInput.pure(value: 'Doe'),
