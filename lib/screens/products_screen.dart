@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/products_cubit/products_cubit.dart';
 import 'package:flutter_online_shop/cubit/products_cubit/products_state.dart';
+import 'package:flutter_online_shop/screens/products_detail_screen.dart';
 import 'package:flutter_online_shop/service/products_repository.dart';
 import 'package:flutter_online_shop/styles/text_styles.dart';
 import 'package:flutter_online_shop/widgets/cart_button.dart';
@@ -15,18 +16,23 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
+  //контроллеры для управления поиском
   final TextEditingController searchController = TextEditingController();
-  final SearchController controller = SearchController();
 
   @override
   void initState() {
     super.initState();
-    searchController.addListener(() {});
+    //добавляем слушатели к контроллерам для реагирования на изменения
+    searchController.addListener(queryListener);
+  }
+
+  void queryListener() {
+    context.read<ProductsCubit>().searchProducts(searchController.text);
   }
 
   @override
   void dispose() {
-    searchController.dispose();
+    searchController.dispose(); 
     super.dispose();
   }
 
@@ -63,24 +69,20 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ),
             child: RefreshIndicator(
               onRefresh: () => context.read<ProductsCubit>().reload(),
+              color: Colors.blue,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
                     'Discover Everything You Need Online!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: TextStyles.productsScreenSubtitle,
                   ),
                   const SizedBox(
                     height: 10.0,
                   ),
                   CustomSearchBar(
                     searchController: searchController,
-                    onTap: () {},
-                    controller: controller,
                   ),
                   const SizedBox(
                     height: 10.0,
@@ -101,9 +103,18 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             itemCount: products!.length,
                             itemBuilder: (context, index) {
                               final product = products[index];
-            
+
                               return GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProductDetailScreen(
+                                          product: product,
+                                        ),
+                                      ));
+                                },
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(
                                     vertical: 8,
@@ -143,11 +154,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                             Text(
                                               product.title,
                                               maxLines: 3,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12.0,
-                                                color: Colors.black87,
-                                              ),
+                                              style: TextStyles
+                                                  .productsScreenTitle,
                                             ),
                                             const SizedBox(
                                               height: 4,
@@ -155,18 +163,17 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                             Text(
                                               '\$${product.price}',
                                               textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.blue,
-                                                  fontSize: 13.0),
+                                              style: TextStyles
+                                                  .productsScreenPrice,
                                             ),
                                             const SizedBox(
                                               height: 8.0,
                                             ),
                                             CartButton(
-                                                onPressed: () {},
-                                                color: const Color.fromARGB(
-                                                    255, 243, 236, 236)),
+                                              onPressed: () {},
+                                              color: const Color.fromARGB(
+                                                  255, 243, 236, 236),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -182,11 +189,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       if (state.isLoading) {
                         return Center(
                           child: CircularProgressIndicator(
-                            color: Theme.of(context).primaryColor,
+                            color: Colors.white54,
                           ),
                         );
                       }
-            
+
                       return const Center(
                         child: Text('Failed to load products'),
                       );
