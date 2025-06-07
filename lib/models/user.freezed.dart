@@ -26,9 +26,14 @@ mixin _$User {
   String get password => throw _privateConstructorUsedError;
   Name get name => throw _privateConstructorUsedError;
   Address get address => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
 
+  /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -43,7 +48,8 @@ abstract class $UserCopyWith<$Res> {
       String userName,
       String password,
       Name name,
-      Address address});
+      Address address,
+      String token});
 
   $NameCopyWith<$Res> get name;
   $AddressCopyWith<$Res> get address;
@@ -59,6 +65,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -68,6 +76,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? password = null,
     Object? name = null,
     Object? address = null,
+    Object? token = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -94,9 +103,15 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $NameCopyWith<$Res> get name {
@@ -105,6 +120,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     });
   }
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res> get address {
@@ -127,7 +144,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String userName,
       String password,
       Name name,
-      Address address});
+      Address address,
+      String token});
 
   @override
   $NameCopyWith<$Res> get name;
@@ -142,6 +160,8 @@ class __$$UserImplCopyWithImpl<$Res>
   __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -151,6 +171,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? password = null,
     Object? name = null,
     Object? address = null,
+    Object? token = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -177,6 +198,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -190,7 +215,8 @@ class _$UserImpl implements _User {
       required this.userName,
       required this.password,
       required this.name,
-      required this.address});
+      required this.address,
+      required this.token});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -207,10 +233,12 @@ class _$UserImpl implements _User {
   final Name name;
   @override
   final Address address;
+  @override
+  final String token;
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, userName: $userName, password: $password, name: $name, address: $address)';
+    return 'User(id: $id, email: $email, userName: $userName, password: $password, name: $name, address: $address, token: $token)';
   }
 
   @override
@@ -225,15 +253,18 @@ class _$UserImpl implements _User {
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.address, address) || other.address == address));
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.token, token) || other.token == token));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, email, userName, password, name, address);
+  int get hashCode => Object.hash(
+      runtimeType, id, email, userName, password, name, address, token);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
@@ -254,7 +285,8 @@ abstract class _User implements User {
       required final String userName,
       required final String password,
       required final Name name,
-      required final Address address}) = _$UserImpl;
+      required final Address address,
+      required final String token}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -271,7 +303,12 @@ abstract class _User implements User {
   @override
   Address get address;
   @override
-  @JsonKey(ignore: true)
+  String get token;
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

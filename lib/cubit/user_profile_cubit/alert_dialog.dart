@@ -25,7 +25,10 @@ class DeleteAccountAlert extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: onConfirm,
+          onPressed: () {
+            onConfirm();
+            Navigator.of(context).pop();
+          },
           child: const Text(
             'Confirm',
           ),

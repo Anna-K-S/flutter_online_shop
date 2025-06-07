@@ -8,7 +8,7 @@ part of 'product.dart';
 
 _$ProductDataImpl _$$ProductDataImplFromJson(Map<String, dynamic> json) =>
     _$ProductDataImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       price: json['price'] as num,
       category: json['category'] as String,

@@ -1,4 +1,3 @@
-
 import 'package:flutter_online_shop/models/product.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -33,12 +32,10 @@ sealed class ProductsState with _$ProductsState {
     List<Product>? products,
   }) = ProductsError;
 
-
-List<Product>? get productsOrNull => map(
-  idle: (state) => state.products,
-  loading: (state) => state.products,
-  success: (state) => state.products,
-  error: (state) => state.products,
-);
- 
+  List<Product>? get productsOrNull => map(
+        idle: (state) => state.products,
+        loading: (state) => state.products,
+        success: (state) => state.products,
+        error: (state) => state.products,
+      );
 }

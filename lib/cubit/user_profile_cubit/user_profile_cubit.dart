@@ -82,7 +82,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     emit(state.copyWith(status: UserProfileStatus.updating));
 
     try {
-      await _userRepository.update(newUser);
+      _userRepository.userUpdated;
       emit(state.copyWith(status: UserProfileStatus.updated));
     } catch (e) {
       emit(state.copyWith(status: UserProfileStatus.error));
@@ -91,10 +91,10 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     }
   }
 
-  Future<void> delete() async {
+  Future<void> deleteDetailInfo() async {
     emit(state.copyWith(status: UserProfileStatus.deleting));
     try {
-      await _userRepository.delete(_user.id);
+      await _userRepository.deleteDetailInfo(_user);
       emit(state.copyWith(status: UserProfileStatus.deleted));
     } catch (e) {
       emit(state.copyWith(status: UserProfileStatus.error));

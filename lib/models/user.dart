@@ -2,10 +2,8 @@ import 'package:flutter_online_shop/models/address.dart';
 import 'package:flutter_online_shop/models/name.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-
 part 'user.freezed.dart';
-part 'user.g.dart'; 
-
+part 'user.g.dart';
 
 @freezed
 class User with _$User {
@@ -16,6 +14,7 @@ class User with _$User {
     required String password,
     required Name name,
     required Address address,
+    required String token,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

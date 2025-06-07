@@ -22,10 +22,15 @@ CreateCartRequest _$CreateCartRequestFromJson(Map<String, dynamic> json) {
 mixin _$CreateCartRequest {
   int get userId => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
-  List<CartProduct> get products => throw _privateConstructorUsedError;
+  List<Product> get products => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateCartRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateCartRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateCartRequestCopyWith<CreateCartRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -36,7 +41,7 @@ abstract class $CreateCartRequestCopyWith<$Res> {
           CreateCartRequest value, $Res Function(CreateCartRequest) then) =
       _$CreateCartRequestCopyWithImpl<$Res, CreateCartRequest>;
   @useResult
-  $Res call({int userId, DateTime date, List<CartProduct> products});
+  $Res call({int userId, DateTime date, List<Product> products, String token});
 }
 
 /// @nodoc
@@ -49,12 +54,15 @@ class _$CreateCartRequestCopyWithImpl<$Res, $Val extends CreateCartRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateCartRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userId = null,
     Object? date = null,
     Object? products = null,
+    Object? token = null,
   }) {
     return _then(_value.copyWith(
       userId: null == userId
@@ -68,7 +76,11 @@ class _$CreateCartRequestCopyWithImpl<$Res, $Val extends CreateCartRequest>
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<CartProduct>,
+              as List<Product>,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -81,7 +93,7 @@ abstract class _$$CreateCartRequestImplCopyWith<$Res>
       __$$CreateCartRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int userId, DateTime date, List<CartProduct> products});
+  $Res call({int userId, DateTime date, List<Product> products, String token});
 }
 
 /// @nodoc
@@ -92,12 +104,15 @@ class __$$CreateCartRequestImplCopyWithImpl<$Res>
       $Res Function(_$CreateCartRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateCartRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userId = null,
     Object? date = null,
     Object? products = null,
+    Object? token = null,
   }) {
     return _then(_$CreateCartRequestImpl(
       userId: null == userId
@@ -111,7 +126,11 @@ class __$$CreateCartRequestImplCopyWithImpl<$Res>
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<CartProduct>,
+              as List<Product>,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -122,7 +141,8 @@ class _$CreateCartRequestImpl implements _CreateCartRequest {
   const _$CreateCartRequestImpl(
       {required this.userId,
       required this.date,
-      required final List<CartProduct> products})
+      required final List<Product> products,
+      required this.token})
       : _products = products;
 
   factory _$CreateCartRequestImpl.fromJson(Map<String, dynamic> json) =>
@@ -132,17 +152,20 @@ class _$CreateCartRequestImpl implements _CreateCartRequest {
   final int userId;
   @override
   final DateTime date;
-  final List<CartProduct> _products;
+  final List<Product> _products;
   @override
-  List<CartProduct> get products {
+  List<Product> get products {
     if (_products is EqualUnmodifiableListView) return _products;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_products);
   }
 
   @override
+  final String token;
+
+  @override
   String toString() {
-    return 'CreateCartRequest(userId: $userId, date: $date, products: $products)';
+    return 'CreateCartRequest(userId: $userId, date: $date, products: $products, token: $token)';
   }
 
   @override
@@ -152,15 +175,18 @@ class _$CreateCartRequestImpl implements _CreateCartRequest {
             other is _$CreateCartRequestImpl &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.date, date) || other.date == date) &&
-            const DeepCollectionEquality().equals(other._products, _products));
+            const DeepCollectionEquality().equals(other._products, _products) &&
+            (identical(other.token, token) || other.token == token));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, userId, date,
-      const DeepCollectionEquality().hash(_products));
+      const DeepCollectionEquality().hash(_products), token);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateCartRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CreateCartRequestImplCopyWith<_$CreateCartRequestImpl> get copyWith =>
@@ -179,7 +205,8 @@ abstract class _CreateCartRequest implements CreateCartRequest {
   const factory _CreateCartRequest(
       {required final int userId,
       required final DateTime date,
-      required final List<CartProduct> products}) = _$CreateCartRequestImpl;
+      required final List<Product> products,
+      required final String token}) = _$CreateCartRequestImpl;
 
   factory _CreateCartRequest.fromJson(Map<String, dynamic> json) =
       _$CreateCartRequestImpl.fromJson;
@@ -189,9 +216,14 @@ abstract class _CreateCartRequest implements CreateCartRequest {
   @override
   DateTime get date;
   @override
-  List<CartProduct> get products;
+  List<Product> get products;
   @override
-  @JsonKey(ignore: true)
+  String get token;
+
+  /// Create a copy of CreateCartRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CreateCartRequestImplCopyWith<_$CreateCartRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -209,8 +241,12 @@ mixin _$ProductsRequest {
   String get description => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
 
+  /// Serializes this ProductsRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ProductsRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProductsRequestCopyWith<ProductsRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -240,6 +276,8 @@ class _$ProductsRequestCopyWithImpl<$Res, $Val extends ProductsRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ProductsRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -304,6 +342,8 @@ class __$$ProductsRequestImplCopyWithImpl<$Res>
       _$ProductsRequestImpl _value, $Res Function(_$ProductsRequestImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProductsRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -390,12 +430,14 @@ class _$ProductsRequestImpl implements _ProductsRequest {
             (identical(other.image, image) || other.image == image));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, title, price, category, description, image);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProductsRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProductsRequestImplCopyWith<_$ProductsRequestImpl> get copyWith =>
@@ -434,8 +476,11 @@ abstract class _ProductsRequest implements ProductsRequest {
   String get description;
   @override
   String get image;
+
+  /// Create a copy of ProductsRequest
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProductsRequestImplCopyWith<_$ProductsRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -449,9 +494,14 @@ mixin _$CreateUserRequest {
   String get userName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
 
+  /// Serializes this CreateUserRequest to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CreateUserRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CreateUserRequestCopyWith<CreateUserRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -462,7 +512,7 @@ abstract class $CreateUserRequestCopyWith<$Res> {
           CreateUserRequest value, $Res Function(CreateUserRequest) then) =
       _$CreateUserRequestCopyWithImpl<$Res, CreateUserRequest>;
   @useResult
-  $Res call({String userName, String email, String password});
+  $Res call({String userName, String email, String password, String token});
 }
 
 /// @nodoc
@@ -475,12 +525,15 @@ class _$CreateUserRequestCopyWithImpl<$Res, $Val extends CreateUserRequest>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CreateUserRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userName = null,
     Object? email = null,
     Object? password = null,
+    Object? token = null,
   }) {
     return _then(_value.copyWith(
       userName: null == userName
@@ -495,6 +548,10 @@ class _$CreateUserRequestCopyWithImpl<$Res, $Val extends CreateUserRequest>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -507,7 +564,7 @@ abstract class _$$UserImplCopyWith<$Res>
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userName, String email, String password});
+  $Res call({String userName, String email, String password, String token});
 }
 
 /// @nodoc
@@ -517,12 +574,15 @@ class __$$UserImplCopyWithImpl<$Res>
   __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CreateUserRequest
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userName = null,
     Object? email = null,
     Object? password = null,
+    Object? token = null,
   }) {
     return _then(_$UserImpl(
       userName: null == userName
@@ -537,6 +597,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -545,7 +609,10 @@ class __$$UserImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserImpl implements _User {
   const _$UserImpl(
-      {required this.userName, required this.email, required this.password});
+      {required this.userName,
+      required this.email,
+      required this.password,
+      required this.token});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -556,10 +623,12 @@ class _$UserImpl implements _User {
   final String email;
   @override
   final String password;
+  @override
+  final String token;
 
   @override
   String toString() {
-    return 'CreateUserRequest(userName: $userName, email: $email, password: $password)';
+    return 'CreateUserRequest(userName: $userName, email: $email, password: $password, token: $token)';
   }
 
   @override
@@ -571,14 +640,18 @@ class _$UserImpl implements _User {
                 other.userName == userName) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            (identical(other.token, token) || other.token == token));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, userName, email, password);
+  int get hashCode =>
+      Object.hash(runtimeType, userName, email, password, token);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CreateUserRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
@@ -596,7 +669,8 @@ abstract class _User implements CreateUserRequest {
   const factory _User(
       {required final String userName,
       required final String email,
-      required final String password}) = _$UserImpl;
+      required final String password,
+      required final String token}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -607,7 +681,12 @@ abstract class _User implements CreateUserRequest {
   @override
   String get password;
   @override
-  @JsonKey(ignore: true)
+  String get token;
+
+  /// Create a copy of CreateUserRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

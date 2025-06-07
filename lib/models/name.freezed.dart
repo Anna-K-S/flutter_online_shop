@@ -23,8 +23,12 @@ mixin _$Name {
   String get firstName => throw _privateConstructorUsedError;
   String get finalName => throw _privateConstructorUsedError;
 
+  /// Serializes this Name to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Name
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NameCopyWith<Name> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -46,6 +50,8 @@ class _$NameCopyWithImpl<$Res, $Val extends Name>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Name
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -82,6 +88,8 @@ class __$$NameImplCopyWithImpl<$Res>
   __$$NameImplCopyWithImpl(_$NameImpl _value, $Res Function(_$NameImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Name
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,11 +138,13 @@ class _$NameImpl implements _Name {
                 other.finalName == finalName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, firstName, finalName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Name
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NameImplCopyWith<_$NameImpl> get copyWith =>
@@ -159,8 +169,11 @@ abstract class _Name implements Name {
   String get firstName;
   @override
   String get finalName;
+
+  /// Create a copy of Name
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NameImplCopyWith<_$NameImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

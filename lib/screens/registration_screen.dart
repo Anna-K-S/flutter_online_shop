@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_online_shop/cubit/register_cubit/register_cubit.dart';
 import 'package:flutter_online_shop/cubit/register_cubit/register_state.dart';
+import 'package:flutter_online_shop/service/auth_repository.dart';
+import 'package:flutter_online_shop/service/cart_repository.dart';
 import 'package:flutter_online_shop/service/user_repository.dart';
 import 'package:flutter_online_shop/styles/decorations_styles.dart';
 import 'package:flutter_online_shop/styles/text_styles.dart';
 import 'package:flutter_online_shop/widgets/rounded_button.dart';
+import 'package:go_router/go_router.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -26,11 +29,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterFormCubit(context.read<IUserRepository>()),
+      create: (context) => RegisterFormCubit(
+        context.read<IUserRepository>(),
+        context.read<IAuthRepository>(),
+        context.read<ICartRepository>(),
+      ),
       child: Builder(
         builder: (context) {
           return Scaffold(
-            backgroundColor: Colors.white,
             body: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -42,7 +48,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   children: <Widget>[
                     const Text(
                       'Register Account',
-                      style: TextStyles.title,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
@@ -50,7 +55,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     const Text(
                       'Fill Your Details',
-                      style: TextStyles.subtitle,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
@@ -63,9 +67,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         initialValue: state.userName.value,
                         decoration: DecorationsStyles.textField.copyWith(
                           labelText: 'Your Name',
-                          labelStyle: TextStyles.text,
-                          errorText:
-                              state.userName.isNotValid ? 'Invalid Name' : null,
+                          errorText: state.userName.isPure
+                              ? null
+                              : state.userName.error == FormInputError.empty
+                                  ? 'Invalid Name'
+                                  : null,
                         ),
                       ),
                     ),
@@ -82,9 +88,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           label: const Text(
                             'Email Address',
                           ),
-                          labelStyle: TextStyles.text,
-                          errorText:
-                              state.email.isNotValid ? 'Invalid Email' : null,
+                          errorText: state.email.isPure
+                              ? null
+                              : state.email.error == FormInputError.empty
+                                  ? 'Invalid Email'
+                                  : null,
                         ),
                       ),
                     ),
@@ -109,10 +117,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           label: const Text(
                             'Password',
                           ),
-                          labelStyle: TextStyles.text,
-                          errorText: state.password.isNotValid
-                              ? 'Invalid Password'
-                              : null,
+                          errorText: state.isPure
+                              ? null
+                              : state.password.isNotValid ==
+                                      FormInputError.empty
+                                  ? 'Invalid Password'
+                                  : null,
                         ),
                       ),
                     ),
@@ -132,11 +142,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               );
                             return;
                           }
-                          context.read<RegisterFormCubit>().signUp(
-                            
-                          );
-                        
-                         
+                          context.read<RegisterFormCubit>().signUp();
+
+                          context.go('/profile');
                         },
                         text: 'Sing Up',
                         color: const Color.fromARGB(255, 214, 206, 206),
@@ -159,9 +167,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           style: TextStyles.text,
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => context.go('/login'),
                           child: const Text(
                             'Log In',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],

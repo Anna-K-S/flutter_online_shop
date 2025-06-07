@@ -7,7 +7,11 @@ class ProductsCubit extends Cubit<ProductsState> {
   final IProductsRepository _productsRepository;
 
   ProductsCubit(this._productsRepository)
-      : super(const ProductsIdle(products: []));
+      : super(
+          const ProductsIdle(
+            products: [],
+          ),
+        );
 
   var _products = const <Product>[];
 
@@ -18,7 +22,11 @@ class ProductsCubit extends Cubit<ProductsState> {
     try {
       _products = await _productsRepository.getAll();
       if (_products.isEmpty || state.productsOrNull == null) {
-        return emit(const ProductsIdle(products: []));
+        return emit(
+          const ProductsIdle(
+            products: [],
+          ),
+        );
       }
 
       emit(
@@ -46,25 +54,6 @@ class ProductsCubit extends Cubit<ProductsState> {
     } catch (e) {
       emit(
         ProductsState.error(
-          error: e,
-          products: state.products,
-        ),
-      );
-    }
-  }
-
-  Future<void> getById(int id) async {
-    emit(ProductsLoading(products: state.productsOrNull!));
-    try {
-      final products = await _productsRepository.getById(id);
-      emit(
-        ProductsSuccess(
-          products: _products = [products],
-        ),
-      );
-    } catch (e) {
-      emit(
-        ProductsError(
           error: e,
           products: state.products,
         ),

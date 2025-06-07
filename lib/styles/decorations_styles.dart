@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 
 class DecorationsStyles {
   static const textField = InputDecoration(
@@ -81,7 +81,7 @@ class DecorationsStyles {
       InputDecoration(
         icon: const Icon(
           Icons.search,
-          color: Colors.black,
+          
         ),
         hintText: hintText,
         suffixIcon: showClearButton
@@ -89,12 +89,12 @@ class DecorationsStyles {
                 onPressed: onPressed,
                 icon: const Icon(
                   Icons.clear,
-                  color: Colors.black,
+                  
                 ),
               )
             : null,
         filled: true,
-        fillColor: Colors.white,
+       
         contentPadding: const EdgeInsets.symmetric(
           vertical: 0,
           horizontal: 20,
